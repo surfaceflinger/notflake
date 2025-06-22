@@ -250,6 +250,19 @@
       "url": "https://github.com/nixos/nixpkgs/archive/39c0822892e326446896b6e40116c6e33cb48939.tar.gz",
       "hash": "0qgl8175h9jcjm449xhspb8y8j7anmrg1vx3gjlhjvhfi39jz5ra"
     },
+    "nixpkgs-2505": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixos-25.05",
+      "submodules": false,
+      "revision": "b2485d56967598da068b5a6946dadda8bfcbcd37",
+      "url": "https://github.com/nixos/nixpkgs/archive/b2485d56967598da068b5a6946dadda8bfcbcd37.tar.gz",
+      "hash": "1q0m25p83mk0zz42yyi0avyvm77x09ydgrlkkfpzwf22ghb27yfy"
+    },
     "schizofox": {
       "type": "Git",
       "repository": {

@@ -30,6 +30,9 @@ nilla.create (
           loader = "flake";
         };
 
+        # need this one for temporary firefox fix
+        nixpkgs-2505.loader = "flake";
+
         # these inputs offer only nixos modules so
         # we can just import relevant default.nix files
         agenix.loader = "raw";
