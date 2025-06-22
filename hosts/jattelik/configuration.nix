@@ -28,7 +28,6 @@
   ];
 
   # base
-  networking.hostName = "jattelik";
   nixpkgs.hostPlatform = "aarch64-linux";
 
   # https://github.com/cynicsketch/nix-mineral/issues/56

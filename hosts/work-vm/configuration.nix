@@ -10,7 +10,6 @@
   ];
 
   # base
-  networking.hostName = "work-vm";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # bootloader/kernel/modules
