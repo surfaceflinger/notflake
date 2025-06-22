@@ -8,7 +8,7 @@ in
 
   services.monero = {
     enable = true;
-    banlist = "${inputs.monero-banlist}/block.txt";
+    banlist = "${inputs.monero-banlist.result}/block.txt";
     rpc = {
       address = "0.0.0.0";
       port = 18089;

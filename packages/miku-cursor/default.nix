@@ -1,9 +1,13 @@
-{ pkgs, ... }:
-pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+{
+  fetchFromGitHub,
+  lib,
+  stdenvNoCC,
+}:
+stdenvNoCC.mkDerivation (finalAttrs: {
   name = "miku-cursor";
   version = "1.2.4";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "supermariofps";
     repo = "hatsune-miku-windows-linux-cursors";
     rev = "${finalAttrs.version}";
@@ -21,8 +25,8 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
-  meta = with pkgs.lib; {
-    platforms = platforms.linux;
-    maintainers = with maintainers; [ cafkafk ];
+  meta = {
+    platforms = lib.platforms.linux;
+    maintainers = with lib.maintainers; [ cafkafk ];
   };
 })

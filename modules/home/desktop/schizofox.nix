@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  imports = [ inputs.schizofox.homeManagerModule ];
+  imports = [ inputs.schizofox.result.homeManagerModule ];
 
   home.sessionVariables.BROWSER = "schizofox";
 
@@ -132,10 +132,10 @@
       defaultUserChrome.enable = false;
       defaultUserContent.enable = false;
       extraUserContent = ''
-        @import "${inputs.firefox-gnome-theme}/userContent.css";
+        @import "${inputs.firefox-gnome-theme.result}/userContent.css";
       '';
       extraUserChrome = ''
-        @import "${inputs.firefox-gnome-theme}/userChrome.css";
+        @import "${inputs.firefox-gnome-theme.result}/userChrome.css";
       '';
     };
   };

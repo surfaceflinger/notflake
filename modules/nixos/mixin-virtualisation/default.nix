@@ -4,10 +4,10 @@
   ...
 }:
 {
-  programs.virt-manager.enable = config.isDesktop;
+  programs.virt-manager.enable = config.xdg.portal.enable;
 
   virtualisation = {
-    spiceUSBRedirection.enable = config.isDesktop;
+    spiceUSBRedirection.enable = config.xdg.portal.enable;
     libvirtd = {
       enable = true;
       qemu = {

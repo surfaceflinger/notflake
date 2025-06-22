@@ -1,5 +1,5 @@
 {
-  inputs,
+  nixosModules,
   pkgs,
   ...
 }:
@@ -8,11 +8,12 @@
     ./blahaj.pl/gotosocial.nix
     ./blahaj.pl/wastebin.nix
     ./blahaj.pl/www.nix
-    inputs.self.nixosModules.mixin-vm
-    inputs.self.nixosModules.mixin-www
-    inputs.self.nixosModules.server
-    inputs.self.nixosModules.user-nat
     ./litestream.nix
+    nixosModules.common
+    nixosModules.mixin-vm
+    nixosModules.mixin-www
+    nixosModules.server
+    nixosModules.user-nat
     ./personal/ipfs.nix
     ./personal/matrix.nix
     ./personal/soju.nix

@@ -1,6 +1,6 @@
 {
   lib,
-  perSystem,
+  pkgs,
   ...
 }:
 {
@@ -19,7 +19,7 @@
     serviceConfig = {
       Type = "oneshot";
       Restart = "no";
-      ExecStart = lib.getExe perSystem.self.disable-bd-prochot;
+      ExecStart = lib.getExe pkgs.disable-bd-prochot;
     };
   };
 

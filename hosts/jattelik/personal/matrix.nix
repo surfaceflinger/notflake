@@ -6,7 +6,7 @@ let
   port = 6167;
 in
 {
-  imports = [ inputs.grapevine.nixosModules.default ];
+  imports = [ inputs.grapevine.result.nixosModules.default ];
 
   services.grapevine = {
     enable = true;

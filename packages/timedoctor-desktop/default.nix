@@ -1,15 +1,23 @@
-{ pkgs, ... }:
+{
+  appimageTools,
+  fetchurl,
+  graphene-hardened-malloc,
+  lib,
+  libjpeg,
+  lz4,
+  makeWrapper,
+}:
 let
   pname = "timedoctor-desktop";
   version = "3.12.16";
 
-  src = pkgs.fetchurl {
+  src = fetchurl {
     url = "https://repo2.timedoctor.com/td-desktop-hybrid/prod/v${version}/timedoctor-desktop_${version}_linux-x86_64.AppImage";
     hash = "sha256-EodbUs88REwa3JMy2/reHcxLwvNaPtVKZDIkLPd11BU=";
   };
-  appimageContents = pkgs.appimageTools.extract { inherit pname version src; };
+  appimageContents = appimageTools.extract { inherit pname version src; };
 in
-pkgs.appimageTools.wrapType2 rec {
+appimageTools.wrapType2 rec {
   inherit pname version src;
 
   extraBwrapArgs = [
@@ -26,7 +34,7 @@ pkgs.appimageTools.wrapType2 rec {
     "--tmpfs /var"
     "--tmpfs /vol"
     "--unshare-pid"
-    "--setenv LD_PRELOAD ${pkgs.graphene-hardened-malloc}/lib/libhardened_malloc.so"
+    "--setenv LD_PRELOAD ${graphene-hardened-malloc}/lib/libhardened_malloc.so"
   ];
 
   extraInstallCommands = ''
@@ -34,7 +42,7 @@ pkgs.appimageTools.wrapType2 rec {
     install -Dm444 ${appimageContents}/timedoctor-desktop.png -t $out/share/pixmaps
     substituteInPlace $out/share/applications/timedoctor-desktop.desktop \
       --replace-fail 'Exec=AppRun' 'Exec=timedoctor-desktop'
-    source "${pkgs.makeWrapper}/nix-support/setup-hook"
+    source "${makeWrapper}/nix-support/setup-hook"
     wrapProgram "$out/bin/timedoctor-desktop" \
       --add-flags "--disable-gpu --disable-accelerated-video-encode --disable-features=VizDisplayCompositor" \
       --add-flags "--js-flags=--jitless"
@@ -46,10 +54,10 @@ pkgs.appimageTools.wrapType2 rec {
       lz4
     ];
 
-  meta = with pkgs.lib; {
+  meta = {
     description = "Employee time tracking software (Time Doctor Classic)";
     homepage = "https://www.timedoctor.com";
     platforms = [ "x86_64-linux" ];
-    maintainers = with maintainers; [ surfaceflinger ];
+    maintainers = with lib.maintainers; [ surfaceflinger ];
   };
 }

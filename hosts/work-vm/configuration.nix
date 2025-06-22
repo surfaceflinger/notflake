@@ -1,10 +1,11 @@
-{ inputs, ... }:
+{ nixosModules, ... }:
 {
   imports = [
-    inputs.self.nixosModules.desktop
-    inputs.self.nixosModules.mixin-tpm20
-    inputs.self.nixosModules.mixin-vm
-    inputs.self.nixosModules.user-natwork
+    nixosModules.common
+    nixosModules.desktop
+    nixosModules.mixin-tpm20
+    nixosModules.mixin-vm
+    nixosModules.user-natwork
     ./storage.nix
   ];
 

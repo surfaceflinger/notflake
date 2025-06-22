@@ -1,10 +1,14 @@
-{ pkgs, ... }:
-pkgs.writeShellApplication {
+{
+  kmod,
+  msr-tools,
+  writeShellApplication,
+}:
+writeShellApplication {
   name = "disable-bd-prochot";
 
   runtimeInputs = [
-    pkgs.kmod
-    pkgs.msr-tools
+    kmod
+    msr-tools
   ];
 
   text = ''

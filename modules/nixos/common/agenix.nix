@@ -1,9 +1,8 @@
 {
-  config,
   inputs,
   ...
 }:
 {
-  imports = [ inputs.agenix.nixosModules.default ];
-  fileSystems."/etc/ssh".neededForBoot = config.isEphemeral;
+  imports = [ "${inputs.agenix.result}/modules/age.nix" ];
+  fileSystems."/etc/ssh".neededForBoot = true; # impermanence
 }

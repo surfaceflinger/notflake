@@ -1,5 +1,4 @@
 {
-  perSystem,
   pkgs,
   ...
 }:
@@ -55,10 +54,10 @@
     qadwaitadecorations-qt6
 
     # fetch gravatar and install as ~/.face
-    perSystem.self.gnome-gravatar
+    gnome-gravatar
 
     # the way weather works in gnome is terrible :(
-    perSystem.self.gnome-weather-set
+    gnome-weather-set
   ];
 
   fonts = {

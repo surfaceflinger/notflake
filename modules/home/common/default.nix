@@ -1,14 +1,14 @@
 {
   inputs,
   osConfig,
-  perSystem,
+  pkgs,
   ...
 }:
 {
   imports = [
     ./git.nix
-    inputs.dont-track-me.homeManagerModules.default
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.dont-track-me.result.homeManagerModules.default
+    inputs.nix-index-database.result.hmModules.nix-index
   ];
 
   home.stateVersion = osConfig.system.stateVersion;
@@ -18,8 +18,8 @@
     enableAll = true;
   };
 
-  home.packages = [
-    perSystem.self.safe-rm
+  home.packages = with pkgs; [
+    safe-rm-nat
   ];
 
   nix.gc = {

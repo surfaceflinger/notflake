@@ -16,5 +16,5 @@
       set titlecolor normal,normal
     '';
   };
-  environment.etc.nanorc.text = lib.mkBefore "include ${inputs.nano-syntax-highlighting}/*.nanorc";
+  environment.etc.nanorc.text = lib.mkBefore "include ${inputs.nano-syntax-highlighting.result}/*.nanorc";
 }

@@ -1,6 +1,6 @@
 {
   config,
-  perSystem,
+  inputs,
   pkgs,
   ...
 }:
@@ -14,20 +14,23 @@
     deadnix
     file
     flow-control
+    inputs.nilla-cli.result.packages.default.result."${config.nixpkgs.hostPlatform.system}"
+    inputs.nilla-utils.result.packages.default.result."${config.nixpkgs.hostPlatform.system}"
     ipgrep
+    jq
     lurk
     ncdu
     nixfmt-rfc-style
-    perSystem.self.safe-rm
+    npins
     pv
     rage
     ripgrep
+    safe-rm-nat
     shellcheck
     statix
     tre
     wget
     (writeScriptBin "7z" ''exec 7zz "$@"'')
-    (writeScriptBin "jq" ''exec yq -Po json "$@"'')
     yq-go
 
     # system utilities

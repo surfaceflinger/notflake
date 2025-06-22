@@ -1,26 +1,27 @@
 {
   config,
   inputs,
+  nixosModules,
   ...
 }:
 {
   imports = [
-    "${inputs.nixos-hardware}/common/cpu/intel/haswell"
-    inputs.nixos-hardware.nixosModules.common-gpu-amd
-    inputs.nixos-hardware.nixosModules.common-pc
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-    inputs.self.nixosModules.mixin-virtualisation
-    inputs.self.nixosModules.mixin-www
-    inputs.self.nixosModules.server
-    inputs.self.nixosModules.user-nat
-    inputs.xkomhotshot.nixosModules.default
+    "${inputs.nixos-hardware.result}/common/cpu/intel/haswell"
+    "${inputs.nixos-hardware.result}/common/gpu/amd"
+    "${inputs.nixos-hardware.result}/common/pc"
+    "${inputs.nixos-hardware.result}/common/pc/ssd"
+    inputs.xkomhotshot.result.nixosModules.default
     ../../modules/nixos/desktop/networking.nix
     ./monero.nix
+    nixosModules.common
+    nixosModules.mixin-virtualisation
+    nixosModules.mixin-www
+    nixosModules.server
+    nixosModules.user-nat
     ./storage.nix
   ];
 
   # base
-  networking.hostName = "skogsduva";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # bootloader/kernel/modules

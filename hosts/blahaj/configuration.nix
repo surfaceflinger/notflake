@@ -1,5 +1,6 @@
 {
   config,
+  nixosModules,
   inputs,
   pkgs,
   ...
@@ -7,22 +8,22 @@
 {
   imports = [
     ./audio.nix
-    inputs.nixos-hardware.nixosModules.common-gpu-amd
-    inputs.nixos-hardware.nixosModules.common-pc
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-    inputs.self.nixosModules.desktop
-    inputs.self.nixosModules.mixin-gaming
-    inputs.self.nixosModules.mixin-ryzen
-    inputs.self.nixosModules.mixin-tpm20
-    inputs.self.nixosModules.mixin-virtualisation
-    inputs.self.nixosModules.mixin-www
-    inputs.self.nixosModules.user-nat
+    "${inputs.nixos-hardware.result}/common/gpu/amd"
+    "${inputs.nixos-hardware.result}/common/pc"
+    "${inputs.nixos-hardware.result}/common/pc/ssd"
     ./media.nix
+    nixosModules.common
+    nixosModules.desktop
+    nixosModules.mixin-gaming
+    nixosModules.mixin-ryzen
+    nixosModules.mixin-tpm20
+    nixosModules.mixin-virtualisation
+    nixosModules.mixin-www
+    nixosModules.user-nat
     ./storage.nix
   ];
 
   # base
-  networking.hostName = "blahaj";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # bootloader/kernel/modules
@@ -98,7 +99,7 @@
     { ... }:
     {
       imports = [
-        inputs.tgexpiry.homeModules.tgexpiry
+        inputs.tgexpiry.result.homeModules.tgexpiry
       ];
 
       services.tgexpiry.enable = true;

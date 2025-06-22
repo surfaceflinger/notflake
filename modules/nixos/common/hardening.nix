@@ -1,12 +1,11 @@
 {
-  config,
   inputs,
   lib,
   ...
 }:
 {
   imports = [
-    "${inputs.nix-mineral}/nix-mineral.nix"
+    "${inputs.nix-mineral.result}/nix-mineral.nix"
   ];
 
   nix-mineral = {
@@ -31,7 +30,7 @@
 
   boot.kernel.sysctl = {
     "dev.tty.legacy_tiocsti" = 0;
-    "kernel.unprivileged_userns_clone" = if config.isDesktop then 1 else 0;
+    "kernel.unprivileged_userns_clone" = lib.mkDefault 0;
     "kernel.warn_limit" = 100;
   };
 

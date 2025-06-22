@@ -8,8 +8,8 @@
 
   services = {
     qemuGuest.enable = true;
-    spice-autorandr.enable = config.isDesktop;
-    spice-vdagentd.enable = config.isDesktop;
-    spice-webdavd.enable = config.isDesktop;
+    spice-autorandr.enable = config.xdg.portal.enable;
+    spice-vdagentd.enable = config.xdg.portal.enable;
+    spice-webdavd.enable = config.xdg.portal.enable;
   };
 }

@@ -1,8 +1,7 @@
 {
   config,
-  inputs,
+  homeModules,
   lib,
-  perSystem,
   pkgs,
   ...
 }:
@@ -25,10 +24,10 @@
     packages =
       with pkgs;
       [
-        perSystem.agenix.default
-        perSystem.self.swift-backup
+        agenix-cli
+        swift-backup
       ]
-      ++ lib.optionals config.isDesktop [
+      ++ lib.optionals config.xdg.portal.enable [
         # random desktop software
         brave
         burpsuite
@@ -64,11 +63,11 @@
     {
       imports =
         [
-          inputs.self.homeModules.common
+          homeModules.common
         ]
-        ++ lib.optionals config.isDesktop [
-          inputs.self.homeModules.desktop
+        ++ lib.optionals config.xdg.portal.enable [
           ./halloy.nix
+          homeModules.desktop
         ];
 
       programs.git = {
@@ -80,6 +79,6 @@
     };
 
   # crypto hw wallets!
-  hardware.ledger.enable = config.isDesktop;
-  services.trezord.enable = config.isDesktop;
+  hardware.ledger.enable = config.xdg.portal.enable;
+  services.trezord.enable = config.xdg.portal.enable;
 }

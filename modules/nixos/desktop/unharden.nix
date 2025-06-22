@@ -15,4 +15,6 @@
       disable-bluetooth-kmodules = lib.mkForce false;
     };
   };
+
+  boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 }

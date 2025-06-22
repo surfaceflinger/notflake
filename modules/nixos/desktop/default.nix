@@ -1,8 +1,11 @@
-{ inputs, ... }:
+{
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = [
-    inputs.self.nixosModules.common
-    inputs.srvos.nixosModules.desktop
+    "${inputs.srvos.result}/nixos/desktop"
     ./bluetooth.nix
     ./gnome.nix
     ./logitech.nix
@@ -13,7 +16,14 @@
     ./unharden.nix
   ];
 
-  isDesktop = true;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+
+  # sched-ext
+  services.scx = {
+    enable = !pkgs.stdenv.isAarch64;
+    scheduler = "scx_bpfland";
+  };
+
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
 }

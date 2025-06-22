@@ -1,5 +1,4 @@
 {
-  perSystem,
   pkgs,
   ...
 }:
@@ -11,7 +10,7 @@
     gtk3.extraCss = builtins.readFile ./gtk.css;
     cursorTheme = {
       name = "miku-cursor";
-      package = perSystem.self.miku-cursor;
+      package = pkgs.miku-cursor;
     };
     iconTheme = {
       name = "MoreWaita";

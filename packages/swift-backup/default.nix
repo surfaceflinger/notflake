@@ -1,11 +1,16 @@
-{ pkgs, ... }:
-pkgs.writeShellApplication {
+{
+  writeShellApplication,
+  mbuffer,
+  rage,
+  swiftclient,
+}:
+writeShellApplication {
   name = "swift-backup";
 
   runtimeInputs = [
-    pkgs.mbuffer
-    pkgs.rage
-    pkgs.swiftclient
+    mbuffer
+    rage
+    swiftclient
   ];
 
   text = ''

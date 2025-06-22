@@ -1,11 +1,17 @@
-{ pkgs, ... }:
-pkgs.writeShellApplication {
+{
+  bc,
+  curl,
+  dconf,
+  jq,
+  writeShellApplication,
+}:
+writeShellApplication {
   name = "gnome-weather-set";
   runtimeInputs = [
-    pkgs.curl
-    pkgs.dconf
-    pkgs.jq
-    pkgs.bc
+    curl
+    dconf
+    jq
+    bc
   ];
   text = builtins.readFile ./weather.sh;
 }

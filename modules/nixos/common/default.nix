@@ -1,7 +1,6 @@
 {
-  config,
   inputs,
-  perSystem,
+  lib,
   pkgs,
   ...
 }:
@@ -10,11 +9,10 @@
     ./agenix.nix
     ./boot.nix
     ./chrony.nix
-    ./conditions.nix
     ./doas.nix
     ./hardening.nix
     ./impermanence.nix
-    inputs.home-manager.nixosModules.default
+    inputs.home-manager.result.nixosModules.default
     ./memory.nix
     ./nano.nix
     ./networking.nix
@@ -25,15 +23,7 @@
     ./zsh.nix
   ];
 
-  # use latest kernel
-  boot.kernelPackages =
-    if config.isDesktop then pkgs.linuxPackages_xanmod else pkgs.linuxPackages_hardened;
-
-  # sched-ext
-  services.scx = {
-    enable = !pkgs.stdenv.isAarch64;
-    scheduler = if config.isDesktop then "scx_bpfland" else "scx_rusty";
-  };
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
 
   # override srvos changes
   programs.vim.defaultEditor = false;
@@ -57,7 +47,6 @@
     useUserPackages = true; # install user packages directly to the user's profile
     extraSpecialArgs = {
       inherit inputs; # forward the inputs
-      inherit perSystem; # forward blueprint's perSystem
     };
   };
 }

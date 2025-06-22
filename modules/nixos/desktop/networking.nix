@@ -1,14 +1,9 @@
-{
-  config,
-  lib,
-  ...
-}:
-{
+_: {
   # desktop networking
   networking.networkmanager.enable = true;
   hardware.usb-modeswitch.enable = true;
 
-  environment.persistence."/persist".directories = lib.mkIf config.isEphemeral [
+  environment.persistence."/persist".directories = [
     "/etc/NetworkManager/system-connections"
   ];
 

@@ -1,17 +1,13 @@
 {
-  config,
   inputs,
-  lib,
   ...
 }:
 {
-  imports = [ inputs.impermanence.nixosModule ];
+  imports = [ "${inputs.impermanence.result}/nixos.nix" ];
 
-  config = lib.mkIf config.isEphemeral {
-    fileSystems."/persist".neededForBoot = true;
-    environment.persistence."/persist" = {
-      enableWarnings = false;
-      hideMounts = true;
-    };
+  fileSystems."/persist".neededForBoot = true;
+  environment.persistence."/persist" = {
+    enableWarnings = false;
+    hideMounts = true;
   };
 }

@@ -1,18 +1,23 @@
-{ inputs, ... }:
+{
+  inputs,
+  nixosModules,
+  ...
+}:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t440p
-    inputs.self.nixosModules.laptop
-    inputs.self.nixosModules.mixin-bdprochot
-    inputs.self.nixosModules.mixin-gaming
-    inputs.self.nixosModules.user-nat
-    inputs.self.nixosModules.user-natwork
+    "${inputs.nixos-hardware.result}/common/pc/ssd"
+    "${inputs.nixos-hardware.result}/lenovo/thinkpad/t440p"
+    nixosModules.common
+    nixosModules.desktop
+    nixosModules.laptop
+    nixosModules.mixin-bdprochot
+    nixosModules.mixin-gaming
+    nixosModules.user-nat
+    nixosModules.user-natwork
     ./storage.nix
   ];
 
   # base
-  networking.hostName = "djungelskog";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # bootloader/kernel/modules
@@ -23,13 +28,13 @@
       biosSupport = true;
     };
     initrd.availableKernelModules = [
-      "xhci_pci"
-      "ehci_pci"
       "ahci"
-      "usb_storage"
+      "ehci_pci"
+      "rtsx_pci_sdmmc"
       "sd_mod"
       "sr_mod"
-      "rtsx_pci_sdmmc"
+      "usb_storage"
+      "xhci_pci"
     ];
     kernelModules = [ "kvm-intel" ];
   };

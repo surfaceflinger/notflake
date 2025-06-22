@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    "${inputs.nixos-hardware.result}/common/cpu/amd/pstate.nix"
+    "${inputs.nixos-hardware.result}/common/cpu/amd/zenpower.nix"
   ];
 
   boot.kernelModules = [ "kvm-amd" ];

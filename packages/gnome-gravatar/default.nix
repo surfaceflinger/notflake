@@ -1,6 +1,6 @@
-{ pkgs, ... }:
-pkgs.writeShellApplication {
+{ curl, writeShellApplication }:
+writeShellApplication {
   name = "gnome-gravatar";
-  runtimeInputs = [ pkgs.curl ];
+  runtimeInputs = [ curl ];
   text = builtins.readFile ./gravatar.sh;
 }

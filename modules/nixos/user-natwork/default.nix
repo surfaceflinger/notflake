@@ -2,8 +2,8 @@
   config,
   inputs,
   lib,
-  perSystem,
   pkgs,
+  homeModules,
   ...
 }:
 {
@@ -28,26 +28,26 @@
         eksctl
         gnumake
         (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+        inputs.cfn-changeset-viewer.result.packages."${config.nixpkgs.hostPlatform.system}".default
+        inputs.tf.result.packages."${config.nixpkgs.hostPlatform.system}"."1.5.7"
         k9s
         kubectl
         kubernetes-helm
         mariadb
         opentofu
-        perSystem.cfn-changeset-viewer.default
-        perSystem.tf."1.5.7"
         postgresql
         siege
         ssm-session-manager-plugin
         teleport
       ]
-      ++ lib.optionals config.isDesktop [
+      ++ lib.optionals config.xdg.portal.enable [
         beekeeper-studio
         bitwarden
         brave
         freerdp
         obs-studio
-        perSystem.self.timedoctor-desktop
         slack
+        timedoctor-desktop
       ];
   };
 
@@ -55,8 +55,8 @@
     { ... }:
     {
       imports = [
-        inputs.self.homeModules.common
-      ] ++ lib.optionals config.isDesktop [ inputs.self.homeModules.desktop ];
+        homeModules.common
+      ] ++ lib.optionals config.xdg.portal.enable [ homeModules.desktop ];
 
       dconf.settings."org/gnome/shell/extensions/appindicator".legacy-tray-enabled = true;
 
@@ -65,6 +65,9 @@
 
   programs.zsh.shellAliases = {
     awsume = ". ${lib.getExe pkgs.awsume}";
-    changeset = "${lib.getExe perSystem.cfn-changeset-viewer.default} --change-set-name";
+    changeset = "${
+      lib.getExe
+        inputs.cfn-changeset-viewer.result.packages."${config.nixpkgs.hostPlatform.system}".default
+    } --change-set-name";
   };
 }

@@ -3,8 +3,6 @@ _: {
   boot.zfs.devNodes = "/dev/disk/by-partuuid";
   networking.hostId = "e5ef2880";
 
-  isEphemeral = true;
-
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";

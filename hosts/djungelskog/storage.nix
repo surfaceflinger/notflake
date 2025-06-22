@@ -2,8 +2,6 @@ _: {
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "40762f1f";
 
-  isEphemeral = true;
-
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";

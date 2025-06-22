@@ -2,8 +2,6 @@ _: {
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "b84cacfe";
 
-  isEphemeral = true;
-
   boot.zfs.extraPools = [
     "smolhaj"
     "ikea"

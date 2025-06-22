@@ -1,7 +1,9 @@
-{ inputs, ... }:
+{
+  inputs,
+  ...
+}:
 {
   imports = [
-    inputs.self.nixosModules.common
-    inputs.srvos.nixosModules.server
+    "${inputs.srvos.result}/nixos/server"
   ];
 }
