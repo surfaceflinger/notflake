@@ -1,9 +1,9 @@
 {
   config,
+  homeModules,
   inputs,
   lib,
   pkgs,
-  homeModules,
   ...
 }:
 {
@@ -50,6 +50,9 @@
         timedoctor-desktop
       ];
   };
+
+  # input doesn't work on gnome x11 w/o this anymore
+  services.xserver.enable = true;
 
   home-manager.users.natwork =
     { ... }:
