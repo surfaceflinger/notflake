@@ -11,10 +11,6 @@
   programs.schizofox = {
     enable = true;
 
-    package =
-      inputs.nixpkgs-2505.result.legacyPackages."${osConfig.nixpkgs.hostPlatform.system
-      }".firefox-esr-128-unwrapped;
-
     security.sandbox.enable = false;
 
     settings = {
