@@ -1,6 +1,10 @@
-_: {
+{ pkgs, ... }:
+{
   # desktop networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = [ pkgs.networkmanager-openvpn ];
+  };
   hardware.usb-modeswitch.enable = true;
 
   environment.persistence."/persist".directories = [
