@@ -6,9 +6,7 @@ in
 nilla.create (
   { config }:
   {
-    includes = [
-      "${pins.nilla-utils}/modules"
-    ];
+    includes = [ "${pins.nilla-utils}/modules" ];
 
     config = {
       generators.inputs.pins = pins;
@@ -16,9 +14,7 @@ nilla.create (
         nixpkgs.settings = {
           configuration = {
             allowUnfree = true;
-            permittedInsecurePackages = [
-              "litestream-0.3.13"
-            ];
+            permittedInsecurePackages = [ "litestream-0.3.13" ];
           };
           overlays = [ config.overlays.default ];
         };

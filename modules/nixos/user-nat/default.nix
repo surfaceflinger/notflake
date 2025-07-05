@@ -62,9 +62,7 @@
     { ... }:
     {
       imports =
-        [
-          homeModules.common
-        ]
+        [ homeModules.common ]
         ++ lib.optionals config.xdg.portal.enable [
           ./halloy.nix
           homeModules.desktop

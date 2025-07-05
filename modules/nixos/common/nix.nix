@@ -5,9 +5,7 @@
   ...
 }:
 {
-  imports = [
-    "${inputs.srvos.result}/shared/mixins/trusted-nix-caches.nix"
-  ];
+  imports = [ "${inputs.srvos.result}/shared/mixins/trusted-nix-caches.nix" ];
 
   nix = {
     channel.enable = false;

@@ -98,9 +98,7 @@
   home-manager.users.nat =
     { ... }:
     {
-      imports = [
-        inputs.tgexpiry.result.homeModules.tgexpiry
-      ];
+      imports = [ inputs.tgexpiry.result.homeModules.tgexpiry ];
 
       services.tgexpiry.enable = true;
     };

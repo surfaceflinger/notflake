@@ -57,9 +57,7 @@
   home-manager.users.natwork =
     { ... }:
     {
-      imports = [
-        homeModules.common
-      ] ++ lib.optionals config.xdg.portal.enable [ homeModules.desktop ];
+      imports = [ homeModules.common ] ++ lib.optionals config.xdg.portal.enable [ homeModules.desktop ];
 
       dconf.settings."org/gnome/shell/extensions/appindicator".legacy-tray-enabled = true;
 

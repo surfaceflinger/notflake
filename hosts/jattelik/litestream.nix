@@ -13,35 +13,19 @@ in
       dbs = [
         {
           path = config.services.gotosocial.settings.db-address;
-          replicas = [
-            {
-              url = "s3://${bucket}/gotosocial";
-            }
-          ];
+          replicas = [ { url = "s3://${bucket}/gotosocial"; } ];
         }
         {
           path = "/var/lib/private/wastebin/sqlite3.db";
-          replicas = [
-            {
-              url = "s3://${bucket}/wastebin";
-            }
-          ];
+          replicas = [ { url = "s3://${bucket}/wastebin"; } ];
         }
         {
           path = "/var/lib/vaultwarden/db.sqlite3";
-          replicas = [
-            {
-              url = "s3://${bucket}/vaultwarden";
-            }
-          ];
+          replicas = [ { url = "s3://${bucket}/vaultwarden"; } ];
         }
         {
           path = "/var/lib/private/soju/soju.db";
-          replicas = [
-            {
-              url = "s3://${bucket}/soju";
-            }
-          ];
+          replicas = [ { url = "s3://${bucket}/soju"; } ];
         }
       ];
     };

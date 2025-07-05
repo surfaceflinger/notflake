@@ -1,8 +1,4 @@
-{
-  inputs,
-  osConfig,
-  ...
-}:
+{ inputs, ... }:
 {
   imports = [ inputs.schizofox.result.homeManagerModule ];
 

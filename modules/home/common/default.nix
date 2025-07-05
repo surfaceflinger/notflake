@@ -18,9 +18,7 @@
     enableAll = true;
   };
 
-  home.packages = with pkgs; [
-    safe-rm-nat
-  ];
+  home.packages = with pkgs; [ safe-rm-nat ];
 
   nix.gc = {
     automatic = true;

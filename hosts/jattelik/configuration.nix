@@ -1,8 +1,4 @@
-{
-  nixosModules,
-  pkgs,
-  ...
-}:
+{ nixosModules, pkgs, ... }:
 {
   imports = [
     ./blahaj.pl/gotosocial.nix

@@ -1,9 +1,4 @@
+{ inputs, ... }:
 {
-  inputs,
-  ...
-}:
-{
-  imports = [
-    "${inputs.srvos.result}/nixos/server"
-  ];
+  imports = [ "${inputs.srvos.result}/nixos/server" ];
 }

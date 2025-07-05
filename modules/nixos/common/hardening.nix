@@ -1,12 +1,6 @@
+{ inputs, lib, ... }:
 {
-  inputs,
-  lib,
-  ...
-}:
-{
-  imports = [
-    "${inputs.nix-mineral.result}/nix-mineral.nix"
-  ];
+  imports = [ "${inputs.nix-mineral.result}/nix-mineral.nix" ];
 
   nix-mineral = {
     enable = true;

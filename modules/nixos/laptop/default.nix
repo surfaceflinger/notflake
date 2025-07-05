@@ -1,8 +1,6 @@
 { inputs, ... }:
 {
-  imports = [
-    "${inputs.nixos-hardware.result}/common/pc/laptop"
-  ];
+  imports = [ "${inputs.nixos-hardware.result}/common/pc/laptop" ];
 
   nix-mineral.overrides.performance.no-mitigations = true;
 

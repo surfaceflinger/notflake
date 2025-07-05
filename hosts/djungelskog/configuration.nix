@@ -1,8 +1,4 @@
-{
-  inputs,
-  nixosModules,
-  ...
-}:
+{ inputs, nixosModules, ... }:
 {
   imports = [
     "${inputs.nixos-hardware.result}/common/pc/ssd"

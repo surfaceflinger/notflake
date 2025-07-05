@@ -40,9 +40,7 @@
       "usb_storage"
       "xhci_pci"
     ];
-    kernelModules = [
-      "kvm-intel"
-    ];
+    kernelModules = [ "kvm-intel" ];
   };
 
   # this is an old intel.

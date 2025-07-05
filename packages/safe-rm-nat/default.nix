@@ -1,12 +1,7 @@
-{
-  safe-rm,
-  symlinkJoin,
-}:
+{ safe-rm, symlinkJoin }:
 let
   safe-rm' = safe-rm.overrideAttrs (old: {
-    patches = old.patches ++ [
-      ./paths.patch
-    ];
+    patches = old.patches ++ [ ./paths.patch ];
   });
 in
 symlinkJoin {
