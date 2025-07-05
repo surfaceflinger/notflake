@@ -11,7 +11,10 @@
   programs.schizofox = {
     enable = true;
 
-    security.sandbox.enable = false;
+    security = {
+      sandbox.enable = false;
+      sanitizeOnShutdown.sanitize.history = true;
+    };
 
     settings = {
       # schizofox overrides
