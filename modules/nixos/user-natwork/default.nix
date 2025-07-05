@@ -24,24 +24,24 @@
         awscli2
         awsume
         buildah
+        cfn-changeset-viewer
         cfn-nag
         eksctl
         gnumake
         (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-        inputs.cfn-changeset-viewer.result.packages."${config.nixpkgs.hostPlatform.system}".default
+        inputs.nixpkgs-tofu.result.legacyPackages."${config.nixpkgs.hostPlatform.system}".opentofu
+        inputs.nixpkgs-tofu.result.legacyPackages."${config.nixpkgs.hostPlatform.system}".terragrunt
         inputs.tf.result.packages."${config.nixpkgs.hostPlatform.system}"."1.5.7"
         k9s
         kubectl
         kubernetes-helm
         mariadb
-        opentofu
         postgresql
         siege
         ssm-session-manager-plugin
         teleport
       ]
       ++ lib.optionals config.xdg.portal.enable [
-        beekeeper-studio
         bitwarden
         brave
         freerdp
