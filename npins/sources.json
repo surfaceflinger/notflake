@@ -308,9 +308,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "45783741bf8ce109daa7661583d7032761d8bd56",
-      "url": "https://github.com/surfaceflinger/tgexpiry/archive/45783741bf8ce109daa7661583d7032761d8bd56.tar.gz",
-      "hash": "0ic2r6dpi6dxlnycdywdj5vf3dbzk8wwr8ra8dmzbvlgxcqk9v70"
+      "revision": "219d467979ff4f0f4f343eb229d0b52981cbdf06",
+      "url": "https://github.com/surfaceflinger/tgexpiry/archive/219d467979ff4f0f4f343eb229d0b52981cbdf06.tar.gz",
+      "hash": "133zizsz4phyrm1pc53y2r3xcffyg2v3a82arjzyjxhn1ssqz5i3"
     },
     "xkomhotshot": {
       "type": "Git",
@@ -321,9 +321,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "c462fd36404a967a06612b53f78d6dbe91a2d04f",
-      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/c462fd36404a967a06612b53f78d6dbe91a2d04f.tar.gz",
-      "hash": "0ils034s78dfab9qxb45r604cndpiqll13zsz45g1829sixm328a"
+      "revision": "29f2b1f14d3680feb0b533de49bff0b1bcf88bbf",
+      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/29f2b1f14d3680feb0b533de49bff0b1bcf88bbf.tar.gz",
+      "hash": "1h50aggmmjvligqqdqfbz7nbw8al3fq0213546hl9rknl5zq3ahx"
     }
   },
   "version": 5
