@@ -14,8 +14,8 @@
     deadnix
     file
     flow-control
-    inputs.nilla-cli.result.packages.default.result."${config.nixpkgs.hostPlatform.system}"
-    inputs.nilla-utils.result.packages.default.result."${config.nixpkgs.hostPlatform.system}"
+    inputs.nilla-cli.result.packages.default.result."${pkgs.system}"
+    inputs.nilla-utils.result.packages.default.result."${pkgs.system}"
     ipgrep
     jq
     lurk
