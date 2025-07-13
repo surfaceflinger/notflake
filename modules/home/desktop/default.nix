@@ -1,4 +1,4 @@
-{ osConfig, ... }:
+{ ... }:
 {
   imports = [
     ./amberol.nix
@@ -10,6 +10,4 @@
     ./schizofox.nix
     ./xdg.nix
   ];
-
-  home.stateVersion = osConfig.system.stateVersion;
 }

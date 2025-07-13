@@ -1,9 +1,4 @@
-{
-  inputs,
-  osConfig,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./git.nix
@@ -11,7 +6,7 @@
     inputs.nix-index-database.result.hmModules.nix-index
   ];
 
-  home.stateVersion = osConfig.system.stateVersion;
+  home.stateVersion = "24.11";
 
   dont-track-me = {
     enable = true;
