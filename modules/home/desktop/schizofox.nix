@@ -134,9 +134,6 @@
     theme = {
       defaultUserChrome.enable = false;
       defaultUserContent.enable = false;
-      extraUserContent = ''
-        @import "${inputs.firefox-gnome-theme.result}/userContent.css";
-      '';
       extraUserChrome = ''
         @import "${inputs.firefox-gnome-theme.result}/userChrome.css";
       '';
