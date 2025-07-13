@@ -29,9 +29,9 @@
         eksctl
         gnumake
         (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-        inputs.nixpkgs-tofu.result.legacyPackages."${config.nixpkgs.hostPlatform.system}".opentofu
-        inputs.nixpkgs-tofu.result.legacyPackages."${config.nixpkgs.hostPlatform.system}".terragrunt
-        inputs.tf.result.packages."${config.nixpkgs.hostPlatform.system}"."1.5.7"
+        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.system}".opentofu
+        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.system}".terragrunt
+        inputs.tf.result.packages."${pkgs.system}"."1.5.7"
         k9s
         kubectl
         kubernetes-helm
@@ -66,9 +66,6 @@
 
   programs.zsh.shellAliases = {
     awsume = ". ${lib.getExe pkgs.awsume}";
-    changeset = "${
-      lib.getExe
-        inputs.cfn-changeset-viewer.result.packages."${config.nixpkgs.hostPlatform.system}".default
-    } --change-set-name";
+    changeset = "${lib.getExe pkgs.cfn-changeset-viewer} --change-set-name";
   };
 }
