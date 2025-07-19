@@ -43,6 +43,11 @@
     ];
     # make the routes on this interface a dependency for network-online.target
     linkConfig.RequiredForOnline = "routable";
+    # queue
+    cakeConfig = {
+      Bandwidth = "2500M";
+      PriorityQueueingPreset = "besteffort";
+    };
   };
 
   # tor snowflake proxy
