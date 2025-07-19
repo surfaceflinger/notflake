@@ -3,7 +3,7 @@
   imports = [
     ./git.nix
     inputs.dont-track-me.result.homeManagerModules.default
-    inputs.nix-index-database.result.hmModules.nix-index
+    inputs.nix-index-database.result.homeModules.nix-index
   ];
 
   home.stateVersion = "24.11";
