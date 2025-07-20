@@ -14,10 +14,12 @@
     ../../modules/nixos/desktop/networking.nix
     ./monero.nix
     nixosModules.common
+    nixosModules.mixin-telemetry
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
     nixosModules.server
     nixosModules.user-nat
+    ./observability
     ./storage.nix
   ];
 
