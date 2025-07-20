@@ -7,15 +7,16 @@
 }:
 {
   imports = [
-    ./audio.nix
     "${inputs.nixos-hardware.result}/common/gpu/amd"
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
+    ./audio.nix
     ./media.nix
     nixosModules.common
     nixosModules.desktop
     nixosModules.mixin-gaming
     nixosModules.mixin-ryzen
+    nixosModules.mixin-telemetry
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
