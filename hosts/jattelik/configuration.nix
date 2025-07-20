@@ -6,6 +6,7 @@
     ./blahaj.pl/www.nix
     ./litestream.nix
     nixosModules.common
+    nixosModules.mixin-telemetry
     nixosModules.mixin-vm
     nixosModules.mixin-www
     nixosModules.server
