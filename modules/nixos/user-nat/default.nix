@@ -61,12 +61,13 @@
   home-manager.users.nat =
     { ... }:
     {
-      imports =
-        [ homeModules.common ]
-        ++ lib.optionals config.xdg.portal.enable [
-          ./halloy.nix
-          homeModules.desktop
-        ];
+      imports = [
+        homeModules.common
+      ]
+      ++ lib.optionals config.xdg.portal.enable [
+        ./halloy.nix
+        homeModules.desktop
+      ];
 
       programs.git = {
         userEmail = "nat@nekopon.pl";
