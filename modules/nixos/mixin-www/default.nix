@@ -16,6 +16,11 @@ _: {
     enableReload = false;
     globalConfig = ''
       admin off
+      metrics { per_host }
     '';
+    virtualHosts.":2019" = {
+      logFormat = "output discard";
+      extraConfig = "route /metrics { metrics }";
+    };
   };
 }
