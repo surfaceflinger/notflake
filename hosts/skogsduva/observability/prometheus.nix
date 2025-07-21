@@ -84,6 +84,32 @@
           }
         ];
       }
+      # caddy
+      {
+        job_name = "caddy";
+        static_configs = [
+          {
+            labels.service = "caddy";
+            targets = [
+              "blahaj:2019"
+              "jattelik:2019"
+              "skogsduva:2019"
+            ];
+          }
+        ];
+      }
+      # gotosocial
+      {
+        job_name = "gotosocial";
+        static_configs = [
+          {
+            labels.service = "gotosocial";
+            targets = [
+              "jattelik:2020"
+            ];
+          }
+        ];
+      }
     ];
   };
 
@@ -92,7 +118,7 @@
     extraConfig = ''
       bind [fd7a:115c:a1e0::ed01:8243] [::1]
 
-      reverse_proxy [::1]:9090 { header_up X-Forwarded-For {remote_host} }
+      reverse_proxy ${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}
     '';
   };
 }
