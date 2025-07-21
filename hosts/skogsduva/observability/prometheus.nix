@@ -104,9 +104,7 @@
         static_configs = [
           {
             labels.service = "gotosocial";
-            targets = [
-              "jattelik:2020"
-            ];
+            targets = [ "jattelik:2020" ];
           }
         ];
       }
