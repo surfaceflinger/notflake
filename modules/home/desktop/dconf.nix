@@ -38,6 +38,7 @@ with lib.hm.gvariant;
         "timedoctor-desktop.desktop"
         "org.gnome.Geary.desktop"
         "io.bassi.Amberol.desktop"
+        "io.github.htkhiem.Euphonica.desktop"
         "code.desktop"
         "io.gitlab.news_flash.NewsFlash.desktop"
         "org.prismlauncher.PrismLauncher.desktop"
