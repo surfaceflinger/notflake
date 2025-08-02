@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "29e1ee66af2b57ef11b49542cfb3721f46ac37e3",
-      "url": "https://github.com/Artoriuz/ArtCNN/archive/29e1ee66af2b57ef11b49542cfb3721f46ac37e3.tar.gz",
-      "hash": "0m90h3xdmxpszlmgbbsjrggqdj5lccikq07sblw52jjmh4rbn7m3"
+      "revision": "2d1dc6474b21e8c085a91012444b38462286300c",
+      "url": "https://github.com/Artoriuz/ArtCNN/archive/2d1dc6474b21e8c085a91012444b38462286300c.tar.gz",
+      "hash": "1lj60x6jwap9s63yi883638v66d1rnh1fwqjakk480lzcv8bf1lm"
     },
     "blahajpl-homepage": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "2615749a60ad731a2a2bbbe45d8b468bf1d8cdf8",
-      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/2615749a60ad731a2a2bbbe45d8b468bf1d8cdf8.tar.gz",
-      "hash": "0hfhl2fd7wl5yrma8kf91xy40hd6vhygshsakg7drzbjs58hgbnj"
+      "revision": "722a3117a01600c6dcc78271aff4aeff62b7af09",
+      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/722a3117a01600c6dcc78271aff4aeff62b7af09.tar.gz",
+      "hash": "0mmjqnbjy222x4di0q0llqfz0hrv4c3nhgy7ipw7blsh2zhfr618"
     },
     "flake-compat": {
       "type": "Git",
@@ -86,9 +86,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "55a01e711320d49353af309c02beeb92d76c386e",
+      "revision": "c713e9f21f4c38b676aa2eec412784405f36d8e0",
       "url": null,
-      "hash": "1my9l3rwbxlza1z73r3vv550mk8vsc47rxbxnnypmsb0acrbw47k"
+      "hash": "0xn0ncn357cdmpynmc91w1zwylwlqi51hpsms831v7q4vc0qgijq"
     },
     "home-manager": {
       "type": "Git",
@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "710771af3d1c8c3f86a9e5d562616973ed5f3f21",
-      "url": "https://github.com/nix-community/home-manager/archive/710771af3d1c8c3f86a9e5d562616973ed5f3f21.tar.gz",
-      "hash": "0cgcq9czic7ryx9gkvqcydh65bxbaha5c9j6898zx23d0yc3qbqa"
+      "revision": "e102920c1becb114645c6f92fe14edc0b05cc229",
+      "url": "https://github.com/nix-community/home-manager/archive/e102920c1becb114645c6f92fe14edc0b05cc229.tar.gz",
+      "hash": "1nm0qw1sznzkyraqwgqrilyi0kkf6nl1a88hnrsw0yw46nnw4lci"
     },
     "impermanence": {
       "type": "Git",
@@ -125,9 +125,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ae926a793078cafdca171db36976a5868ad953df",
-      "url": "https://github.com/rblaine95/monero-banlist/archive/ae926a793078cafdca171db36976a5868ad953df.tar.gz",
-      "hash": "03ymgjsbmmn3gpgqmlpma2vqmfxfhln8smrgvy8f7s0aaykhqvsh"
+      "revision": "c02098668a3024011f9673beea2cdda44c80c5d4",
+      "url": "https://github.com/rblaine95/monero-banlist/archive/c02098668a3024011f9673beea2cdda44c80c5d4.tar.gz",
+      "hash": "08yp748bjlz1cyd7nkcssd7h9l78paylijh1prhjl43fmq78bblj"
     },
     "nano-syntax-highlighting": {
       "type": "Git",
@@ -229,9 +229,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "169f242a23200c42617926e5212d2b58d962e3e1",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/169f242a23200c42617926e5212d2b58d962e3e1.tar.gz",
-      "hash": "13i066xkhbid6kawwxzngq270fvnfl558aa2vybgvhy88jknbcq5"
+      "revision": "39d6ed840adaa9a79583dca67c64e6c352aab513",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/39d6ed840adaa9a79583dca67c64e6c352aab513.tar.gz",
+      "hash": "03pnrxfv8vgjfk0ji6fdparvw16z8bmdxkyppj2faay1xflkb904"
     },
     "nixpkgs-tofu": {
       "type": "Git",
@@ -251,14 +251,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "surfaceflinger",
+        "owner": "schizofox",
         "repo": "schizofox"
       },
-      "branch": "ff-esr-140",
+      "branch": "main",
       "submodules": false,
-      "revision": "06b19344342c285b0dbf746585f595cb45c21210",
-      "url": "https://github.com/surfaceflinger/schizofox/archive/06b19344342c285b0dbf746585f595cb45c21210.tar.gz",
-      "hash": "1hk1bx5w8ij9bgibhirdj6zhlm4fg1z1dx9nn4d6yhnsy684fj6f"
+      "revision": "05e7a9f99d59e519527f65b42cdcf2c691a17675",
+      "url": "https://github.com/schizofox/schizofox/archive/05e7a9f99d59e519527f65b42cdcf2c691a17675.tar.gz",
+      "hash": "0x275628wxdghqjzbabmph2l6dwc9a44qkycps4m1s0jzs3gg7iy"
     },
     "srvos": {
       "type": "Git",
@@ -269,9 +269,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "6a29375c7b8e9bb477233f66cd6609583741dadc",
-      "url": "https://github.com/nix-community/srvos/archive/6a29375c7b8e9bb477233f66cd6609583741dadc.tar.gz",
-      "hash": "1myzigiadhxdgwgxh21fcljjq13p7hl5i3ds4m2px3a5k0l6n7sr"
+      "revision": "4f59ec08568d142514df76369e464928797802db",
+      "url": "https://github.com/nix-community/srvos/archive/4f59ec08568d142514df76369e464928797802db.tar.gz",
+      "hash": "0md575mxzpd13qivv2lizwcaplywlpr86ql69s7mnmdnx588dhp9"
     },
     "tf": {
       "type": "Git",
@@ -282,9 +282,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "dc33b2a5daf8e19be41e40e7ed138ecb9467d69a",
-      "url": "https://github.com/vdesjardins/terraform-overlay/archive/dc33b2a5daf8e19be41e40e7ed138ecb9467d69a.tar.gz",
-      "hash": "0djnxqa18bbbcv3f4ils963ii1114w631gl7zqkf3f0r20i3g07s"
+      "revision": "66823ea775269086ffb347ed0b44376661351e0f",
+      "url": "https://github.com/vdesjardins/terraform-overlay/archive/66823ea775269086ffb347ed0b44376661351e0f.tar.gz",
+      "hash": "1q72d5h5gmlh6zxpmd87ipnmgwmm9ghfxkdxyxl4ih5j5ssgafh5"
     },
     "tgexpiry": {
       "type": "Git",
