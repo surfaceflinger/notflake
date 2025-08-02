@@ -40,6 +40,13 @@
             labels.role = "workstation";
             targets = [ "blahaj:9100" ];
           }
+          {
+            labels.role = "vacuum";
+            targets = [
+              "valetudo-floor:9100"
+              "valetudo-ground:9100"
+            ];
+          }
         ];
       }
       # json exporter
