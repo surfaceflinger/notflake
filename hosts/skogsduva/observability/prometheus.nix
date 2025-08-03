@@ -118,10 +118,11 @@
     ];
   };
 
-  services.caddy.virtualHosts."http://prometheus.natalia.ovh" = {
+  services.caddy.virtualHosts."https://prometheus.natalia.ovh" = {
     logFormat = "output discard";
     extraConfig = ''
       bind [fd7a:115c:a1e0::ed01:8243] [::1]
+      tls internal
 
       reverse_proxy ${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}
     '';
