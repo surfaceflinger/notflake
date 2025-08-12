@@ -15,7 +15,6 @@
       "audio"
       "libvirtd"
       "networkmanager"
-      "podman"
     ];
     packages =
       with pkgs;
