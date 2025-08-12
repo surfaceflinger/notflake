@@ -24,7 +24,7 @@
     packages =
       with pkgs;
       [
-        agenix-cli
+        ragenix
         swift-backup
       ]
       ++ lib.optionals config.xdg.portal.enable [
