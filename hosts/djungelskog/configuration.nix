@@ -37,12 +37,6 @@
 
   # power management
   boot.kernelParams = [ "intel_pstate=passive" ];
-  services.tlp.settings = {
-    CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-    CPU_SCALING_GOVERNOR_ON_BAT = "conservative";
-    START_CHARGE_THRESH_BAT0 = 85;
-    STOP_CHARGE_THRESH_BAT0 = 90;
-  };
 
   # thinkfan
   services.thinkfan = {

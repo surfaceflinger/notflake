@@ -65,6 +65,10 @@
     ];
   };
 
-  services.power-profiles-daemon.enable = false;
   programs.gamemode.enable = true;
+  services = {
+    power-profiles-daemon.enable = false;
+    tlp.enable = false;
+    tuned.enable = true;
+  };
 }
