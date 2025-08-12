@@ -31,6 +31,7 @@
           "tf" = inputs.tf;
         };
     settings = {
+      allowed-users = [ "@users" ];
       auto-allocate-uids = true;
       use-xdg-base-directories = true;
       experimental-features = lib.mkForce [
