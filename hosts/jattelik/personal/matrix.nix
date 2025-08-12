@@ -30,11 +30,8 @@ in
         }
       ];
       server_discovery = {
+        client.base_url = "https://${matrix_hostname}";
         server.authority = "${matrix_hostname}:443";
-        client = {
-          advertise_buggy_sliding_sync = true;
-          base_url = "https://${matrix_hostname}";
-        };
       };
 
       # misc
@@ -45,7 +42,7 @@ in
   services.caddy.virtualHosts."${server_name}".extraConfig = ''
     handle_path /.well-known/matrix/* {
       respond /server `{"m.server": "${matrix_hostname}:443"}`
-      respond /client `{"m.homeserver": {"base_url": "https://${matrix_hostname}"}, "org.matrix.msc3575.proxy": {"url": "https://${matrix_hostname}"}}`
+      respond /client `{"m.homeserver": {"base_url": "https://${matrix_hostname}"}}`
     }
   '';
 
