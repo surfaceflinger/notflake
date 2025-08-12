@@ -12,10 +12,7 @@ nilla.create (
       generators.inputs.pins = pins;
       inputs = {
         nixpkgs.settings = {
-          configuration = {
-            allowUnfree = true;
-            permittedInsecurePackages = [ "litestream-0.3.13" ];
-          };
+          configuration.allowUnfree = true;
           overlays = [ config.overlays.default ];
         };
 
