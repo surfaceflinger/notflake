@@ -21,6 +21,10 @@ symlinkJoin {
       "netstat"
       "pstree"
       "telnet"
+      "tftp"
+      "traceroute"
+      "traceroute6"
+      "wget"
       "whois"
     )
 
