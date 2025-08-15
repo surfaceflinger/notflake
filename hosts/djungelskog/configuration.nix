@@ -38,50 +38,8 @@
   # power management
   boot.kernelParams = [ "intel_pstate=passive" ];
 
-  # thinkfan
-  services.thinkfan = {
-    enable = true;
-    levels = [
-      [
-        0
-        0
-        65
-      ]
-      [
-        1
-        65
-        75
-      ]
-      [
-        3
-        75
-        80
-      ]
-      [
-        7
-        80
-        90
-      ]
-      [
-        "level disengaged"
-        90
-        32767
-      ]
-    ];
-    sensors = [
-      {
-        query = "/sys/devices/platform/coretemp.0/hwmon/";
-        indices = [
-          1
-          2
-          3
-          4
-          5
-        ];
-        type = "hwmon";
-      }
-    ];
-  };
+  # make fan silent
+  services.zcfan.enable = true;
 
   # disable these fucking pgup/pgdown around arrow up - who came up with this?
   services.keyd = {
