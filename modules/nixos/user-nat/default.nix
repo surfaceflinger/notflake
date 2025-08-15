@@ -25,6 +25,7 @@
       with pkgs;
       [
         ragenix
+        rustscan
         swift-backup
       ]
       ++ lib.optionals config.xdg.portal.enable [

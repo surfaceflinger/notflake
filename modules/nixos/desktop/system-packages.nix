@@ -17,7 +17,7 @@
     glxinfo
     libva-utils
     (nvtopPackages.full.override { nvidia = false; })
-    pavucontrol
+    pwvucontrol
   ];
 
   programs.adb.enable = true;

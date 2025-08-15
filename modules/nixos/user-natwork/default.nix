@@ -38,7 +38,6 @@
         postgresql
         siege
         ssm-session-manager-plugin
-        teleport
       ]
       ++ lib.optionals config.xdg.portal.enable [
         bitwarden

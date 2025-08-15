@@ -16,9 +16,9 @@
     flow-control
     inputs.nilla-cli.result.packages.default.result."${pkgs.system}"
     inputs.nilla-utils.result.packages.default.result."${pkgs.system}"
-    ipgrep
     jq
     lurk
+    magic-wormhole-rs
     ncdu
     nixfmt-rfc-style
     npins
@@ -29,24 +29,17 @@
     shellcheck
     statix
     tre
-    wget
     (writeScriptBin "7z" ''exec 7zz "$@"'')
     yq-go
 
     # system utilities
     bottom
+    busybox-nat
     config.boot.kernelPackages.cpupower
-    pciutils
-    psmisc
-    usbutils
 
     # network
     doggo
     goaccess
-    inetutils
-    magic-wormhole-rs
-    rustscan
     speedtest-go
-    wavemon
   ];
 }
