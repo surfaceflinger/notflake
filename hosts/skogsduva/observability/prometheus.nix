@@ -21,6 +21,17 @@
           }
         ];
       }
+      # grafana
+      {
+        job_name = "grafana";
+        static_configs = [
+          {
+            targets = [
+              "[${config.services.grafana.settings.server.http_addr}]:${toString config.services.grafana.settings.server.http_port}"
+            ];
+          }
+        ];
+      }
       # hosts
       {
         job_name = "node";
@@ -40,6 +51,13 @@
             labels.role = "workstation";
             targets = [ "blahaj:9100" ];
           }
+        ];
+      }
+      # hosts - low power
+      {
+        job_name = "node-lowpower";
+        scrape_interval = "60s";
+        static_configs = [
           {
             labels.role = "vacuum";
             targets = [
