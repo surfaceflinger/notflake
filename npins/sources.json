@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "bc014931784c62b566cad39b8510e76dde588d94",
-      "url": "https://github.com/nix-community/home-manager/archive/bc014931784c62b566cad39b8510e76dde588d94.tar.gz",
-      "hash": "0v0khb3p05l37n05l35gm7r0h8gg6vqil6rm9cfxvlvzvxz6mkki"
+      "revision": "d2ffdedfc39c591367b1ddf22b4ce107f029dcc3",
+      "url": "https://github.com/nix-community/home-manager/archive/d2ffdedfc39c591367b1ddf22b4ce107f029dcc3.tar.gz",
+      "hash": "16q4biycw6ahxirbxjmrgljrf1ms69xh8mpybcnl1klnlhgvhwj4"
     },
     "impermanence": {
       "type": "Git",
@@ -308,9 +308,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "c5f4ce1a3fcc11eea6194447d4816e2c8aa3eac3",
-      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/c5f4ce1a3fcc11eea6194447d4816e2c8aa3eac3.tar.gz",
-      "hash": "157jx58897yzmjdzmvi3c5kbkv9r65zirkq9rl6a6jgld3ndwn11"
+      "revision": "ce4c722a3b0828106fef27a6ebb79fd688e658d0",
+      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/ce4c722a3b0828106fef27a6ebb79fd688e658d0.tar.gz",
+      "hash": "02gw5vd6c91sv4c819npk02gzbidjqzhwavrd1k9r7nk17s3hv9z"
     }
   },
   "version": 5
