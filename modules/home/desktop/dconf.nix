@@ -44,6 +44,7 @@ with lib.hm.gvariant;
         "org.prismlauncher.PrismLauncher.desktop"
         "lunarclient.desktop"
         "steam.desktop"
+        "com.saivert.pwvucontrol.desktop"
         "org.pulseaudio.pavucontrol.desktop"
         "com.github.wwmm.easyeffects.desktop"
         "virt-manager.desktop"
@@ -224,6 +225,11 @@ with lib.hm.gvariant;
 
     "org/gnome/gitlab/cheywood/Buffer" = {
       font-size = 10;
+    };
+
+    "com/saivert/pwvucontrol" = {
+      enable-overamplification = true;
+      use-peakmeter-led = true;
     };
   };
 }
