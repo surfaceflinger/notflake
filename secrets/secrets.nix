@@ -24,4 +24,8 @@ in
     host-jattelik
     user-nat-blahaj
   ];
+  "caddy-desec-jattelik.age".publicKeys = [
+    host-jattelik
+    user-nat-blahaj
+  ];
 }
