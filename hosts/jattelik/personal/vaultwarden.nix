@@ -26,8 +26,9 @@
   services.caddy.virtualHosts."vault.nekopon.pl" = {
     logFormat = "output discard";
     extraConfig = ''
+      import common
+
       header {
-        Strict-Transport-Security "max-age=31536000;"
         X-XSS-Protection "0"
         X-Frame-Options "SAMEORIGIN"
         X-Robots-Tag "noindex, nofollow"

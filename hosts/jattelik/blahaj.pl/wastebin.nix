@@ -19,5 +19,9 @@ in
     };
   };
 
-  services.caddy.virtualHosts."${domain}".extraConfig = "reverse_proxy http://[::1]:9595";
+  services.caddy.virtualHosts."${domain}".extraConfig = ''
+    import common
+
+    reverse_proxy http://[::1]:9595
+  '';
 }

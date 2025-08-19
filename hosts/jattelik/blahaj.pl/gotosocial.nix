@@ -25,6 +25,8 @@ in
   services.caddy.virtualHosts."${host}" = {
     logFormat = "output discard";
     extraConfig = ''
+      import common
+
       handle_path /metrics { respond 404; }
 
       encode zstd gzip

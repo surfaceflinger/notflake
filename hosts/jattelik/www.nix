@@ -1,7 +1,32 @@
-_: {
+{ config, pkgs, ... }:
+{
+  age.secrets.caddy-desec-jattelik.file = ../../secrets/caddy-desec-jattelik.age;
+
   services.caddy = {
-    virtualHosts."natalia.ovh".extraConfig = "redir https://nekopon.pl";
+    environmentFile = config.age.secrets.caddy-desec-jattelik.path;
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/desec@v1.0.1" ];
+      hash = "sha256-r4+WK8UhGLAuIvdV6uiH2bMh/SjTfY4CzKcpHU0Gu5s=";
+    };
+    globalConfig = ''
+      dns desec {
+        token {env.DESEC_API_TOKEN}
+      }
+      ech ech.natalia.ovh
+    '';
+    virtualHosts."www.natalia.ovh, www.nekopon.pl, www.blahaj.pl".extraConfig = ''
+      import common
+
+      redir https://{labels.1}.{labels.0}{uri}
+    '';
+    virtualHosts."natalia.ovh".extraConfig = ''
+      import common
+
+      redir https://nekopon.pl
+    '';
     virtualHosts."nekopon.pl".extraConfig = ''
+      import common
+
       route {
         header Content-Security-Policy "default-src 'self'; font-src fonts.gstatic.com; style-src 'self' fonts.googleapis.com; object-src 'none'"
         rewrite * /nekopon.pl{uri}

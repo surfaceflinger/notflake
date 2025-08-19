@@ -47,6 +47,8 @@ in
   '';
 
   services.caddy.virtualHosts."${matrix_hostname}".extraConfig = ''
+    import common
+
     redir / https://${server_name}
     reverse_proxy [${address}]:${toString port}
   '';
