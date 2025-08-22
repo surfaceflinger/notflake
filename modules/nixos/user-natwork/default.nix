@@ -25,6 +25,7 @@
         buildah
         cfn-changeset-viewer
         cfn-nag
+        dyff
         eksctl
         gnumake
         (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
@@ -36,6 +37,7 @@
         kubernetes-helm
         mariadb
         postgresql
+        rain
         siege
         ssm-session-manager-plugin
       ]
