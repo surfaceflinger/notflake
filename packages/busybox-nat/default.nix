@@ -14,6 +14,7 @@ symlinkJoin {
       "fuser"
       "ifconfig"
       "killall"
+      "lsof"
       "lspci"
       "lsscsi"
       "lsusb"
