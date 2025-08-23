@@ -1,15 +1,11 @@
-{
-  inputs,
-  nixosModules,
-  pkgs,
-  ...
-}:
+{ inputs, nixosModules, ... }:
 {
   imports = [
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     ../../modules/nixos/desktop/networking.nix
     ../../modules/nixos/desktop/pipewire.nix
+    ./mopidy.nix
     nixosModules.common
     nixosModules.mixin-telemetry
     nixosModules.mixin-www
@@ -42,33 +38,12 @@
   # also its literally just a music streamer
   nix-mineral.overrides.performance.no-mitigations = true;
 
-  # pipewire
-  security.rtkit.enable = true;
-  services.pipewire = {
-    alsa.enable = true;
-    enable = true;
-    pulse.enable = true;
-    socketActivation = false;
-    systemWide = true;
+  # allow suspend
+  services.logind = {
+    powerKeyLongPress = "poweroff";
+    powerKey = "suspend";
   };
-
-  # mopidy
-  networking.firewall.allowedTCPPorts = [
-    6680
-    8989
-  ];
-  services.mopidy = {
-    enable = true;
-    extensionPackages = [
-      pkgs.mopidy-iris
-      pkgs.mopidy-tidal
-    ];
-    configuration = ''
-      [tidal]
-      enabled = true
-      login_method = HACK
-      quality = LOSSLESS
-    '';
-  };
-  users.users.mopidy.extraGroups = [ "pipewire" ];
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=yes
+  '';
 }
