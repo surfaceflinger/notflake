@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     "${inputs.srvos.result}/nixos/desktop"
@@ -16,7 +21,9 @@
 
   # sched-ext
   services.scx = {
-    enable = !pkgs.stdenv.isAarch64;
+    # enable = !pkgs.stdenv.isAarch64;
+    enable = lib.warn "scx and metadata-cleaner temporarily disabled" false;
+    package = pkgs.scx.rustscheds;
     scheduler = "scx_bpfland";
   };
 
