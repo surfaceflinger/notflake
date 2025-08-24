@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "6fafa0409ad451b90db466f900b7549a1890bf1a",
-      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/6fafa0409ad451b90db466f900b7549a1890bf1a.tar.gz",
-      "hash": "19l555faahaaq499yvg91arkixkw5hq3namdgk4a8lzhpjvc4l8a"
+      "revision": "99f0c72d0073f7c8057cd41b03aadec3af68fbeb",
+      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/99f0c72d0073f7c8057cd41b03aadec3af68fbeb.tar.gz",
+      "hash": "1wcpb61i7fyqgmw95vn56i3jcmqkrr13qfacwa10x88p826rjx1f"
     },
     "flake-compat": {
       "type": "Git",
@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "6911d3e7f475f7b3558b4f5a6aba90fa86099baa",
-      "url": "https://github.com/nix-community/home-manager/archive/6911d3e7f475f7b3558b4f5a6aba90fa86099baa.tar.gz",
-      "hash": "021dirr33zj4ink9589rj12ip9w0wwmvk1rfnhz3hgglqwxsgms1"
+      "revision": "9e3a33c0bcbc25619e540b9dfea372282f8a9740",
+      "url": "https://github.com/nix-community/home-manager/archive/9e3a33c0bcbc25619e540b9dfea372282f8a9740.tar.gz",
+      "hash": "09xg976ss7nimrd5nla0wx12k6k9h7rx42ww7vfx0z07pvkbfn17"
     },
     "impermanence": {
       "type": "Git",
@@ -125,9 +125,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "89229885499965b0a6318f68a793d8a3b34f6ab3",
-      "url": "https://github.com/rblaine95/monero-banlist/archive/89229885499965b0a6318f68a793d8a3b34f6ab3.tar.gz",
-      "hash": "04psbvfkdky27vbany05qz032zxqvfms8iykrdyvgp4g61hq2l0d"
+      "revision": "4b219eb1c9ead4743d1820eeb33cb6fafa5e8e85",
+      "url": "https://github.com/rblaine95/monero-banlist/archive/4b219eb1c9ead4743d1820eeb33cb6fafa5e8e85.tar.gz",
+      "hash": "1cl903blcmldy14m4wspgvkja3vplqw30qkchw8ydg8k0gnrz8lj"
     },
     "nano-syntax-highlighting": {
       "type": "Git",
@@ -190,9 +190,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ebbc1c05f786ae39bb5e04e57bf2c10c44a649e3",
-      "url": "https://github.com/nix-community/nix-index-database/archive/ebbc1c05f786ae39bb5e04e57bf2c10c44a649e3.tar.gz",
-      "hash": "156fri66yn0zmx0s0f19l8w73j1mzwg6yqy2ydyz03v661j739j3"
+      "revision": "52dec1cb33a614accb9e01307e17816be974d24d",
+      "url": "https://github.com/nix-community/nix-index-database/archive/52dec1cb33a614accb9e01307e17816be974d24d.tar.gz",
+      "hash": "1wcca9fraf82fzxadg543lm5g8qlnsg1fvb8xkbxz2ypwidc3x5d"
     },
     "nix-mineral": {
       "type": "Git",
@@ -229,9 +229,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "2661dd7d8192dd1b7878bbdaacdf0ca7c3363d53",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/2661dd7d8192dd1b7878bbdaacdf0ca7c3363d53.tar.gz",
-      "hash": "1ddnfnj8dgzij6rndcsr6mgcvgxqg3m6sa3hzl4ip5xy9566jnhn"
+      "revision": "45813a0bf6cef73d37a4e2737d44f991db435442",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/45813a0bf6cef73d37a4e2737d44f991db435442.tar.gz",
+      "hash": "026822bxdxb46crn7zw7q61gklnl77nyflsm7g5jpcn9qp4wxn1d"
     },
     "nixpkgs-tofu": {
       "type": "Git",
