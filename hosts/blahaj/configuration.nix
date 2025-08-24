@@ -103,7 +103,7 @@
     {
       imports = [ inputs.tgexpiry.result.homeModules.tgexpiry ];
 
-      services.tgexpiry.enable = true;
+      services.tgexpiry.enable = false;
 
       services.amberol.enable = lib.mkForce false;
       services.mpd = {
