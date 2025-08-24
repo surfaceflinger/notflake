@@ -45,6 +45,7 @@
             targets = [
               "jattelik:9100"
               "skogsduva:9100"
+              "symfonisk:9100"
             ];
           }
           {
