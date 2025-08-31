@@ -62,6 +62,7 @@
     packages = with pkgs; [
       cascadia-code
       merriweather
+      nokia-fonts
     ];
   };
 
