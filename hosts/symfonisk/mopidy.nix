@@ -36,7 +36,7 @@
   };
   users.users.mopidy.extraGroups = [ "pipewire" ];
 
-  services.caddy.virtualHosts."symfonisk:443" = {
+  services.caddy.virtualHosts."symfonisk:443, symfonisk.local:443" = {
     extraConfig = ''
       import common
       tls internal
