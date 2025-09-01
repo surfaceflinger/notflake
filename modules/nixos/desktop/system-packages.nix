@@ -5,7 +5,7 @@
     # desktop software
     buffer
     gnome-obfuscate
-    # metadata-cleaner
+    metadata-cleaner
     papers
 
     # media

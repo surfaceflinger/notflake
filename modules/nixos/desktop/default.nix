@@ -19,14 +19,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
-  # sched-ext
-  services.scx = {
-    # enable = !pkgs.stdenv.isAarch64;
-    enable = lib.warn "scx, metadata-cleaner, fractal, tgexpiry temporarily disabled" false;
-    package = pkgs.scx.rustscheds;
-    scheduler = "scx_bpfland";
-  };
-
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
 }
