@@ -65,6 +65,7 @@ with lib.hm.gvariant;
       clock-show-weekday = true;
       document-font-name = "Merriweather 11";
       font-hinting = "none";
+      font-name = "Nokia Sans 11";
       gtk-enable-primary-paste = false;
       gtk-theme = "adw-gtk3";
       monospace-font-name = "Cascadia Mono PL 10";
