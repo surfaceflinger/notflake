@@ -32,6 +32,7 @@
   hardware.enableRedistributableFirmware = true;
   boot = {
     blacklistedKernelModules = [ "uvcvideo" ];
+    kernelModules = [ "nct6775" ];
     initrd.availableKernelModules = [
       "ahci"
       "nvme"
