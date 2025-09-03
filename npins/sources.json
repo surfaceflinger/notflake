@@ -308,9 +308,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ce4c722a3b0828106fef27a6ebb79fd688e658d0",
-      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/ce4c722a3b0828106fef27a6ebb79fd688e658d0.tar.gz",
-      "hash": "02gw5vd6c91sv4c819npk02gzbidjqzhwavrd1k9r7nk17s3hv9z"
+      "revision": "1bb64b54e59cb85586cfbcb9041b93fe604ff84b",
+      "url": "https://github.com/surfaceflinger/xkomhotshot/archive/1bb64b54e59cb85586cfbcb9041b93fe604ff84b.tar.gz",
+      "hash": "05pb7w83yazlimcvndb0p2msiafakszbrr730h3sx7k0db0vjvjx"
     }
   },
   "version": 5
