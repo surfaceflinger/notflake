@@ -4,12 +4,14 @@
 zpool create -f \
   -o ashift=13 \
   -O acltype=posixacl \
-  -O checksum=blake3 \
   -O atime=off \
-  -O xattr=sa \
-  -O dnodesize=auto \
-  -O devices=off \
+  -O checksum=blake3 \
   -O compression=zstd \
+  -O devices=off \
+  -O dnodesize=auto \
+  -O normalization=formD \
+  -O utf8only=on \
+  -O xattr=sa \
   \
   -O encryption=aes-256-gcm \
   -O keyformat=passphrase \
@@ -30,7 +32,7 @@ Every `-O` attribute passed to `zpool create` is actually some `-o` setting for 
 ```
 zfs create -o canmount=off -o mountpoint=/ blahaj/NixOS
 zfs create -o canmount=off                 blahaj/NixOS/etc
-zfs create -o canmount=on                  blahaj/NixOS/etc/nixos
+zfs create -o canmount=on                  blahaj/NixOS/etc/ssh
 zfs create -o canmount=on                  blahaj/NixOS/home
 zfs create -o canmount=on                  blahaj/NixOS/nix
 zfs create -o canmount=on                  blahaj/NixOS/persist
