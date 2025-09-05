@@ -8,6 +8,7 @@
       hash = "sha256-Oh4+QegYb2W1uWUTiBPOT95VOSyhFT/QSRahNxGDONs=";
     };
 
-    "easyeffects/irs/sennheiser-hd-599-autoeq.irs".source = ./hd599.wav;
+    "easyeffects/irs/sennheiser-hd-599-autoeq.irs".source = ./eq/hd599.wav;
+    "easyeffects/irs/moondrop-u2-autoeq.irs".source = ./eq/moondropu2.wav;
   };
 }
