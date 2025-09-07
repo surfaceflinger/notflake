@@ -51,8 +51,6 @@
           "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
         "{74145f27-f039-47ce-a470-a662b129930a}".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
-        "{762f9885-5a13-4abd-9c77-433dcd38b8fd}".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
         "7esoorv3@alefvanoon.anonaddy.me".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
         "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}".install_url =
@@ -77,6 +75,8 @@
           "https://addons.mozilla.org/firefox/downloads/latest/kagi-search-for-firefox/latest.xpi";
         "sponsorBlocker@ajay.app".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
+        "V3-eov3cv@hotmail.com".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/v3-get-old-youtube-layout/latest.xpi";
       };
       darkreader.enable = false;
       simplefox.enable = false;
