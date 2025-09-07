@@ -5,9 +5,9 @@
   nix-mineral.overrides.performance.no-mitigations = true;
 
   # personal preference on how logind should handle lid switch.
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "lock";
+  services.logind.settings.Login = {
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "lock";
+    HandleLidSwitch = "suspend";
   };
 }
