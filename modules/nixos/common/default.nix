@@ -40,6 +40,13 @@
   # openssh everywhere
   services.openssh.enable = true;
 
+  # enable scx
+  services.scx = {
+    enable = !pkgs.stdenv.isAarch64;
+    package = pkgs.scx.rustscheds;
+    scheduler = "scx_bpfland";
+  };
+
   # configure home-manager
   home-manager = {
     backupFileExtension = "backup";
