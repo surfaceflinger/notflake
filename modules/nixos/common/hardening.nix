@@ -14,7 +14,6 @@
       performance.allow-smt = true;
       security = {
         disable-bluetooth-kmodules = true;
-        disable-intelme-kmodules = true;
         lock-root = true;
       };
     };

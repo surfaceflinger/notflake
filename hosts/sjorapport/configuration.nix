@@ -19,19 +19,21 @@
   hardware.enableRedistributableFirmware = true;
   boot = {
     kernelModules = [ "kvm-intel" ];
-    kernelParams = [
-      "i915.force_probe=!a721" # disable i915
-      "xe.force_probe=a721" # enable xe
-      "mem_sleep_default=deep" # enable s3 sleep
-    ];
-    initrd.availableKernelModules = [
-      "nvme"
-      "sd_mod"
-      "usb_storage"
-      "xhci_pci"
-    ];
+    initrd = {
+      kernelModules = [ "intel_pmc_core" ];
+      availableKernelModules = [
+        "nvme"
+        "sd_mod"
+        "usb_storage"
+        "xhci_pci"
+      ];
+    };
   };
 
   # enable xe driver
   hardware.intelgpu.driver = "xe";
+  boot.kernelParams = [
+    "i915.force_probe=!a721"
+    "xe.force_probe=a721"
+  ];
 }
