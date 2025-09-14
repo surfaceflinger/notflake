@@ -36,4 +36,7 @@
     "i915.force_probe=!a721"
     "xe.force_probe=a721"
   ];
+
+  # i need angry birds and subway surfers
+  virtualisation.waydroid.enable = true;
 }
