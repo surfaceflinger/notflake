@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 {
   imports = [
     ./git.nix
@@ -12,8 +12,6 @@
     enable = true;
     enableAll = true;
   };
-
-  home.packages = with pkgs; [ safe-rm-nat ];
 
   nix.gc = {
     automatic = true;

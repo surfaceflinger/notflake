@@ -25,7 +25,6 @@
     pv
     rage
     ripgrep
-    safe-rm-nat
     shellcheck
     statix
     tre
