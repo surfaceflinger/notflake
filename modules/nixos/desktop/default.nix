@@ -5,7 +5,8 @@
     ./bluetooth.nix
     ./gnome.nix
     ./logitech.nix
-    ./networking.nix
+    ./mdns.nix
+    ./networkmanager.nix
     ./pipewire.nix
     ./printing.nix
     ./system-packages.nix

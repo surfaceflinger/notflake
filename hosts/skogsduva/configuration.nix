@@ -11,7 +11,7 @@
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     inputs.xkomhotshot.result.nixosModules.default
-    ../../modules/nixos/desktop/networking.nix
+    ../../modules/nixos/desktop/mdns.nix
     ./monero.nix
     nixosModules.common
     nixosModules.mixin-telemetry

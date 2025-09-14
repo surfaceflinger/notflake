@@ -3,7 +3,7 @@
   imports = [
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
-    ../../modules/nixos/desktop/networking.nix
+    ../../modules/nixos/desktop/networkmanager.nix
     ../../modules/nixos/desktop/pipewire.nix
     ./mopidy.nix
     nixosModules.common
