@@ -22,6 +22,10 @@ with lib.hm.gvariant;
       temperature-unit = "centigrade";
     };
 
+    "org/gnome/shell/weather" = {
+      automatic-location = false;
+    };
+
     "org/gnome/shell" = {
       disable-extension-version-validation = true;
       app-picker-layout = [ "" ];
