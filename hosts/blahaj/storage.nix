@@ -29,12 +29,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "blahaj/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-partlabel/blahajEFI";
     fsType = "vfat";

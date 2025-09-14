@@ -24,12 +24,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "skogsduva/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-partuuid/dc5ef06b-ea2e-4c74-b108-bb09c0aefe9d";
     fsType = "vfat";

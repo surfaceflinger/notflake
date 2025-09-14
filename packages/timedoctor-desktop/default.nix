@@ -28,7 +28,6 @@ appimageTools.wrapType2 rec {
     "--tmpfs /boot"
     "--tmpfs /home"
     "--bind $HOME/.config/Time\\ Doctor $HOME/.config/Time\\ Doctor"
-    "--tmpfs /persist"
     "--tmpfs /sys"
     "--tmpfs /tmp"
     "--tmpfs /var"

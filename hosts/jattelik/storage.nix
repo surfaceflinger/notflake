@@ -31,10 +31,4 @@ _: {
     fsType = "zfs";
     options = [ "zfsutil" ];
   };
-
-  fileSystems."/persist" = {
-    device = "jattelik/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
 }

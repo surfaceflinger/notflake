@@ -11,7 +11,6 @@
     ./chrony.nix
     ./doas.nix
     ./hardening.nix
-    ./impermanence.nix
     inputs.home-manager.result.nixosModules.default
     ./memory.nix
     ./nano.nix

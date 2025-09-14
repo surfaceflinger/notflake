@@ -32,11 +32,12 @@ Every `-O` attribute passed to `zpool create` is actually some `-o` setting for 
 ```
 zfs create -o canmount=off -o mountpoint=/ blahaj/NixOS
 zfs create -o canmount=off                 blahaj/NixOS/etc
+zfs create -o canmount=on                  blahaj/NixOS/etc/NetworkManager
 zfs create -o canmount=on                  blahaj/NixOS/etc/ssh
 zfs create -o canmount=on                  blahaj/NixOS/home
 zfs create -o canmount=on                  blahaj/NixOS/nix
-zfs create -o canmount=on                  blahaj/NixOS/persist
 zfs create -o canmount=off                 blahaj/NixOS/var
+zfs create -o canmount=on                  blahaj/NixOS/var/cache
 zfs create -o canmount=on                  blahaj/NixOS/var/lib
 zfs create -o canmount=on                  blahaj/NixOS/var/log
 zfs create -o canmount=on                  blahaj/NixOS/vol/Games

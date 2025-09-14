@@ -24,12 +24,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "knorrig/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/5230-BEF0";
     fsType = "vfat";

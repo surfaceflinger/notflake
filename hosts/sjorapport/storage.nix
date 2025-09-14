@@ -24,12 +24,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "sjorapport/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/9249-C4FB";
     fsType = "vfat";

@@ -28,7 +28,6 @@ nilla.create (
         # these inputs offer only nixos modules so
         # we can just import relevant default.nix files
         agenix.loader = "raw";
-        impermanence.loader = "raw";
         nixos-hardware.loader = "raw";
         srvos.loader = "raw";
 

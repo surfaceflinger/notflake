@@ -25,12 +25,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "work-vm/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/1A60-B111";
     fsType = "vfat";

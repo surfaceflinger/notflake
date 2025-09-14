@@ -24,12 +24,6 @@ _: {
     options = [ "zfsutil" ];
   };
 
-  fileSystems."/persist" = {
-    device = "symfonisk/NixOS/persist";
-    fsType = "zfs";
-    options = [ "zfsutil" ];
-  };
-
   fileSystems."/boot" = {
     device = "/dev/disk/by-partuuid/98b5fda4-9c20-4049-90ac-18be204ba828";
     fsType = "vfat";

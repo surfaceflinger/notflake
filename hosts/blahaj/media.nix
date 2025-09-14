@@ -10,8 +10,6 @@
     };
   };
 
-  environment.persistence."/persist".directories = [ "/var/cache/minidlna" ];
-
   services.caddy.virtualHosts.":9090".extraConfig = ''
     root * /vol/ikea/Media/Videos/
     file_server browse
