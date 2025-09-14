@@ -60,9 +60,9 @@
   fonts = {
     fontconfig.cache32Bit = true;
     packages = with pkgs; [
+      atkinson-hyperlegible-next
+      brill
       cascadia-code
-      merriweather
-      nokia-fonts
     ];
   };
 

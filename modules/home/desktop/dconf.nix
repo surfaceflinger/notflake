@@ -67,9 +67,9 @@ with lib.hm.gvariant;
     "org/gnome/desktop/interface" = {
       accent-color = "pink";
       clock-show-weekday = true;
-      document-font-name = "Merriweather 11";
+      document-font-name = "Brill 14";
       font-hinting = "none";
-      font-name = "Nokia Sans 11";
+      font-name = "Atkinson Hyperlegible Next 11";
       gtk-enable-primary-paste = false;
       gtk-theme = "adw-gtk3";
       monospace-font-name = "Cascadia Mono PL 10";
