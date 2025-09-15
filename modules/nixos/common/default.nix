@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   lib,
   pkgs,
@@ -24,11 +23,6 @@
   ];
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
-
-  # workaround for /etc being on tmpfs
-  boot.kernelParams = [
-    "systemd.machine_id=${builtins.hashString "md5" config.networking.hostName}"
-  ];
 
   # override srvos changes
   programs.vim.defaultEditor = false;
