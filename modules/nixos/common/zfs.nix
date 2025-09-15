@@ -1,10 +1,7 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
+  boot.supportedFilesystems = [ "zfs" ];
+
   services.zfs.autoSnapshot = {
     enable = true;
     flags = "-k -p -u -v";
@@ -16,4 +13,10 @@
     before = [ "shutdown.target" ];
     conflicts = [ "shutdown.target" ];
   };
+
+  fileSystems = lib.genAttrs [ "/nix" "/etc/ssh" "/var/log" "/var/lib" ] (fs: {
+    device = "${config.networking.hostName}/NixOS${lib.optionalString (fs != "/") fs}";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  });
 }

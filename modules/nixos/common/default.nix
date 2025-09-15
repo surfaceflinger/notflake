@@ -13,6 +13,7 @@
     ./hardening.nix
     inputs.home-manager.result.nixosModules.default
     ./memory.nix
+    ./mounts.nix
     ./nano.nix
     ./networking.nix
     ./nix.nix
