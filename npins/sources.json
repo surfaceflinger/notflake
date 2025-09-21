@@ -61,9 +61,10 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "0909cfe4a2af8d358ad13b20246a350e14c2473d",
-      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/0909cfe4a2af8d358ad13b20246a350e14c2473d.tar.gz",
-      "hash": "1ffsb8ap9hn0vzfdcw9h5qwkhz8ny9l8lwkf8zmz3s33d8rx2b4n"
+      "revision": "b655eaf16d4cbec9c3472f62eee285d4b419a808",
+      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/b655eaf16d4cbec9c3472f62eee285d4b419a808.tar.gz",
+      "hash": "1snsflwwf9l80wf0l79v300fyvx2ccvfp7s2hx32mrq83160d9jj",
+      "frozen": true
     },
     "flake-compat": {
       "type": "Git",
