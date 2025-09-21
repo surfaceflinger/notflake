@@ -8,6 +8,7 @@ symlinkJoin {
   paths = [ busybox' ];
   postBuild = ''
     tools=(
+      "chattr"
       "ftpd"
       "ftpget"
       "ftpput"
