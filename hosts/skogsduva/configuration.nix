@@ -32,6 +32,7 @@
     loader.limine = {
       biosDevice = "/dev/sda";
       biosSupport = true;
+      partitionIndex = 2;
     };
     initrd.availableKernelModules = [
       "ahci"
