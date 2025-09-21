@@ -51,6 +51,8 @@
           "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
         "{74145f27-f039-47ce-a470-a662b129930a}".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
+        "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/styl-us/latest.xpi";
         "7esoorv3@alefvanoon.anonaddy.me".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/libredirect/latest.xpi";
         "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}".install_url =
@@ -67,8 +69,8 @@
           "https://addons.mozilla.org/firefox/downloads/latest/indie-wiki-buddy/latest.xpi";
         "cliget@zaidabdulla.com".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/cliget/latest.xpi";
-        "deArrow@ajay.app".install_url =
-          "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
+        #"deArrow@ajay.app".install_url =
+        #  "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
         "privacypass@kagi.com".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/kagi-privacy-pass/latest.xpi";
         "search@kagi.com".install_url =
