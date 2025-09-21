@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "2c7f7e5773fc8a7339020f1574448029f7166f6e",
-      "url": "https://github.com/Artoriuz/ArtCNN/archive/2c7f7e5773fc8a7339020f1574448029f7166f6e.tar.gz",
-      "hash": "0k8xy8z1qd2gv4rv3fi3j655pf101x92rww9km051bvv6wg7623n"
+      "revision": "cb7344354ef031faeed9cc5155f10465485561d7",
+      "url": "https://github.com/Artoriuz/ArtCNN/archive/cb7344354ef031faeed9cc5155f10465485561d7.tar.gz",
+      "hash": "1cj8ppvfiggkw8fr1kh2ir6ry0hv52yswm0pb2pg4aiyrxqibxi4"
     },
     "blahajpl-homepage": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "b655eaf16d4cbec9c3472f62eee285d4b419a808",
-      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/b655eaf16d4cbec9c3472f62eee285d4b419a808.tar.gz",
-      "hash": "1snsflwwf9l80wf0l79v300fyvx2ccvfp7s2hx32mrq83160d9jj"
+      "revision": "0909cfe4a2af8d358ad13b20246a350e14c2473d",
+      "url": "https://github.com/rafaelmardojai/firefox-gnome-theme/archive/0909cfe4a2af8d358ad13b20246a350e14c2473d.tar.gz",
+      "hash": "1ffsb8ap9hn0vzfdcw9h5qwkhz8ny9l8lwkf8zmz3s33d8rx2b4n"
     },
     "flake-compat": {
       "type": "Git",
@@ -86,9 +86,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b5bc53bb2ddd9e6111c66a92a98229eaf647ebf0",
+      "revision": "c4abca1eb554e1a1edb9b6adb8f968db5f9d53c2",
       "url": null,
-      "hash": "06lm4r8gjcx03mlc9farbwlcc0npq375vjdn5qqz3c1nly983j2i"
+      "hash": "0cn94qh7p5kdvxsa7l2ydmc1llm4bmp5mxm025bdfkbbz5hwqxin"
     },
     "home-manager": {
       "type": "Git",
@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "17a10049486f6698fca32097d8f52c0c895542b0",
-      "url": "https://github.com/nix-community/home-manager/archive/17a10049486f6698fca32097d8f52c0c895542b0.tar.gz",
-      "hash": "1rkb958yc3d2k67g02a5aq6lzxaf2bz3qsv5f7yiq9n0nxfsbnfv"
+      "revision": "939e91e1cff1f99736c5b02529658218ed819a2a",
+      "url": "https://github.com/nix-community/home-manager/archive/939e91e1cff1f99736c5b02529658218ed819a2a.tar.gz",
+      "hash": "1i39gw8iaby4803k8dza2426ljyj21awvac9amfr9h53g92rg7lb"
     },
     "monero-banlist": {
       "type": "Git",
@@ -112,9 +112,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "14355166949b525782d55aad88175368d337a234",
-      "url": "https://github.com/rblaine95/monero-banlist/archive/14355166949b525782d55aad88175368d337a234.tar.gz",
-      "hash": "0ylf0hg7k7q0192drc4rix0lpzl0pxlxn4nq8glayiz9pxq4kmdh"
+      "revision": "7f936c2d9ec0415e8aa47925b302a20a6230f19b",
+      "url": "https://github.com/rblaine95/monero-banlist/archive/7f936c2d9ec0415e8aa47925b302a20a6230f19b.tar.gz",
+      "hash": "0s0zic2y6dd1k6wssy5inxqlbxwyimp5vhn15ar6gd3wcw9kis7s"
     },
     "nano-syntax-highlighting": {
       "type": "Git",
@@ -177,9 +177,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "050a5feb5d1bb5b6e5fc04a7d3d816923a87c9ea",
-      "url": "https://github.com/nix-community/nix-index-database/archive/050a5feb5d1bb5b6e5fc04a7d3d816923a87c9ea.tar.gz",
-      "hash": "17rm322w50s8fcspv9c9x9j2szdr4gbiy0477la511znfdxjjwnw"
+      "revision": "fd2569ca2ef7d69f244cd9ffcb66a0540772ff85",
+      "url": "https://github.com/nix-community/nix-index-database/archive/fd2569ca2ef7d69f244cd9ffcb66a0540772ff85.tar.gz",
+      "hash": "0zhah5idwg68n5cdvpdd8m5iq60fl6sqf7rcsb82h36aji2dc267"
     },
     "nix-mineral": {
       "type": "Git",
@@ -203,9 +203,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f89c620d3d6e584d98280b48f0af7be4f8506ab5",
-      "url": "https://github.com/NixOS/nixos-hardware/archive/f89c620d3d6e584d98280b48f0af7be4f8506ab5.tar.gz",
-      "hash": "10q0hvkd2bc6wggc7w2ih0gnjabs1lxsnj91zzaxidzhs6c32sy5"
+      "revision": "67a709cfe5d0643dafd798b0b613ed579de8be05",
+      "url": "https://github.com/NixOS/nixos-hardware/archive/67a709cfe5d0643dafd798b0b613ed579de8be05.tar.gz",
+      "hash": "1qz8j83b1zw96x9afmzjmmxccc53fpbf3s1jgnxvmaf12c9h79y3"
     },
     "nixpkgs": {
       "type": "Git",
@@ -216,9 +216,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "c33958f2c219db65cb1e5d96126f5c646b1a371e",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/c33958f2c219db65cb1e5d96126f5c646b1a371e.tar.gz",
-      "hash": "0g7ngn038nw4ivdn3zxkdk4a9xbp336lpjcyh00jn528pj69y2x5"
+      "revision": "599659685bae25ca2659da2ded988f2c773cc120",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/599659685bae25ca2659da2ded988f2c773cc120.tar.gz",
+      "hash": "0w55l57v5jcpcavn9mqarvw9fmw39lybcvddnxsdy4zdnln87qam"
     },
     "nixpkgs-tofu": {
       "type": "Git",
@@ -256,9 +256,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ec58f16bdb57cf3a17bba79f687945dca1703c64",
-      "url": "https://github.com/nix-community/srvos/archive/ec58f16bdb57cf3a17bba79f687945dca1703c64.tar.gz",
-      "hash": "0cll7ic57w438zdk52sd11v5r8ag7jqq6z9f8sdwdh4z0im4dnz1"
+      "revision": "30e6b4c2e5e7b235c7d0a266994a0c93e86bcf69",
+      "url": "https://github.com/nix-community/srvos/archive/30e6b4c2e5e7b235c7d0a266994a0c93e86bcf69.tar.gz",
+      "hash": "0914xix3h7diby72imk9l14crq0d9hn4ihfwsajqw1mnp8hixnar"
     },
     "tf": {
       "type": "Git",
@@ -269,9 +269,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "34b9e491f2475e3ca4e54939160475ce98a2b81f",
-      "url": "https://github.com/vdesjardins/terraform-overlay/archive/34b9e491f2475e3ca4e54939160475ce98a2b81f.tar.gz",
-      "hash": "0yr3vycphw8dy1wi2w4ifxci8rqywv4c6r1kvjq17sdlyzm8m8mp"
+      "revision": "d63372e87b646a8f81dcd6f556b51fdf730bab39",
+      "url": "https://github.com/vdesjardins/terraform-overlay/archive/d63372e87b646a8f81dcd6f556b51fdf730bab39.tar.gz",
+      "hash": "19snv8pfsgj2d2b53s73kmcgbjfmbqh6g4xpng944wc57k8sb77b"
     },
     "tgexpiry": {
       "type": "Git",
