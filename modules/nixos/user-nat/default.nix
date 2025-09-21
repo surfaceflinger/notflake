@@ -53,6 +53,7 @@
         # ops
         opentofu
         scaleway-cli
+        virt-viewer
 
         # misc
         binsider
