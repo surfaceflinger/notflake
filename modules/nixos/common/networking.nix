@@ -34,12 +34,12 @@
   ];
 
   services.resolved = {
-    enable = lib.warn "temporarily disabled DoT due to systemd 257.8 regression" true;
+    enable = true;
+    dnsovertls = lib.warn "temporarily disabled DoT due to systemd 257.8 regression" "false";
     dnssec = "false"; # causes resolves to fail way too often
     llmnr = "false";
     extraConfig = ''
       Cache=no-negative
-      DNSOverTLS=no
       MulticastDNS=false
       StaleRetentionSec=28800
     '';
