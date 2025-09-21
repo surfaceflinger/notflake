@@ -2,9 +2,13 @@
 {
   imports = [
     "${inputs.nixos-hardware.result}/common/cpu/amd/pstate.nix"
-    "${inputs.nixos-hardware.result}/common/cpu/amd/zenpower.nix"
   ];
 
-  boot.kernelModules = [ "kvm-amd" ];
+  boot = {
+    blacklistedKernelModules = [ "k10temp" ];
+    extraModulePackages = [ config.boot.kernelPackages.zenergy ];
+    kernelModules = [ "kvm-amd" "zenergy" ];
+  };
+
   services.hardware.openrgb.motherboard = "amd";
 }
