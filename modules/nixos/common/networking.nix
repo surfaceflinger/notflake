@@ -35,7 +35,7 @@
 
   services.resolved = {
     enable = true;
-    dnsovertls = "true";
+    dnsovertls = "opportunistic";
     dnssec = "false"; # causes resolves to fail way too often
     llmnr = "false";
     extraConfig = ''
