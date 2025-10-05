@@ -59,13 +59,6 @@
   # openrgb
   services.hardware.openrgb.enable = true;
 
-  # ollama
-  services.ollama = {
-    enable = true;
-    acceleration = "rocm";
-    rocmOverrideGfx = "11.0.0";
-  };
-
   # harmonia binary cache
   networking.firewall.allowedTCPPorts = [ 30909 ];
   services.harmonia = {
@@ -92,7 +85,6 @@
         obs-vkcapture
       ];
     })
-    alpaca
     euphonica
     gpu-screen-recorder-gtk
     obs-studio-plugins.obs-vkcapture
