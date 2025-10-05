@@ -43,6 +43,8 @@
     extest.enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
     extraPackages = with pkgs; [
+      nspr
+      nss
       steamtinkerlaunch
       winetricks
     ];
