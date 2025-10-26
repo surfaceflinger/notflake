@@ -13,19 +13,6 @@
       "url": "https://github.com/ryantm/agenix/archive/2f0f812f69f3eb4140157fe15e12739adf82e32a.tar.gz",
       "hash": "1d4m7hsq727q7ndjqmgyl8vkbkqjwps962ygmv2mcc5dbqzgn963"
     },
-    "artcnn": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "Artoriuz",
-        "repo": "ArtCNN"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "441a5efd8af74fc103027fc0d267cc14faf952cd",
-      "url": "https://github.com/Artoriuz/ArtCNN/archive/441a5efd8af74fc103027fc0d267cc14faf952cd.tar.gz",
-      "hash": "16diqcdmw7a5vdfvns4g2lx7fhz4k899a4pxzknx5wcb1h2w3q02"
-    },
     "blahajpl-homepage": {
       "type": "Git",
       "repository": {
