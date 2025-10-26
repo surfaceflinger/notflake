@@ -46,8 +46,6 @@
         feather
         ledger-live-desktop
         rates
-        trezor-agent
-        trezorctl
         trezor-suite
 
         # ops
@@ -71,9 +69,9 @@
         homeModules.desktop
       ];
 
-      programs.git = {
-        userEmail = "nat@nekopon.pl";
-        userName = "nat";
+      programs.git.settings.user = {
+        email = "nat@nekopon.pl";
+        name = "nat";
       };
 
       systemd.user.tmpfiles.rules = [ "D %h/Downloads 0700 - - -" ];

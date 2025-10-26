@@ -7,7 +7,7 @@
       key = "~/.ssh/id_ed25519";
       signByDefault = true;
     };
-    extraConfig = {
+    settings = {
       am.threeWay = true;
       branch.sort = "-committerdate";
       column.ui = "auto";
