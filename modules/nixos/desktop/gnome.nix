@@ -11,8 +11,6 @@
     QT_NO_SYNTHESIZED_BOLD = 1;
     # wayland in (most) electron apps
     NIXOS_OZONE_WL = "1";
-    # qt gnome styling
-    QT_WAYLAND_DECORATION = "adwaita";
   };
 
   # debloat
@@ -47,8 +45,6 @@
     # theming
     adw-gtk3
     morewaita-icon-theme
-    qadwaitadecorations
-    qadwaitadecorations-qt6
 
     # fetch gravatar and install as ~/.face
     gnome-gravatar
