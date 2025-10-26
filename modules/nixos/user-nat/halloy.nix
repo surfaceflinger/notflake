@@ -14,7 +14,7 @@
       servers.RizonAlt = {
         chathistory = true;
         nickname = "nat";
-        password_file = ".config/halloy/soju-jattelik.passwd";
+        password_file = "soju-jattelik.passwd";
         port = 6667;
         server = "jattelik";
         username = "nat/RizonAlt@halloy-${osConfig.networking.hostName}";
@@ -24,7 +24,7 @@
       servers.LiberaChat = {
         chathistory = true;
         nickname = "nat";
-        password_file = ".config/halloy/soju-jattelik.passwd";
+        password_file = "soju-jattelik.passwd";
         port = 6667;
         server = "jattelik";
         username = "nat/irc.libera.chat@halloy-${osConfig.networking.hostName}";
@@ -34,7 +34,7 @@
       servers.Rizon = {
         chathistory = true;
         nickname = "nat";
-        password_file = ".config/halloy/soju-jattelik.passwd";
+        password_file = "soju-jattelik.passwd";
         port = 6667;
         server = "jattelik";
         username = "nat/irc.rizon.net@halloy-${osConfig.networking.hostName}";
@@ -44,7 +44,7 @@
       servers.OFTC = {
         chathistory = true;
         nickname = "nat";
-        password_file = ".config/halloy/soju-jattelik.passwd";
+        password_file = "soju-jattelik.passwd";
         port = 6667;
         server = "jattelik";
         username = "nat/irc.oftc.net@halloy-${osConfig.networking.hostName}";
