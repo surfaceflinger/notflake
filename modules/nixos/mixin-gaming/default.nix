@@ -18,7 +18,7 @@
     furmark # upalarnia pl
     jazz2 # i maintain this, ok?
     lunar-client # minecraft with spyware
-    #mcpelauncher-ui-qt # minecraft with more spyware
+    mcpelauncher-ui-qt # minecraft with more spyware
     pcsx2 # ps2 emu
     rpcs3 # ps3 emu
     steamguard-cli # steam MFA
