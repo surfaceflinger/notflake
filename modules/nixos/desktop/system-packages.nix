@@ -14,8 +14,8 @@
     yt-dlp
 
     # system utilities
-    glxinfo
     libva-utils
+    mesa-demos
     (nvtopPackages.full.override { nvidia = false; })
     pwvucontrol
   ];
