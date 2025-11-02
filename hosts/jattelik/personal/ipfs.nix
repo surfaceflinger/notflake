@@ -8,6 +8,8 @@ _: {
     settings = {
       Adresses.API = [ ];
       Discovery.MDNS.Enabled = false;
+      Plugins.Plugins.telemetry.Config.Mode = "off";
+      Provide.DHT.SweepEnabled = true;
     };
   };
 
