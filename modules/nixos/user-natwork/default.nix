@@ -29,9 +29,9 @@
         eksctl
         gnumake
         (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.system}".opentofu
-        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.system}".terragrunt
-        inputs.tf.result.packages."${pkgs.system}"."1.5.7"
+        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.stdenv.hostPlatform.system}".opentofu
+        inputs.nixpkgs-tofu.result.legacyPackages."${pkgs.stdenv.hostPlatform.system}".terragrunt
+        inputs.tf.result.packages."${pkgs.stdenv.hostPlatform.system}"."1.5.7"
         k9s
         kubectl
         kubernetes-helm
