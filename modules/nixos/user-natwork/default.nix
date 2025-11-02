@@ -42,7 +42,7 @@
         ssm-session-manager-plugin
       ]
       ++ lib.optionals config.xdg.portal.enable [
-        bitwarden
+        bitwarden-desktop
         brave
         freerdp
         obs-studio
