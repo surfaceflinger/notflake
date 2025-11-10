@@ -30,6 +30,9 @@
     }) # minecraft (good one)
   ];
 
+  # for roblox
+  services.flatpak.enable = true;
+
   # gamescope
   programs.gamescope = {
     enable = true;
