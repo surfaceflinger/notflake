@@ -25,10 +25,12 @@
     gnome-logs
     gnome-maps
     gnome-music
+    gnome-software
     gnome-system-monitor
     gnome-tour
     gnome-user-docs
     orca
+    showtime
     snapshot
     sushi
     totem
