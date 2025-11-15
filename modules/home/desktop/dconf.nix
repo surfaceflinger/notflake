@@ -214,10 +214,6 @@ with lib.hm.gvariant;
     };
 
     # random other software
-    "org/gnome/tweaks" = {
-      show-extensions-notice = false;
-    };
-
     "org/gnome/TextEditor" = {
       discover-settings = true;
       highlight-current-line = true;

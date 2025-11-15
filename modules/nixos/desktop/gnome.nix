@@ -40,7 +40,7 @@
     # gnome
     ffmpegthumbnailer
     gnome-session
-    gnome-tweaks
+    refine
 
     # theming
     adw-gtk3
