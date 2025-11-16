@@ -6,7 +6,7 @@
     environmentFile = config.age.secrets.caddy-desec-jattelik.path;
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/desec@v1.0.1" ];
-      hash = "sha256-CAtYLnQq58xETJ23UXhi1D3kWflROQtddwgs+hiFTAg=";
+      hash = "sha256-5jZuc/YIbo40qCQIvfojXneYxU5q5mJF7q81m4Vpvw4=";
     };
     globalConfig = ''
       dns desec {
