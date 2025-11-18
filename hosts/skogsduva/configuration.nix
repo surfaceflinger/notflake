@@ -14,6 +14,7 @@
     ../../modules/nixos/desktop/mdns.nix
     ./monero.nix
     nixosModules.common
+    nixosModules.mixin-intel
     nixosModules.mixin-telemetry
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
@@ -23,11 +24,7 @@
     ./storage.nix
   ];
 
-  # base
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   # bootloader/kernel/modules
-  hardware.enableRedistributableFirmware = true;
   boot = {
     loader.limine = {
       biosDevice = "/dev/sda";
@@ -43,10 +40,9 @@
       "usb_storage"
       "xhci_pci"
     ];
-    kernelModules = [ "kvm-intel" ];
   };
 
-  # this is an old intel.
+  # this is an old intel and the other mode sucks
   boot.kernelParams = [ "intel_pstate=passive" ];
 
   # xkom telegram bot

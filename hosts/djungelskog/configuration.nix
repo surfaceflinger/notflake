@@ -8,16 +8,13 @@
     nixosModules.laptop
     nixosModules.mixin-bdprochot
     nixosModules.mixin-gaming
+    nixosModules.mixin-intel
     nixosModules.user-nat
     nixosModules.user-natwork
     ./storage.nix
   ];
 
-  # base
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   # bootloader/kernel/modules
-  hardware.enableRedistributableFirmware = true;
   boot = {
     loader.limine = {
       biosDevice = "/dev/sda";
@@ -32,7 +29,6 @@
       "usb_storage"
       "xhci_pci"
     ];
-    kernelModules = [ "kvm-intel" ];
   };
 
   # power management
