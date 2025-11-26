@@ -84,7 +84,7 @@
         name = "nat";
       };
 
-      services.podman.enable = true;
+      services.podman.enable = config.xdg.portal.enable;
 
       systemd.user.tmpfiles.rules = [ "D %h/Downloads 0700 - - -" ];
     };
