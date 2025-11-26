@@ -49,8 +49,18 @@
         trezor-suite
 
         # ops
+        argocd
+        buildah
+        gnumake
+        google-cloud-sdk
+        hcloud
+        k9s
+        kubectl
+        kubernetes-helm
         opentofu
+        postgresql
         scaleway-cli
+        tflint
         virt-viewer
 
         # misc
@@ -73,6 +83,8 @@
         email = "nat@nekopon.pl";
         name = "nat";
       };
+
+      services.podman.enable = true;
 
       systemd.user.tmpfiles.rules = [ "D %h/Downloads 0700 - - -" ];
     };
