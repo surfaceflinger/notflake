@@ -1,3 +1,1 @@
-_: {
-  services.tailscale-systray.enable = true;
-}
+_: { services.tailscale-systray.enable = true; }
