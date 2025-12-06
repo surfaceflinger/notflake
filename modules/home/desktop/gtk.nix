@@ -23,7 +23,6 @@
       { package = gamemode-shell-extension; }
       { package = media-progress; }
       { package = pip-on-top; }
-      { package = tailscale-qs; }
       { package = user-themes-x; }
       { package = window-is-ready-remover; }
     ];

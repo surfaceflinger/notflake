@@ -57,6 +57,7 @@
         k9s
         kubectl
         kubernetes-helm
+        openbao
         opentofu
         postgresql
         scaleway-cli
@@ -65,6 +66,7 @@
 
         # misc
         binsider
+        claude-code
       ];
   };
 

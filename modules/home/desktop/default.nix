@@ -8,6 +8,7 @@
     ./mangohud.nix
     ./mpv.nix
     ./schizofox.nix
+    ./tailscale.nix
     ./xdg.nix
   ];
 }
