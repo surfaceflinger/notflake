@@ -56,11 +56,13 @@
         hcloud
         k9s
         kubectl
+        kubelogin-oidc
         kubernetes-helm
         openbao
         opentofu
         postgresql
         scaleway-cli
+        talosctl
         tflint
         virt-viewer
 
