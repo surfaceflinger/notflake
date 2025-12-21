@@ -6,14 +6,19 @@
   programs.zsh = {
     enable = true;
     histFile = "$HOME/.config/zsh/history";
-    histSize = 10000000;
+    histSize = 999999999;
     syntaxHighlighting.enable = true;
     vteIntegration = true;
     setOptions = [
-      "autocd" # Automatically cd into typed directory
-      "globdots" # Include hidden files in auto/tab complete
-      "interactive_comments" # Comments in the shell
-      "prompt_subst" # Substitution in the prompt
+      "autocd"
+      "extended_history"
+      "globdots"
+      "hist_expire_dups_first"
+      "hist_ignore_all_dups"
+      "hist_ignore_space"
+      "hist_reduce_blanks"
+      "interactive_comments"
+      "prompt_subst"
     ];
     shellAliases = with pkgs; rec {
       cat = "${lib.getExe bat} -Pp";
