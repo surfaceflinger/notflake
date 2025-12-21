@@ -56,10 +56,16 @@
         hcloud
         k9s
         kubectl
+        kubectl-cnpg
+        kubectl-df-pv
+        kubectl-images
+        kubectl-neat
+        kubectl-validate
         kubelogin-oidc
         kubernetes-helm
         openbao
         opentofu
+        packer
         postgresql
         scaleway-cli
         talosctl
