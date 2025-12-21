@@ -35,6 +35,7 @@
     bottom
     busybox-nat
     config.boot.kernelPackages.cpupower
+    systemctl-tui
 
     # network
     doggo
