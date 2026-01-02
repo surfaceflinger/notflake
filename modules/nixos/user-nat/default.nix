@@ -63,7 +63,7 @@
         kubectl-validate
         kubelogin-oidc
         kubernetes-helm
-        openbao
+        (openbao.override { withUi = false; })
         opentofu
         packer
         postgresql
