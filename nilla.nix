@@ -35,6 +35,7 @@ nilla.create (
         grapevine.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         home-manager.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
+        nix-mineral.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         schizofox.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         tf.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         tgexpiry.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;

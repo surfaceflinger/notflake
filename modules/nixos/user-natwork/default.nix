@@ -38,7 +38,6 @@
         mariadb
         postgresql
         rain
-        siege
         ssm-session-manager-plugin
       ]
       ++ lib.optionals config.xdg.portal.enable [

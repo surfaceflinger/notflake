@@ -1,17 +1,13 @@
-{ lib, ... }:
-{
-  nix-mineral.overrides = {
-    desktop = {
-      allow-multilib = true;
-      home-exec = true;
-      skip-restrict-home-permission = true;
-      tmp-exec = true;
+_: {
+  nix-mineral = {
+    settings.system.multilib = true;
+    extras = {
+      network.bluetooth-kmodules = true;
+      system.unprivileged-userns = true;
     };
-    performance.no-pti = true;
-    security = {
-      disable-bluetooth-kmodules = lib.mkForce false;
+    filesystems.normal = {
+      "/home".options."noexec" = false;
+      "/tmp".options."noexec" = false;
     };
   };
-
-  boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 }

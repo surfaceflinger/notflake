@@ -85,14 +85,6 @@
     "net.ipv4.tcp_keepalive_intvl" = 10;
     "net.ipv4.tcp_keepalive_probes" = 6;
 
-    # reenable few things disabled by hardening
-    "net.ipv4.icmp_echo_ignore_all" = 0;
-    "net.ipv4.tcp_dsack" = 1;
-    "net.ipv4.tcp_sack" = 1;
-    "net.ipv6.icmp.echo_ignore_all" = 0;
-    "net.ipv6.icmp.echo_ignore_anycast" = 0;
-    "net.ipv6.icmp.echo_ignore_multicast" = 0;
-
     # mtu probing
     "net.ipv4.tcp_mtu_probing" = 1;
 

@@ -1,4 +1,9 @@
-{ inputs, nixosModules, ... }:
+{
+  inputs,
+  lib,
+  nixosModules,
+  ...
+}:
 {
   imports = [
     "${inputs.nixos-hardware.result}/common/pc"
@@ -36,12 +41,12 @@
   };
   # some mitigations arent available on via eden x2 so its pointless
   # also its literally just a music streamer
-  nix-mineral.overrides.performance.no-mitigations = true;
+  nix-mineral.settings.kernel.cpu-mitigations = lib.mkForce "off";
 
   # allow suspend
-  services.logind = {
-    powerKeyLongPress = "poweroff";
-    powerKey = "suspend";
+  services.logind.settings.Login = {
+    HandlePowerKeyLongPress = "poweroff";
+    HandlePowerKey = "suspend";
   };
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes

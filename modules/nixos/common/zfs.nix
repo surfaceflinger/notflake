@@ -1,6 +1,14 @@
-{ config, lib, ... }:
 {
-  boot.supportedFilesystems = [ "zfs" ];
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    zfs.package = pkgs.zfs_2_4;
+  };
 
   services.zfs.autoSnapshot = {
     enable = true;

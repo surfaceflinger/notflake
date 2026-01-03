@@ -64,5 +64,5 @@
   services.snowflake-proxy.enable = true;
 
   # fix building
-  nix-mineral.overrides.desktop.allow-multilib = true;
+  nix-mineral.settings.system.multilib = true;
 }

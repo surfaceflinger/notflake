@@ -8,8 +8,6 @@
   imports = [
     ./agenix.nix
     ./boot.nix
-    ./chrony.nix
-    ./doas.nix
     ./hardening.nix
     inputs.home-manager.result.nixosModules.default
     ./memory.nix

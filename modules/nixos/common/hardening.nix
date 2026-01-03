@@ -1,36 +1,59 @@
 { inputs, lib, ... }:
 {
-  imports = [ "${inputs.nix-mineral.result}/nix-mineral.nix" ];
+  imports = [ inputs.nix-mineral.result.nixosModules.nix-mineral ];
 
   nix-mineral = {
     enable = true;
-    overrides = {
-      compatibility = {
-        allow-ip-forward = true;
-        allow-unsigned-modules = true;
-        no-lockdown = true;
+    preset = "maximum";
+    settings = {
+      debug.debugfs = true;
+      etc.kicksecure-gitconfig = false;
+      system.yama = "relaxed";
+      kernel = {
+        cpu-mitigations = "smt-on";
+        lockdown = false;
+        only-signed-modules = false;
+        pti = false;
       };
-      desktop.hideproc-off = true;
-      performance.allow-smt = true;
-      security = {
-        disable-bluetooth-kmodules = true;
-        lock-root = true;
+      network = {
+        icmp.ignore-all = false;
+        ip-forwarding = true;
+        max-addresses = false;
       };
     };
+    extras = {
+      entropy.extra-latent-entropy = true;
+      network.tcp-window-scaling = true;
+      system.minimize-swapping = false;
+      misc = {
+        ssh-hardening = true;
+        usbguard.enable = false;
+      };
+    };
+    filesystems.special."/proc".options.hidepid = lib.mkForce false;
   };
 
-  environment.etc.gitconfig.text = lib.mkForce "";
-
+  # not included in nix-mineral
   boot.kernel.sysctl = {
     "dev.tty.legacy_tiocsti" = 0;
-    "kernel.unprivileged_userns_clone" = lib.mkDefault 0;
+    "kernel.oops_limit" = 100;
     "kernel.warn_limit" = 100;
   };
 
   boot.kernelParams = [
     "bdev_allow_write_mounted=0"
-    "cfi=kcfi" # won't work anyway
-    "debugfs=on" # reenable debugfs for some weird drivers and eg. rasdaemon
+    "hash_pointers=always"
+    "proc_mem.force_override=never"
+  ];
+
+  # better doas
+  security.doas.extraRules = [
+    {
+      users = [ "root" ];
+      groups = [ "wheel" ];
+      keepEnv = true;
+      persist = true;
+    }
   ];
 
   # fixup for building

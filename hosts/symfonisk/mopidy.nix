@@ -26,13 +26,13 @@
       pkgs.mopidy-iris
       pkgs.mopidy-tidal
     ];
-    configuration = ''
-      [http]
-      default_app = iris
-      [tidal]
-      enabled = true
-      quality = LOSSLESS
-    '';
+    settings = {
+      http.default_app = "iris";
+      tidal = {
+        enabled = true;
+        quality = "LOSSLESS";
+      };
+    };
   };
   users.users.mopidy.extraGroups = [ "pipewire" ];
 
