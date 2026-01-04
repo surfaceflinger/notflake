@@ -1,16 +1,20 @@
 { pkgs, ... }:
 {
-  boot.kernel.sysctl = {
-    # remove artificial penalties for split locks, which is useful for games run
-    # through proton.
-    # https://www.phoronix.com/news/linux-splitlock-hurts-gaming
-    "kernel.split_lock_mitigate" = 0;
+  boot = {
+    kernelModules = [ "ntsync" ];
+    kernel.sysctl = {
+      # remove artificial penalties for split locks, which is useful for games run
+      # through proton.
+      # https://www.phoronix.com/news/linux-splitlock-hurts-gaming
+      "kernel.split_lock_mitigate" = 0;
+    };
   };
 
   environment.sessionVariables = {
     # enable wine wayland and hdr
     PROTON_ENABLE_HDR = 1;
     PROTON_ENABLE_WAYLAND = 1;
+    PROTON_USE_NTSYNC = 1;
   };
 
   # packs
