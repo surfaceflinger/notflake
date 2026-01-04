@@ -28,7 +28,7 @@
   # bootloader/kernel/modules
   boot = {
     loader.limine = {
-      biosDevice = "/dev/sda";
+      biosDevice = "/dev/disk/by-id/ata-SSDPR-CL100-240-G3_G11004475";
       biosSupport = true;
       partitionIndex = 2;
     };
