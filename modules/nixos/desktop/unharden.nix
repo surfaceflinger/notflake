@@ -1,6 +1,12 @@
 _: {
   nix-mineral = {
-    settings.system.multilib = true;
+    settings = {
+      kernel = {
+        cpu-mitigations = "smt-on";
+        pti = false;
+      };
+      system.multilib = true;
+    };
     extras = {
       network.bluetooth-kmodules = true;
       system.unprivileged-userns = true;

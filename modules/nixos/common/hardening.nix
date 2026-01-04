@@ -10,10 +10,8 @@
       etc.kicksecure-gitconfig = false;
       system.yama = "relaxed";
       kernel = {
-        cpu-mitigations = "smt-on";
         lockdown = false;
         only-signed-modules = false;
-        pti = false;
       };
       network = {
         icmp.ignore-all = false;
@@ -43,8 +41,10 @@
   boot.kernelParams = [
     "bdev_allow_write_mounted=0"
     "debugfs=on" # reenable debugfs for some weird drivers and eg. rasdaemon
+    "hardened_usercopy=1"
     "hash_pointers=always"
     "proc_mem.force_override=never"
+    "tsx=off"
   ];
 
   # better doas
