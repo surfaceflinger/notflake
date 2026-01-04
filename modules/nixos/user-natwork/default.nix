@@ -57,7 +57,10 @@
 
       dconf.settings."org/gnome/shell/extensions/appindicator".legacy-tray-enabled = true;
 
-      services.podman.enable = true;
+      services = {
+        easyeffects.enable = false;
+        podman.enable = true;
+      };
     };
 
   programs.zsh.shellAliases = {
