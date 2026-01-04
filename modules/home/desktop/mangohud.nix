@@ -37,6 +37,7 @@ _: {
     fps
     engine_color=eb5b5b
     gpu_color=2e9762
+    winesync
     wine
     wine_color=eb5b5b
     frame_timing=1
