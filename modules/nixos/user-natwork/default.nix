@@ -58,7 +58,7 @@
       dconf.settings."org/gnome/shell/extensions/appindicator".legacy-tray-enabled = true;
 
       services = {
-        easyeffects.enable = false;
+        easyeffects.enable = lib.mkForce false;
         podman.enable = true;
       };
     };
