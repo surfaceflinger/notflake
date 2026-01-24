@@ -4,6 +4,7 @@ _: {
       kernel = {
         cpu-mitigations = "smt-on";
         pti = false;
+        slab-debug = false;
       };
       system.multilib = true;
     };

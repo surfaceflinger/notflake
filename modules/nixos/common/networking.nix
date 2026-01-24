@@ -35,13 +35,12 @@
 
   services.resolved = {
     enable = true;
-    dnsovertls = "opportunistic";
-    dnssec = "false"; # causes resolves to fail way too often
-    llmnr = "false";
-    extraConfig = ''
-      MulticastDNS=false
-      StaleRetentionSec=28800
-    '';
+    settings.Resolve = {
+      DNSOverTLS = "opportunistic";
+      DNSSEC = "false"; # true causes resolves to fail way too often
+      LLMNR = "false";
+      MulticastDNS = "false";
+    };
   };
 
   # tailscale
