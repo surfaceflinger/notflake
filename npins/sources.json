@@ -26,6 +26,19 @@
       "url": "https://github.com/blahaj-pl/homepage/archive/9a399e18bbc72de4cc225756db313f7961d15306.tar.gz",
       "hash": "sha256-NsUno/DdoNPbWIdm4PpmxRUtAA2NoHrVvCu0q0TE8FE="
     },
+    "copyparty": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "9001",
+        "repo": "copyparty"
+      },
+      "branch": "hovudstraum",
+      "submodules": false,
+      "revision": "59e2d77df93cbaaab3a2b9564f4a5d0496b8ea5a",
+      "url": "https://github.com/9001/copyparty/archive/59e2d77df93cbaaab3a2b9564f4a5d0496b8ea5a.tar.gz",
+      "hash": "sha256-W0EUwyTp9yWol8Is1csvgM4SrVL4u3Z6Cxya+S+N3Hs="
+    },
     "dont-track-me": {
       "type": "Git",
       "repository": {

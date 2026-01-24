@@ -1,6 +1,7 @@
 { nixosModules, pkgs, ... }:
 {
   imports = [
+    ./blahaj.pl/copyparty.nix
     ./blahaj.pl/gotosocial.nix
     ./blahaj.pl/wastebin.nix
     ./blahaj.pl/www.nix

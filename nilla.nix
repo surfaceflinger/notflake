@@ -32,6 +32,7 @@ nilla.create (
         srvos.loader = "raw";
 
         # override inputs
+        copyparty.settings.inputs.nixpkgs = config.inputs.copyparty.result;
         grapevine.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         home-manager.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
