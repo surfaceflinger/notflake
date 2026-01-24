@@ -20,7 +20,7 @@
     lurk
     magic-wormhole-rs
     ncdu
-    nixfmt-rfc-style
+    nixfmt
     npins
     pv
     rage
