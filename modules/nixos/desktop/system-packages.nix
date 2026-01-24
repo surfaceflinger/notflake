@@ -19,6 +19,4 @@
     (nvtopPackages.full.override { nvidia = false; })
     pwvucontrol
   ];
-
-  programs.adb.enable = true;
 }

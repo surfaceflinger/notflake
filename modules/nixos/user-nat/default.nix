@@ -73,6 +73,7 @@
         virt-viewer
 
         # misc
+        android-tools
         binsider
         claude-code
       ];
