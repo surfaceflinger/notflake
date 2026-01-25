@@ -35,6 +35,7 @@
   };
 
   boot.kernelParams = [
+    "debugfs=on"
     "hardened_usercopy=1"
     "hash_pointers=always"
     "tsx=auto"
