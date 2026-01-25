@@ -10,6 +10,7 @@
     ./boot.nix
     ./hardening.nix
     inputs.home-manager.result.nixosModules.default
+    ./kmscon.nix
     ./memory.nix
     ./mounts.nix
     ./nano.nix

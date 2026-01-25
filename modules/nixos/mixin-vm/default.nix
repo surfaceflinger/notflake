@@ -1,4 +1,9 @@
-{ config, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 {
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
@@ -8,4 +13,6 @@
     spice-vdagentd.enable = config.xdg.portal.enable;
     spice-webdavd.enable = config.xdg.portal.enable;
   };
+
+  services.kmscon.hwRender = lib.mkForce false;
 }

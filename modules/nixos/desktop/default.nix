@@ -17,4 +17,6 @@
 
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
+
+  services.kmscon.hwRender = true;
 }
