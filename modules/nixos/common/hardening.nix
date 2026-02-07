@@ -31,7 +31,13 @@
         usbguard.enable = false;
       };
     };
-    filesystems.special."/proc".options.hidepid = lib.mkForce false;
+    filesystems = {
+      special."/proc".options.hidepid = lib.mkForce false;
+      normal = {
+        "/home".options."bind" = false;
+        "/var/log".options."bind" = false;
+      };
+    };
   };
 
   boot.kernelParams = [

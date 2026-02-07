@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fcdea223397448d35d9b31f798479227e80183f6",
-      "url": "https://github.com/ryantm/agenix/archive/fcdea223397448d35d9b31f798479227e80183f6.tar.gz",
-      "hash": "sha256-wyT7Pl6tMFbFrs8Lk/TlEs81N6L+VSybPfiIgzU8lbQ="
+      "revision": "b027ee29d959fda4b60b57566d64c98a202e0feb",
+      "url": "https://github.com/ryantm/agenix/archive/b027ee29d959fda4b60b57566d64c98a202e0feb.tar.gz",
+      "hash": "sha256-9VnK6Oqai65puVJ4WYtCTvlJeXxMzAp/69HhQuTdl/I="
     },
     "blahajpl-homepage": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "hovudstraum",
       "submodules": false,
-      "revision": "72224d29d627c2cc5632bf74b43eb5edb9e3cdb7",
-      "url": "https://github.com/9001/copyparty/archive/72224d29d627c2cc5632bf74b43eb5edb9e3cdb7.tar.gz",
-      "hash": "sha256-bdQnwdB6iv+TjTLngfXY/8ys7ZcqdM6lVg14hc0RyiA="
+      "revision": "a368fc66b35e2fbc39e5109dc32da32777299a6a",
+      "url": "https://github.com/9001/copyparty/archive/a368fc66b35e2fbc39e5109dc32da32777299a6a.tar.gz",
+      "hash": "sha256-6SSs69Lh3GG0MaqcqFll9vp4j8pOc+pQrEM6mpIRWc4="
     },
     "dont-track-me": {
       "type": "Git",
@@ -88,9 +88,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f4ad5068ee8e89e4a7c2e963e10dd35cd77b37b7",
-      "url": "https://github.com/nix-community/home-manager/archive/f4ad5068ee8e89e4a7c2e963e10dd35cd77b37b7.tar.gz",
-      "hash": "sha256-07HMIGQ/WJeAQJooA7Kkg1SDKxhAiV6eodvOwTX6WKI="
+      "revision": "6cee0821577643e0b34e2c5d9a90d0b1b5cdca70",
+      "url": "https://github.com/nix-community/home-manager/archive/6cee0821577643e0b34e2c5d9a90d0b1b5cdca70.tar.gz",
+      "hash": "sha256-cyxgVsNfHnJ4Zn6G1EOzfTXbjTy7Ds9zMOsZaX7VZWs="
     },
     "monero-banlist": {
       "type": "Git",
@@ -101,9 +101,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "af51edc09b09101acd913a8d70af4a11e988aa31",
-      "url": "https://github.com/rblaine95/monero-banlist/archive/af51edc09b09101acd913a8d70af4a11e988aa31.tar.gz",
-      "hash": "sha256-43gC3ayOxuokMGQvkAEZ762U1CDmkoCEQ1bli8SktKo="
+      "revision": "95b1b038e6a0c3d69430d64d70f60491367e8d31",
+      "url": "https://github.com/rblaine95/monero-banlist/archive/95b1b038e6a0c3d69430d64d70f60491367e8d31.tar.gz",
+      "hash": "sha256-bTm/kNdLm8+9hX3nR8t250yox5hP23MYk8u8l3g0Crg="
     },
     "nano-syntax-highlighting": {
       "type": "Git",
@@ -153,9 +153,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "7fded3f84b8496671cdaebe6485b0887f326961c",
-      "url": "https://github.com/arnarg/nilla-utils/archive/7fded3f84b8496671cdaebe6485b0887f326961c.tar.gz",
-      "hash": "sha256-keY0ZbNKwhUrY2c6PjpKBJTHxXECEPU1h9kl3UsPYmM="
+      "revision": "a4baea7a972ff833a8d3f81d18c37ad4381de513",
+      "url": "https://github.com/arnarg/nilla-utils/archive/a4baea7a972ff833a8d3f81d18c37ad4381de513.tar.gz",
+      "hash": "sha256-hjnALh6DtV3+FrjPyfEyGRmiRXU94Y3Z+2l5b5gY/jk="
     },
     "nix-index-database": {
       "type": "Git",
@@ -166,9 +166,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "82befcf7dc77c909b0f2a09f5da910ec95c5b78f",
-      "url": "https://github.com/nix-community/nix-index-database/archive/82befcf7dc77c909b0f2a09f5da910ec95c5b78f.tar.gz",
-      "hash": "sha256-d3NBA9zEtBu2JFMnTBqWj7Tmi7R5OikoU2ycrdhQEws="
+      "revision": "2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb",
+      "url": "https://github.com/nix-community/nix-index-database/archive/2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb.tar.gz",
+      "hash": "sha256-hy0gcAgAcxrnSWKGuNO+Ob0x6jQ2xkR6hoaR0qJBHYs="
     },
     "nix-mineral": {
       "type": "Git",
@@ -179,9 +179,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c8b24a659cb296c1a0dde59d00bc9e33df47d9a8",
-      "url": "https://github.com/cynicsketch/nix-mineral/archive/c8b24a659cb296c1a0dde59d00bc9e33df47d9a8.tar.gz",
-      "hash": "sha256-AHDZ9dg4fSRpFrlp7Y+3BhfmEd6PJ8FX9/7spma51aM="
+      "revision": "fa4709e0700f990d46ac3136180ff1641de376f8",
+      "url": "https://github.com/cynicsketch/nix-mineral/archive/fa4709e0700f990d46ac3136180ff1641de376f8.tar.gz",
+      "hash": "sha256-4uB6s3xUYcWSTOr+thVPj42hcwS7PtW62my0rn8ZYyg="
     },
     "nixos-hardware": {
       "type": "Git",
@@ -205,9 +205,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "bf494d6871fb8426f789d4f2bb2228773b5efcdf",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/bf494d6871fb8426f789d4f2bb2228773b5efcdf.tar.gz",
-      "hash": "sha256-sXu77fTEwoLtLDnJetEOVHAQib6mdYPeIKShlOr0xlE="
+      "revision": "b66c62ee7e2aa69b88bbd56dac0914d7c6f04b7b",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/b66c62ee7e2aa69b88bbd56dac0914d7c6f04b7b.tar.gz",
+      "hash": "sha256-KUTj9nug8vKBMiJLwSIhWgqbnP/c5qIJdtFtZjCWyz0="
     },
     "nixpkgs-tofu": {
       "type": "Git",
@@ -245,9 +245,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "861710611463c47190345f09f6959c9230def555",
-      "url": "https://github.com/nix-community/srvos/archive/861710611463c47190345f09f6959c9230def555.tar.gz",
-      "hash": "sha256-i29n0IDa5nR8O9w7QsajWNy/dfgfnGF7/nJY+/OdjEY="
+      "revision": "caa983d259e5ba4b0f2e04f4b8a2839423f62b44",
+      "url": "https://github.com/nix-community/srvos/archive/caa983d259e5ba4b0f2e04f4b8a2839423f62b44.tar.gz",
+      "hash": "sha256-SnlJ3R57b4NPFIhtutym5L4RqcD+fmz+vI7E6g/jtTE="
     },
     "tf": {
       "type": "Git",
@@ -258,9 +258,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a673441341a003b4889a293e276ab9588f616c3c",
-      "url": "https://github.com/vdesjardins/terraform-overlay/archive/a673441341a003b4889a293e276ab9588f616c3c.tar.gz",
-      "hash": "sha256-i53rd0YEOh3TAxrQ5mCRwfQqS3iPbsn1T2m7YyN5lDU="
+      "revision": "f55f507bdb1dc4a128872b5f450498532ef9ac9c",
+      "url": "https://github.com/vdesjardins/terraform-overlay/archive/f55f507bdb1dc4a128872b5f450498532ef9ac9c.tar.gz",
+      "hash": "sha256-Z3LFnXjWLMTrxAyV9RXjFsz9I2i57Q7PesfS+8H6OrY="
     },
     "tgexpiry": {
       "type": "Git",
