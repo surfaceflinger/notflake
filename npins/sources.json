@@ -79,18 +79,6 @@
       "url": "https://github.com/nilla-nix/flake-compat/archive/bbf23c5a71bcc582921145139464226e0fb82192.tar.gz",
       "hash": "sha256-drL2fVdcowCdRauFVfqWWUfGEGVDqui5Ul240kyivZg="
     },
-    "grapevine": {
-      "type": "Git",
-      "repository": {
-        "type": "Git",
-        "url": "https://gitlab.computer.surgery/matrix/grapevine.git"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "0aae932bc949d8d9c179705a015bc0ca85ac3443",
-      "url": null,
-      "hash": "sha256-rH1cjS86JYQvYvvZ3w6XLtMsCbLC7Wwcywy5pr3uMLY="
-    },
     "home-manager": {
       "type": "Git",
       "repository": {

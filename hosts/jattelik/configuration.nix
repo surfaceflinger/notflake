@@ -13,7 +13,6 @@
     nixosModules.server
     nixosModules.user-nat
     ./personal/ipfs.nix
-    ./personal/matrix.nix
     ./personal/soju.nix
     ./personal/vaultwarden.nix
     ./storage.nix

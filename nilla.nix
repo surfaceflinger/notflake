@@ -33,7 +33,6 @@ nilla.create (
 
         # override inputs
         copyparty.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
-        grapevine.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         home-manager.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-mineral.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
