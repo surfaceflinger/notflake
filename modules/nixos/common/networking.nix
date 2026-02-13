@@ -66,40 +66,30 @@
 
   # kernel tuning
   boot.kernel.sysctl = {
-    # bbr + cake
-    "net.core.default_qdisc" = lib.mkForce "cake";
-    "net.ipv4.tcp_congestion_control" = lib.mkForce "bbr";
-
     # nonlocal bind, helps some "race conditions" with services hosted on vpns etc.
     "net.ipv4.ip_nonlocal_bind" = 1;
     "net.ipv6.ip_nonlocal_bind" = 1;
 
-    "net.ipv4.tcp_fastopen" = 3;
-    "net.ipv4.tcp_tw_reuse" = 1;
-    "net.ipv4.tcp_fin_timeout" = 10;
-    "net.ipv4.tcp_slow_start_after_idle" = 0;
-
     # keepalive
-    "net.ipv4.tcp_keepalive_time" = 60;
-    "net.ipv4.tcp_keepalive_intvl" = 10;
-    "net.ipv4.tcp_keepalive_probes" = 6;
+    "net.ipv4.tcp_keepalive_time" = 120;
+    "net.ipv4.tcp_keepalive_intvl" = 30;
+    "net.ipv4.tcp_keepalive_probes" = 4;
 
     # mtu probing
     "net.ipv4.tcp_mtu_probing" = 1;
 
-    # random shit from k4yt3x
-    "net.core.netdev_max_backlog" = 250000;
-    "net.core.rmem_default" = 8388608;
-    "net.core.wmem_default" = 8388608;
-    "net.core.rmem_max" = 536870912;
-    "net.core.wmem_max" = 536870912;
-    "net.core.optmem_max" = 40960;
-    "net.ipv4.tcp_synack_retries" = 5;
+    # random shit from k4yt3x and others
+    #"net.core.netdev_max_backlog" = 250000;
+    "net.core.rmem_default" = 26214400;
+    "net.core.rmem_max" = 26214400;
+    "net.core.wmem_default" = 26214400;
+    "net.core.wmem_max" = 26214400;
     "net.ipv4.ip_local_port_range" = "1024 65535";
-    "net.ipv4.tcp_base_mss" = 1024;
-    "net.ipv4.tcp_rmem" = "8192 262144 536870912";
-    "net.ipv4.tcp_wmem" = "4096 16384 536870912";
     "net.ipv4.tcp_adv_win_scale" = "-2";
+    "net.ipv4.tcp_ecn" = 1;
+    "net.ipv4.tcp_fastopen" = 3;
     "net.ipv4.tcp_notsent_lowat" = 131072;
+    "net.ipv4.tcp_rmem" = "4096	1000000	16000000";
+    "net.ipv4.tcp_wmem" = "4096	1000000	16000000";
   };
 }

@@ -33,6 +33,7 @@
     settings = {
       allowed-users = [ "@users" ];
       auto-allocate-uids = true;
+      use-cgroups = true;
       use-xdg-base-directories = true;
       experimental-features = lib.mkForce [
         "auto-allocate-uids"

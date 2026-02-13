@@ -23,6 +23,7 @@
       # mine
       "browser.search.context.loadInBackground" = true;
       "browser.tabs.firefox-view" = false;
+      "browser.tabs.groups.enabled" = false;
       "browser.tabs.loadBookmarksInBackground" = true;
       "browser.tabs.loadDivertedInBackground" = false;
       "browser.tabs.loadInBackground" = true;

@@ -19,7 +19,6 @@
     packages =
       with pkgs;
       [
-        argocd
         awscli2
         awsume
         buildah

@@ -49,7 +49,6 @@
         trezor-suite
 
         # ops
-        argocd
         buildah
         gnumake
         google-cloud-sdk
