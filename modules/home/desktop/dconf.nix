@@ -36,7 +36,6 @@ with lib.hm.gvariant;
         "org.telegram.desktop.desktop"
         "vesktop.desktop"
         "slack.desktop"
-        "org.gnome.Fractal.desktop"
         "org.squidowl.halloy.desktop"
         "dev.geopjr.Tuba.desktop"
         "timedoctor-desktop.desktop"

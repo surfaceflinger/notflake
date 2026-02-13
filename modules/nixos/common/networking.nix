@@ -66,6 +66,8 @@
 
   # kernel tuning
   boot.kernel.sysctl = {
+    "net.ipv4.tcp_congestion_control" = lib.mkForce "bbr";
+
     # nonlocal bind, helps some "race conditions" with services hosted on vpns etc.
     "net.ipv4.ip_nonlocal_bind" = 1;
     "net.ipv6.ip_nonlocal_bind" = 1;
@@ -79,7 +81,7 @@
     "net.ipv4.tcp_mtu_probing" = 1;
 
     # random shit from k4yt3x and others
-    #"net.core.netdev_max_backlog" = 250000;
+    "net.core.netdev_max_backlog" = 250000;
     "net.core.rmem_default" = 26214400;
     "net.core.rmem_max" = 26214400;
     "net.core.wmem_default" = 26214400;

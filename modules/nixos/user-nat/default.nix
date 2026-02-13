@@ -33,7 +33,6 @@
         brave
         burpsuite
         diebahn
-        fractal
         fragments
         gnome-podcasts
         newsflash
