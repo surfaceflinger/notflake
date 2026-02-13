@@ -35,6 +35,7 @@
       special."/proc".options.hidepid = lib.mkForce false;
       normal = {
         "/home".options."bind" = false;
+        "/srv".enable = lib.mkForce false;
         "/var/log".options."bind" = false;
       };
     };
