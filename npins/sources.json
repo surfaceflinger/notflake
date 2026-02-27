@@ -209,20 +209,6 @@
       "url": "https://github.com/surfaceflinger/nixpkgs/archive/f2439a4d9bae795d88f8c9b52bdfbbf7b0faa1b4.tar.gz",
       "hash": "sha256-pTwstzfbiSisULnQSsmE4uO9TQJmaK2frPwVJK/zjMk="
     },
-    "nixpkgs-tofu": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nixos",
-        "repo": "nixpkgs"
-      },
-      "branch": "nixpkgs-unstable",
-      "submodules": false,
-      "revision": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
-      "url": "https://github.com/nixos/nixpkgs/archive/e6f23dc08d3624daab7094b701aa3954923c6bbb.tar.gz",
-      "hash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
-      "frozen": true
-    },
     "schizofox": {
       "type": "Git",
       "repository": {
@@ -248,19 +234,6 @@
       "revision": "5cd73bcf984b72d8046e1175d13753de255adfb9",
       "url": "https://github.com/nix-community/srvos/archive/5cd73bcf984b72d8046e1175d13753de255adfb9.tar.gz",
       "hash": "sha256-LDWvJDR1J8xE8TBJjzWnOA0oVP/l9xBFC4npQPJDHN4="
-    },
-    "tf": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "vdesjardins",
-        "repo": "terraform-overlay"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "e95159f92fdd3a5ca4de4bb694ec19d7aaf73d97",
-      "url": "https://github.com/vdesjardins/terraform-overlay/archive/e95159f92fdd3a5ca4de4bb694ec19d7aaf73d97.tar.gz",
-      "hash": "sha256-dKPhHpEKz0TS4jbsYE31JQxC2onK9E4EsK1oIYazi5s="
     },
     "tgexpiry": {
       "type": "Git",

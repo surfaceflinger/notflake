@@ -22,9 +22,6 @@ nilla.create (
           loader = "flake";
         };
 
-        # need specific opentofu/terragrunt versions
-        nixpkgs-tofu.loader = "flake";
-
         # these inputs offer only nixos modules so
         # we can just import relevant default.nix files
         agenix.loader = "raw";
@@ -37,7 +34,6 @@ nilla.create (
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-mineral.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         schizofox.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
-        tf.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         tgexpiry.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         xkomhotshot.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
       };
