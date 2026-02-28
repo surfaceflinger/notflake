@@ -101,9 +101,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ea18ee9ce89a54954ab58b13e45bed377f2351b2",
-      "url": "https://github.com/rblaine95/monero-banlist/archive/ea18ee9ce89a54954ab58b13e45bed377f2351b2.tar.gz",
-      "hash": "sha256-amrSikXNPhwGM1rqAp6mu3EXIKZyPF+9mUXXMD6FTqY="
+      "revision": "4ac36cbcbabcf2a9fe9486a0e9b2a1aab87014b7",
+      "url": "https://github.com/rblaine95/monero-banlist/archive/4ac36cbcbabcf2a9fe9486a0e9b2a1aab87014b7.tar.gz",
+      "hash": "sha256-PYgonlwuHelV+kmFYfsy8lPTnFJSPbSwPbKiiWx9J7w="
     },
     "nano-syntax-highlighting": {
       "type": "Git",
@@ -205,9 +205,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "f2439a4d9bae795d88f8c9b52bdfbbf7b0faa1b4",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/f2439a4d9bae795d88f8c9b52bdfbbf7b0faa1b4.tar.gz",
-      "hash": "sha256-pTwstzfbiSisULnQSsmE4uO9TQJmaK2frPwVJK/zjMk="
+      "revision": "86b8ec4b4832deadc7ed94a1ca2ac7e65dd30097",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/86b8ec4b4832deadc7ed94a1ca2ac7e65dd30097.tar.gz",
+      "hash": "sha256-yjndKPTDX2Gh3bOjcZ7azmFWiFVoQWQ5QbQdwE6y05U="
     },
     "schizofox": {
       "type": "Git",
