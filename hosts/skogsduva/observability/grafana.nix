@@ -26,6 +26,7 @@
         cookie_samesite = "strict";
         cookie_secure = true;
         disable_initial_admin_creation = true;
+        secret_key = "0ddd049d7413569d2a7030aa1eae2e23210e81ad30fc43b2e8ad33748eb95090";
         x_xss_protection = false;
       };
       analytics = {
