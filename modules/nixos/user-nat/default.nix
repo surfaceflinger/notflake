@@ -1,6 +1,7 @@
 {
   config,
   homeModules,
+  inputs,
   lib,
   pkgs,
   ...
@@ -50,7 +51,6 @@
         # ops
         buildah
         gnumake
-        google-cloud-sdk
         hcloud
         k9s
         kubectl
@@ -58,6 +58,7 @@
         kubectl-df-pv
         kubectl-images
         kubectl-neat
+        kubectl-rabbitmq
         kubectl-validate
         kubelogin-oidc
         kubernetes-helm
@@ -73,7 +74,7 @@
         # misc
         android-tools
         binsider
-        claude-code
+        inputs.claude-code-nix.result.packages."${pkgs.stdenv.hostPlatform.system}".claude-code-node
       ];
   };
 

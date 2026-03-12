@@ -29,6 +29,7 @@ nilla.create (
         srvos.loader = "raw";
 
         # override inputs
+        claude-code-nix.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         copyparty.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         home-manager.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
