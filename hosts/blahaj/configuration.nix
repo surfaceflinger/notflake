@@ -61,7 +61,7 @@
 
   # harmonia binary cache
   networking.firewall.allowedTCPPorts = [ 30909 ];
-  services.harmonia = {
+  services.harmonia.cache = {
     enable = true;
     settings = {
       bind = "[::1]:30908";
@@ -73,7 +73,7 @@
         header Content-Type application/x-nix-archive
       }
     }
-    reverse_proxy ${config.services.harmonia.settings.bind}
+    reverse_proxy ${config.services.harmonia.cache.settings.bind}
   '';
 
   # obs with gstreamer and vkcapture; gpu-screen-recorder
