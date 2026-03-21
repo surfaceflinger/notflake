@@ -75,6 +75,8 @@
         android-tools
         binsider
         inputs.claude-code-nix.result.packages."${pkgs.stdenv.hostPlatform.system}".claude-code-node
+        nodejs
+        python3Packages.python
       ];
   };
 
