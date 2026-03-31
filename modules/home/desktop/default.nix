@@ -7,6 +7,7 @@
     ./gtk.nix
     ./mangohud.nix
     ./mpv.nix
+    ./opencode.nix
     ./schizofox.nix
     ./tailscale.nix
     ./xdg.nix
