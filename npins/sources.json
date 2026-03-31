@@ -257,9 +257,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "22c1b3d456a407235f4d732a029d1157f348a278",
-      "url": "https://github.com/surfaceflinger/tgexpiry/archive/22c1b3d456a407235f4d732a029d1157f348a278.tar.gz",
-      "hash": "sha256-IZWl/aufwYWTfc0Z+ENbXVMdoFeLLjsPZ53dfFFbBXo="
+      "revision": "053d24d2f69aa870814985a0ce99a5981e14d2fe",
+      "url": "https://github.com/surfaceflinger/tgexpiry/archive/053d24d2f69aa870814985a0ce99a5981e14d2fe.tar.gz",
+      "hash": "sha256-yMcrbKAu3Qff6tk2IzIajKg/ctv9Y7GaESLE6VGq4IQ="
     },
     "xkomhotshot": {
       "type": "Git",

@@ -35,7 +35,6 @@ nilla.create (
         nix-index-database.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         nix-mineral.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         schizofox.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
-        tgexpiry.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
         xkomhotshot.settings.inputs.nixpkgs = config.inputs.nixpkgs-flake.result;
       };
 
