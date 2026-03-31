@@ -58,7 +58,7 @@
   };
 
   # other software
-  environment.systemPackages = with pkgs; [ ArchiSteamFarm ];
+  environment.systemPackages = with pkgs; [ archisteamfarm ];
 
   # secrets
   age.secrets.googlebackup = {
