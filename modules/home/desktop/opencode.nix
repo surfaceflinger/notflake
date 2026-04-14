@@ -9,11 +9,11 @@
       model = "nano-gpt/moonshotai/kimi-k2.5:thinking";
       small_model = "nano-gpt/moonshotai/kimi-k2.5";
       autoupdate = false;
-      theme = "system";
     };
+    tui.theme = "system";
 
-    # Rules
-    rules = ''
+    # Context
+    context = ''
       - When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.
       - When writing scripts, use nix shell shebangs.
       - You can access any tool that's missing in $PATH by using nix commands, eg. nix run.
