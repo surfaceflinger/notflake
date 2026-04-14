@@ -1,13 +1,24 @@
-_: {
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "defaults"
-      "size=2G"
-      "mode=755"
-    ];
-  };
+{ config, lib, ... }:
+{
+  fileSystems = {
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=2G"
+        "mode=755"
+      ];
+    };
 
-  fileSystems."/boot".fsType = "vfat";
+    "/boot".fsType = "vfat";
+  }
+  // lib.genAttrs [ "/etc" "/root" "/tmp" "/var" "/var/tmp" ] (_: {
+    fsType = "none";
+  })
+  // lib.genAttrs [ "/nix" "/etc/ssh" "/home" "/var/log" "/var/lib" ] (fs: {
+    device = "${config.networking.hostName}/NixOS${lib.optionalString (fs != "/") fs}";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  });
 }
