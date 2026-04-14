@@ -43,6 +43,9 @@
     };
   };
 
+  # enable nftables
+  networking.nftables.enable = true;
+
   # tailscale
   networking.firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
   services.tailscale = {
@@ -51,6 +54,7 @@
     useRoutingFeatures = "both";
     extraDaemonFlags = [ "--no-logs-no-support" ];
   };
+  systemd.services.tailscaled.serviceConfig.Environment = [ "TS_DEBUG_FIREWALL_MODE=nftables" ];
 
   ## https://github.com/tailscale/tailscale/issues/8223
   systemd.services."whytailscalewhy" = {
