@@ -22,7 +22,7 @@
     ./zsh.nix
   ];
 
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_hardened;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
 
   # override srvos changes
   programs.vim.defaultEditor = false;
