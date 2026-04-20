@@ -109,6 +109,8 @@
           restore_paused "yes"
           volume_normalization "yes"
 
+          bind_to_address "$XDG_RUNTIME_DIR/mpd.sock"
+
           audio_output {
             type "pipewire"
             name "PipeWire"
