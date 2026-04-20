@@ -1,4 +1,9 @@
-{ inputs, nixosModules, ... }:
+{
+  inputs,
+  nixosModules,
+  pkgs,
+  ...
+}:
 {
   imports = [
     "${inputs.nixos-hardware.result}/framework/12-inch/13th-gen-intel"
@@ -32,5 +37,8 @@
   ];
 
   # i need angry birds and subway surfers
-  virtualisation.waydroid.enable = true;
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid-nftables;
+  };
 }
