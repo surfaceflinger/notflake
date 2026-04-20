@@ -33,6 +33,7 @@
         # random desktop software
         brave
         burpsuite
+        constrict
         diebahn
         fragments
         gnome-podcasts
