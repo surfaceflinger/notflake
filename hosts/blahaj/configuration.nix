@@ -58,13 +58,13 @@
   # openrgb
   services.hardware.openrgb.enable = true;
 
-  # harmonia binary cache
+  # nix-serve-ng binary cache
   networking.firewall.allowedTCPPorts = [ 30909 ];
-  services.harmonia.cache = {
+  services.nix-serve = {
     enable = true;
-    settings = {
-      bind = "[::1]:30908";
-    };
+    package = pkgs.nix-serve-ng;
+    bindAddress = "127.0.0.1";
+    port = 30908;
   };
   services.caddy.virtualHosts.":30909".extraConfig = ''
     encode zstd gzip {
@@ -72,7 +72,7 @@
         header Content-Type application/x-nix-archive
       }
     }
-    reverse_proxy ${config.services.harmonia.cache.settings.bind}
+    reverse_proxy ${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}
   '';
 
   # obs with gstreamer and vkcapture; gpu-screen-recorder
