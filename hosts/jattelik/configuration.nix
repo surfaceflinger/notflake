@@ -28,9 +28,6 @@
   # base
   nixpkgs.hostPlatform = "aarch64-linux";
 
-  # https://github.com/cynicsketch/nix-mineral/issues/56
-  boot.kernel.sysctl."vm.mmap_rnd_bits" = 18;
-
   # netcup doesn't provide dhcp
   # and their metadata service bugs cloud-init out.
   systemd.network.networks."1-wan" = {
