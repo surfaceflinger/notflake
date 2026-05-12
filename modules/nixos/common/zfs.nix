@@ -1,5 +1,8 @@
 _: {
-  boot.supportedFilesystems = [ "zfs" ];
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    zfs.forceImportRoot = true;
+  };
 
   services.zfs.autoSnapshot = {
     enable = true;
