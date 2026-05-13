@@ -244,9 +244,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1f8cefff658cbea7f3b95ab0a3ebb575cb2783bf",
-      "url": "https://github.com/surfaceflinger/spacebot-nix/archive/1f8cefff658cbea7f3b95ab0a3ebb575cb2783bf.tar.gz",
-      "hash": "sha256-gI//bxwUVbTJ6STxv34hcPr561pGqT8qkSVFGAgMkLc="
+      "revision": "8f140b35848fdc47e3a6b3bd40d8739e81049926",
+      "url": "https://github.com/surfaceflinger/spacebot-nix/archive/8f140b35848fdc47e3a6b3bd40d8739e81049926.tar.gz",
+      "hash": "sha256-facOSa9C3uBiHuw6AUAmI2IuTGp09rTe1Xq13O12zFE="
     },
     "srvos": {
       "type": "Git",
