@@ -1,4 +1,9 @@
 { lib, pkgs, ... }:
+let
+  lsColors = pkgs.runCommand "ls-colors-ansi" { } ''
+    ${lib.getExe pkgs.vivid} generate ansi > $out
+  '';
+in
 {
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
@@ -19,6 +24,7 @@
       "hist_reduce_blanks"
       "interactive_comments"
       "prompt_subst"
+      "share_history"
     ];
     shellAliases = with pkgs; rec {
       cat = "${lib.getExe bat} -Pp";
@@ -28,55 +34,51 @@
       tree = lib.getExe tre-command;
     };
     shellInit = ''
-      mkdir -p "$HOME/.config/zsh" && touch "$HOME/.config/zsh/history"
+      [[ -e "$HOME/.config/zsh/history" ]] || {
+          mkdir -p "$HOME/.config/zsh" && touch "$HOME/.config/zsh/history"
+      }
       zsh-newuser-install () {}
       lk () {cd "$(${lib.getExe pkgs.walk} "$@")"}
+      export LS_COLORS=$(<${lsColors})
     '';
     promptInit = ''
-      autoload -U colors && colors # Enable colors
-      HOST=$(${lib.getExe' pkgs.inetutils "hostname"}) # Fixup for cloud-init sourced hostname
       stty stop undef # Disable ctrl-s to freeze terminal.
       zstyle ':completion:*' menu select # select-style completions
 
-      LS_COLORS=$(${lib.getExe pkgs.vivid} generate catppuccin-mocha)
-
-      # setup prompt with git and awsume integration
       autoload -Uz vcs_info
+      zstyle ':vcs_info:git:*' check-for-changes true
+      zstyle ':vcs_info:git:*' stagedstr '%F{yellow}+%f'
+      zstyle ':vcs_info:git:*' unstagedstr '%F{red}*%f'
+      zstyle ':vcs_info:git:*' formats '%F{green}🌸 %b%c%u%F{green}%f '
+
+      # only the awsume segment + vcs_info change per-prompt
       precmd() {
-          # setup colors
-          local awsume_info
-          local awsume_info_color="%F{153}"
-          local userhost_color="%F{183}"
-          local dir_color="%F{225}"
-          local prompt_symbol="✨"
-          local vcs_info_color="%F{190}"
-
-          if [[ $UID -eq 0 ]]; then
-              userhost_color="%F{161}"
-              prompt_symbol="😾"
-          fi
-
-          # setup awsume + vcs
           if [[ -n "$AWSUME_PROFILE" ]]; then
-              awsume_info="$awsume_info_color☁️  $AWSUME_PROFILE%f "
+              awsume_info="%F{blue}☁️  $AWSUME_PROFILE%f "
+          else
+              awsume_info=""
           fi
-          zstyle ":vcs_info:git:*" formats "''${vcs_info_color}🌸 %b%f "
           vcs_info
+      }
 
-          # setup prompt
-          local BASE="$userhost_color%n@%m %f[$dir_color%~%f] $vcs_info_msg_0_$awsume_info"
+      () {
+          local userhost_color prompt_symbol
+          if [[ $UID -eq 0 ]]; then
+              userhost_color='%F{red}'; prompt_symbol='😾'
+          else
+              userhost_color='%F{magenta}'; prompt_symbol='✨'
+          fi
 
-          # don't use colors/emojis on dumb terminals
           case $TERM in
           xterm*)
-              PS1="$BASE$prompt_symbol ";;
+              PS1="''${userhost_color}%n@%m %f[%F{cyan}%~%f] \''${vcs_info_msg_0_}\''${awsume_info}%(?..%F{red}✗ %?%f )''${prompt_symbol} " ;;
           *)
-              PS1=$(echo "$BASE%# " | tr -cd "[:print:]");
+              PS1=$(print -n "''${userhost_color}%n@%m %f[%F{cyan}%~%f] %(?..[%?] )%# " | tr -cd '[:print:]') ;;
           esac
       }
 
-      echo -ne '\e[5 q' # Use beam shape cursor on startup.
-      preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+      print -n '\e[5 q' # Use beam shape cursor on startup.
+      preexec() { print -n '\e[5 q' ;} # Use beam shape cursor for each new prompt.
     '';
   };
 }
