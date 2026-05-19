@@ -29,7 +29,7 @@
     (prismlauncher.override {
       jdks = [
         jdk8
-        jdk21
+        jdk25
       ];
     }) # minecraft (good one)
   ];
