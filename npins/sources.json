@@ -235,19 +235,6 @@
       "url": "https://github.com/schizofox/schizofox/archive/0222d835f7f594f455afb8cc3a0a8ef7460bdc80.tar.gz",
       "hash": "sha256-QipoAi5e1hQDkacT3G2uYy5lAlMZjvvE92npIUokYq4="
     },
-    "spacebot": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "surfaceflinger",
-        "repo": "spacebot-nix"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "8f140b35848fdc47e3a6b3bd40d8739e81049926",
-      "url": "https://github.com/surfaceflinger/spacebot-nix/archive/8f140b35848fdc47e3a6b3bd40d8739e81049926.tar.gz",
-      "hash": "sha256-facOSa9C3uBiHuw6AUAmI2IuTGp09rTe1Xq13O12zFE="
-    },
     "srvos": {
       "type": "Git",
       "repository": {

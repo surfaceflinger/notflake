@@ -14,7 +14,6 @@
     nixosModules.user-nat
     ./personal/ipfs.nix
     ./personal/soju.nix
-    ./personal/spacebot.nix
     ./personal/vaultwarden.nix
     ./storage.nix
     ./www.nix
