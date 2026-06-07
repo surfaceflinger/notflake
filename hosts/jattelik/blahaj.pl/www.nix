@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   services.caddy.virtualHosts."blahaj.pl".extraConfig = ''
     import common
 

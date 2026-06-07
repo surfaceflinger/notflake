@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   imports = [ inputs.copyparty.result.nixosModules.default ];
 
   services.copyparty = {

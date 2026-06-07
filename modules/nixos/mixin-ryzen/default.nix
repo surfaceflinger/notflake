@@ -1,5 +1,4 @@
-{ config, inputs, ... }:
-{
+{ config, inputs, ... }: {
   imports = [ "${inputs.nixos-hardware.result}/common/cpu/amd/pstate.nix" ];
 
   boot = {

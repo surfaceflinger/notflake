@@ -1,5 +1,4 @@
-{ lib, ... }:
-with lib.hm.gvariant;
+{ lib, ... }: with lib.hm.gvariant;
 {
   dconf.settings = {
     # gnome

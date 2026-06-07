@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   services.minidlna = {
     enable = true;
     openFirewall = true;

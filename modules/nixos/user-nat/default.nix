@@ -81,26 +81,24 @@
       ];
   };
 
-  home-manager.users.nat =
-    { ... }:
-    {
-      imports = [
-        homeModules.common
-      ]
-      ++ lib.optionals config.xdg.portal.enable [
-        ./halloy.nix
-        homeModules.desktop
-      ];
+  home-manager.users.nat = { ... }: {
+    imports = [
+      homeModules.common
+    ]
+    ++ lib.optionals config.xdg.portal.enable [
+      ./halloy.nix
+      homeModules.desktop
+    ];
 
-      programs.git.settings.user = {
-        email = "nat@nekopon.pl";
-        name = "nat";
-      };
-
-      services.podman.enable = config.xdg.portal.enable;
-
-      systemd.user.tmpfiles.rules = [ "D %h/Downloads 0700 - - -" ];
+    programs.git.settings.user = {
+      email = "nat@nekopon.pl";
+      name = "nat";
     };
+
+    services.podman.enable = config.xdg.portal.enable;
+
+    systemd.user.tmpfiles.rules = [ "D %h/Downloads 0700 - - -" ];
+  };
 
   # crypto hw wallets!
   hardware.ledger.enable = config.xdg.portal.enable;

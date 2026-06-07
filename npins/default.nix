@@ -73,10 +73,7 @@ let
         else
           {
             fetchTarball =
-              {
-                url,
-                sha256,
-              }:
+              { url, sha256 }:
               pkgs.fetchzip {
                 inherit url sha256;
                 extension = "tar";
@@ -116,11 +113,7 @@ let
     spec // { outPath = mayOverride name path; };
 
   mkGitSource =
-    {
-      fetchTarball,
-      fetchGit,
-      ...
-    }:
+    { fetchTarball, fetchGit, ... }:
     {
       repository,
       revision,
@@ -171,11 +164,7 @@ let
 
   mkPyPiSource =
     { fetchurl, ... }:
-    {
-      url,
-      hash,
-      ...
-    }:
+    { url, hash, ... }:
     fetchurl {
       inherit url;
       sha256 = hash;
@@ -183,22 +172,14 @@ let
 
   mkChannelSource =
     { fetchTarball, ... }:
-    {
-      url,
-      hash,
-      ...
-    }:
+    { url, hash, ... }:
     fetchTarball {
       inherit url;
       sha256 = hash;
     };
 
   mkUrlSource =
-    {
-      fetchTarball,
-      fetchurl,
-      ...
-    }:
+    { fetchTarball, fetchurl, ... }:
     {
       url,
       hash,
@@ -227,9 +208,9 @@ let
           imageName = image_name;
           imageDigest = image_digest;
           finalImageTag = image_tag;
-          hash = hash;
+          inherit hash;
         }
-        // (if args.arch or null != null then { arch = args.arch; } else { })
+        // (if args.arch or null != null then { inherit (args) arch; } else { })
       );
 
 in
@@ -251,7 +232,7 @@ mkFunctor (
         input
       else
         throw "Unsupported input type ${builtins.typeOf input}, must be a path or an attrset";
-    version = data.version;
+    inherit (data) version;
   in
   if version == 8 then
     builtins.mapAttrs (name: spec: mkFunctor (mkSource name spec)) data.pins

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.prometheus.exporters.json = {
     enable = true;
     listenAddress = "[::1]";

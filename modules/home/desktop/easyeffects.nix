@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.easyeffects.enable = true;
 
   xdg.dataFile = {

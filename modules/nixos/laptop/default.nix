@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   imports = [ "${inputs.nixos-hardware.result}/common/pc/laptop" ];
 
   # disable kcfi

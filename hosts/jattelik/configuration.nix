@@ -1,5 +1,4 @@
-{ nixosModules, pkgs, ... }:
-{
+{ nixosModules, pkgs, ... }: {
   imports = [
     ./blahaj.pl/copyparty.nix
     ./blahaj.pl/gotosocial.nix

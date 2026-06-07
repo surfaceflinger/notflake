@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.pipewire = {
     extraConfig = {
       client."99-resample"."stream.properties"."resample.quality" = 10;

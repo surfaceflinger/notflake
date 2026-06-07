@@ -1,5 +1,4 @@
-{ inputs, nixosModules, ... }:
-{
+{ inputs, nixosModules, ... }: {
   imports = [
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     "${inputs.nixos-hardware.result}/lenovo/thinkpad/t440p"

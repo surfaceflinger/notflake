@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   users.groups.music = { };
   systemd.services = {
     slimserver.serviceConfig.Group = "music";

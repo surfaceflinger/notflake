@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   services.prometheus = {
     enable = true;
     webExternalUrl = "http://prometheus.natalia.ovh/";

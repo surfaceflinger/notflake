@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   imports = [
     ./git.nix
     inputs.dont-track-me.result.homeManagerModules.default

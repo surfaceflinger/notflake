@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   # pipewire
   environment.systemPackages = [ pkgs.wiremix ];
   security.rtkit.enable = true;

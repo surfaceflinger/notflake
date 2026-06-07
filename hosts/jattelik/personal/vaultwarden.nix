@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   age.secrets.vaultwarden.file = ../../../secrets/vaultwarden.age;
 
   services.vaultwarden = {

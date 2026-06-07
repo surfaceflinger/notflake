@@ -1,5 +1,4 @@
-{ osConfig, ... }:
-{
+{ osConfig, ... }: {
   programs.halloy = {
     enable = true;
 

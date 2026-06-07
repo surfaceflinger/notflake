@@ -90,38 +90,36 @@
   ];
 
   # home-manager
-  home-manager.users.nat =
-    { ... }:
-    {
-      imports = [ inputs.tgexpiry.result.homeModules.tgexpiry ];
+  home-manager.users.nat = { ... }: {
+    imports = [ inputs.tgexpiry.result.homeModules.tgexpiry ];
 
-      services.tgexpiry.enable = true;
+    services.tgexpiry.enable = true;
 
-      services.amberol.enable = lib.mkForce false;
-      services.mpd = {
-        enable = true;
-        musicDirectory = "/vol/ikea/Media/Music/mpd";
-        extraConfig = ''
-          auto_update "yes"
-          filesystem_charset "UTF-8"
-          replaygain "track"
-          restore_paused "yes"
-          volume_normalization "yes"
+    services.amberol.enable = lib.mkForce false;
+    services.mpd = {
+      enable = true;
+      musicDirectory = "/vol/ikea/Media/Music/mpd";
+      extraConfig = ''
+        auto_update "yes"
+        filesystem_charset "UTF-8"
+        replaygain "track"
+        restore_paused "yes"
+        volume_normalization "yes"
 
-          bind_to_address "$XDG_RUNTIME_DIR/mpd.sock"
+        bind_to_address "$XDG_RUNTIME_DIR/mpd.sock"
 
-          audio_output {
-            type "pipewire"
-            name "PipeWire"
-          }
+        audio_output {
+          type "pipewire"
+          name "PipeWire"
+        }
 
-          audio_output {
-            type "fifo"
-            name "Visualizer"
-            path "/tmp/mpd.fifo"
-            format "44100:16:2"
-          }
-        '';
-      };
+        audio_output {
+          type "fifo"
+          name "Visualizer"
+          path "/tmp/mpd.fifo"
+          format "44100:16:2"
+        }
+      '';
     };
+  };
 }

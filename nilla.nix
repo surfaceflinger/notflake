@@ -4,8 +4,7 @@ let
   nilla = import pins.nilla;
 in
 nilla.create (
-  { config }:
-  {
+  { config }: {
     includes = [ "${pins.nilla-utils}/modules" ];
 
     config = {

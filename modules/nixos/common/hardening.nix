@@ -1,5 +1,4 @@
-{ inputs, lib, ... }:
-{
+{ inputs, lib, ... }: {
   imports = [ inputs.nix-mineral.result.nixosModules.nix-mineral ];
 
   nix-mineral = {

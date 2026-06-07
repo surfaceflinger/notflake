@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   age.secrets.caddy-desec-jattelik.file = ../../secrets/caddy-desec-jattelik.age;
 
   services.caddy = {
