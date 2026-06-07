@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   boot = {
     kernelModules = [ "ntsync" ];
     kernel.sysctl = {
@@ -24,7 +23,7 @@
     lunar-client # minecraft with spyware
     mcpelauncher-ui-qt # minecraft with more spyware
     pcsx2 # ps2 emu
-    rpcs3 # ps3 emu
+    #rpcs3 # ps3 emu
     steamguard-cli # steam MFA
     (prismlauncher.override {
       jdks = [
