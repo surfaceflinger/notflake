@@ -12,13 +12,7 @@ nilla.create (
       generators.inputs.pins = pins;
       inputs = {
         nixpkgs.settings = {
-          configuration = {
-            allowUnfree = true;
-            permittedInsecurePackages =
-              builtins.trace
-                "Using insecure package ilmbase-2.5.10. Remove from permittedInsecurePackages once patched!"
-                [ "ilmbase-2.5.10" ];
-          };
+          configuration.allowUnfree = true;
           overlays = [ config.overlays.default ];
         };
 
