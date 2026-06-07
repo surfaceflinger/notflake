@@ -14,5 +14,5 @@
     spice-webdavd.enable = config.xdg.portal.enable;
   };
 
-  services.kmscon.hwRender = lib.mkForce false;
+  services.kmscon.config.hwaccel = lib.mkForce false;
 }

@@ -1,5 +1,4 @@
-{ inputs, pkgs, ... }:
-{
+{ inputs, pkgs, ... }: {
   imports = [
     "${inputs.srvos.result}/nixos/desktop"
     ./bluetooth.nix
@@ -18,5 +17,5 @@
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
 
-  services.kmscon.hwRender = true;
+  services.kmscon.config.hwaccel = true;
 }

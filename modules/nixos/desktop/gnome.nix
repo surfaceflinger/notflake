@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -60,7 +59,6 @@
     packages = with pkgs; [
       atkinson-hyperlegible-next
       brill
-      cascadia-code
     ];
   };
 

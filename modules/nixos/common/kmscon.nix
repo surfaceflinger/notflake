@@ -1,16 +1,12 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.kmscon = {
     enable = true;
-    extraConfig = ''
-      font-size=11
-      xkb-layout=pl
-    '';
-    fonts = [
-      {
-        name = "Cascadia Mono PL";
-        package = pkgs.cascadia-code;
-      }
-    ];
+    config = {
+      font-size = 11;
+      xkb-layout = "pl";
+      font-name = "Cascadia Mono PL";
+    };
   };
+
+  fonts.packages = [ pkgs.cascadia-code ];
 }
