@@ -218,9 +218,9 @@
       },
       "branch": "natpkgs",
       "submodules": false,
-      "revision": "19421806c2084a46a9df9e30db7d467480894c2e",
-      "url": "https://github.com/surfaceflinger/nixpkgs/archive/19421806c2084a46a9df9e30db7d467480894c2e.tar.gz",
-      "hash": "sha256-G9aCuF3da3tJOAj6kjoOFlX6Y4614v9P+8YqTYQLL+k="
+      "revision": "1982f92c6c0bb8849a88f31a3601fa4446d666c2",
+      "url": "https://github.com/surfaceflinger/nixpkgs/archive/1982f92c6c0bb8849a88f31a3601fa4446d666c2.tar.gz",
+      "hash": "sha256-u6v2KbezhIHdZbEf3RxThz4RUixjB80+IGQa68mrz/I="
     },
     "schizofox": {
       "type": "Git",
@@ -275,5 +275,5 @@
       "hash": "sha256-XW65wWpgnq4HBOPkvL6eyqmoq7hgNbtZjfQrPxA/6xY="
     }
   },
-  "version": 7
+  "version": 8
 }
