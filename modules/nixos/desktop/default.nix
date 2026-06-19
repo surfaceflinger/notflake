@@ -17,5 +17,8 @@
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
 
-  services.kmscon.config.hwaccel = true;
+  services.kmscon.config = {
+    font-name = "Cascadia Mono PL";
+    hwaccel = true;
+  };
 }

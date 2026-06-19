@@ -59,6 +59,7 @@
     packages = with pkgs; [
       atkinson-hyperlegible-next
       brill
+      cascadia-code
     ];
   };
 
