@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }: {
+{ inputs, ... }: {
   imports = [
     "${inputs.srvos.result}/nixos/desktop"
     ./bluetooth.nix
@@ -12,7 +12,7 @@
     ./unharden.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  #boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
