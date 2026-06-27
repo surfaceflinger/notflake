@@ -26,6 +26,8 @@
       network.tcp-window-scaling = true;
       system.minimize-swapping = false;
       misc = {
+        doas-sudo-wrapper = false;
+        replace-sudo-with-doas = false;
         ssh-hardening = true;
         usbguard.enable = false;
       };
@@ -44,16 +46,6 @@
     "debugfs=on"
     "hardened_usercopy=1"
     "tsx=auto"
-  ];
-
-  # better doas
-  security.doas.extraRules = [
-    {
-      users = [ "root" ];
-      groups = [ "wheel" ];
-      keepEnv = true;
-      persist = true;
-    }
   ];
 
   # fixup for building

@@ -17,6 +17,7 @@
     ./networking.nix
     ./nix.nix
     ./regional.nix
+    ./run0.nix
     ./system-packages.nix
     ./zfs.nix
     ./zsh.nix
@@ -41,9 +42,9 @@
 
   # enable scx
   services.scx = {
-    enable = !pkgs.stdenv.isAarch64;
+    enable = true;
     package = pkgs.scx.rustscheds;
-    scheduler = "scx_bpfland";
+    scheduler = "scx_pandemonium";
   };
 
   # configure home-manager
