@@ -4,6 +4,9 @@ _: {
   security.run0 = {
     enable = true;
     sudo-shim.enable = true;
-    persistentAuth.enable = true;
+    persistentAuth = {
+      enable = true;
+      enableRemote = true;
+    };
   };
 }
