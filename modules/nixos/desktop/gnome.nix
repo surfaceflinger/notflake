@@ -60,6 +60,8 @@
       atkinson-hyperlegible-next
       brill
       cascadia-code
+      corefonts
+      vista-fonts
     ];
   };
 
