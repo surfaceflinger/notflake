@@ -33,6 +33,7 @@
         # random desktop software
         brave
         burpsuite
+        comaps
         constrict
         diebahn
         fragments
