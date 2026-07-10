@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     "${inputs.srvos.result}/nixos/desktop"
     ./bluetooth.nix
@@ -21,4 +21,9 @@
     font-name = "Cascadia Mono PL";
     hwaccel = true;
   };
+
+  # fix qt crashes
+  environment.extraInit = ''
+    export XDG_DATA_DIRS="$XDG_DATA_DIRS:${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+  '';
 }
