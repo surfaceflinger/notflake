@@ -14,6 +14,7 @@ in
       bind-address = "::1";
       db-type = "sqlite";
       metrics-enabled = true;
+      statuses-cleanup-remote-older-than = "6 months";
     };
   };
 
