@@ -52,6 +52,7 @@
 
         # ops
         buildah
+        gh
         gnumake
         hcloud
         k9s
