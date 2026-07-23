@@ -92,7 +92,7 @@
     "net.core.wmem_max" = 26214400;
     "net.ipv4.ip_local_port_range" = "1024 65535";
     "net.ipv4.tcp_adv_win_scale" = "-2";
-    "net.ipv4.tcp_ecn" = 1;
+    "net.ipv4.tcp_ecn" = 2;
     "net.ipv4.tcp_fastopen" = 3;
     "net.ipv4.tcp_notsent_lowat" = 131072;
     "net.ipv4.tcp_rmem" = "4096	1000000	16000000";

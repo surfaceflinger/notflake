@@ -1,5 +1,14 @@
-{ config, inputs, ... }: {
-  imports = [ "${inputs.nixos-hardware.result}/common/cpu/amd/pstate.nix" ];
+{
+  config,
+  inputs,
+  nixosModules,
+  ...
+}:
+{
+  imports = [
+    "${inputs.nixos-hardware.result}/common/cpu/amd/pstate.nix"
+    nixosModules.mixin-baremetal
+  ];
 
   boot = {
     extraModulePackages = [ config.boot.kernelPackages.zenergy ];

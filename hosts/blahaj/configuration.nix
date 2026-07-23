@@ -11,6 +11,7 @@
     "${inputs.nixos-hardware.result}/common/gpu/amd"
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
+    inputs.atk-info.result.nixosModules.default
     ./audio.nix
     ./media.nix
     nixosModules.common
@@ -57,6 +58,9 @@
 
   # openrgb
   services.hardware.openrgb.enable = true;
+
+  # atk/compx wireless mouse battery reporting via upower
+  hardware.atk-info.enable = true;
 
   # nix-serve-ng binary cache
   networking.firewall.allowedTCPPorts = [ 30909 ];

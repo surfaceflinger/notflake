@@ -31,6 +31,7 @@
         "cgroups"
         "flakes"
         "nix-command"
+        "pipe-operator"
       ];
     };
     gc = {

@@ -1,4 +1,6 @@
-{ lib, ... }: {
+{ lib, nixosModules, ... }: {
+  imports = [ nixosModules.mixin-baremetal ];
+
   # base
   nixpkgs.hostPlatform = "x86_64-linux";
 

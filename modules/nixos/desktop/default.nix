@@ -3,7 +3,6 @@
     "${inputs.srvos.result}/nixos/desktop"
     ./bluetooth.nix
     ./gnome.nix
-    ./logitech.nix
     ./mdns.nix
     ./networkmanager.nix
     ./pipewire.nix

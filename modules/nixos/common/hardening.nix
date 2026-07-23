@@ -19,6 +19,7 @@
         icmp.ignore-all = false;
         ip-forwarding = true;
         max-addresses = false;
+        tcp-sack = true;
       };
     };
     extras = {

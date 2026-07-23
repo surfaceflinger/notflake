@@ -19,9 +19,8 @@
       "networkmanager"
       "wheel"
     ];
-    openssh.authorizedKeys.keys = lib.strings.splitString "\n" (
-      builtins.readFile ../../../keys/nat.ssh.keys
-    );
+    openssh.authorizedKeys.keys =
+      ../../../keys/nat.ssh.keys |> builtins.readFile |> lib.strings.splitString "\n";
     packages =
       with pkgs;
       [
