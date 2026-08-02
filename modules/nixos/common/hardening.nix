@@ -7,13 +7,10 @@
     settings = {
       debug.debugfs = true;
       etc.kicksecure-gitconfig = false;
+      kernel.only-signed-modules = false;
       system = {
         proc-mem-force = "ptrace";
         yama = "relaxed";
-      };
-      kernel = {
-        lockdown = false;
-        only-signed-modules = false;
       };
       network = {
         icmp.ignore-all = false;
@@ -26,6 +23,10 @@
       entropy.extra-latent-entropy = true;
       network.tcp-window-scaling = true;
       system.minimize-swapping = false;
+      kernel = {
+        load-kernel-modules = true;
+        warn-panic = false;
+      };
       misc = {
         doas-sudo-wrapper = false;
         replace-sudo-with-doas = false;
@@ -45,7 +46,6 @@
 
   boot.kernelParams = [
     "debugfs=on"
-    "hardened_usercopy=1"
     "tsx=auto"
   ];
 
