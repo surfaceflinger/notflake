@@ -26,7 +26,6 @@ symlinkJoin {
       "tftp"
       "traceroute"
       "traceroute6"
-      "wget"
       "whois"
     )
 
