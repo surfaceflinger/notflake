@@ -1,5 +1,6 @@
 _: {
   nix-mineral = {
+    extras.network.bluetooth-kmodules = true;
     settings = {
       kernel = {
         cpu-mitigations = "smt-on";
@@ -7,10 +8,6 @@ _: {
         slab-debug = false;
       };
       system.multilib = true;
-    };
-    extras = {
-      network.bluetooth-kmodules = true;
-      system.unprivileged-userns = true;
     };
     filesystems.normal = {
       "/home".options."noexec" = false;

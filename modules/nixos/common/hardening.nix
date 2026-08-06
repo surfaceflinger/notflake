@@ -7,7 +7,6 @@
     settings = {
       debug.debugfs = true;
       etc.kicksecure-gitconfig = false;
-      kernel.only-signed-modules = false;
       system = {
         proc-mem-force = "ptrace";
         yama = "relaxed";
@@ -21,17 +20,12 @@
     };
     extras = {
       entropy.extra-latent-entropy = true;
+      misc.ssh-hardening = true;
       network.tcp-window-scaling = true;
       system.minimize-swapping = false;
       kernel = {
         load-kernel-modules = true;
         warn-panic = false;
-      };
-      misc = {
-        doas-sudo-wrapper = false;
-        replace-sudo-with-doas = false;
-        ssh-hardening = true;
-        usbguard.enable = false;
       };
     };
     filesystems = {
