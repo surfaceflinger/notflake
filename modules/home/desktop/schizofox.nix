@@ -69,8 +69,8 @@
           "https://addons.mozilla.org/firefox/downloads/latest/indie-wiki-buddy/latest.xpi";
         "cliget@zaidabdulla.com".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/cliget/latest.xpi";
-        #"deArrow@ajay.app".install_url =
-        #  "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
+        "deArrow@ajay.app".install_url =
+          "https://addons.mozilla.org/firefox/downloads/latest/dearrow/latest.xpi";
         "privacypass@kagi.com".install_url =
           "https://addons.mozilla.org/firefox/downloads/latest/kagi-privacy-pass/latest.xpi";
         "search@kagi.com".install_url =
