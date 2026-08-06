@@ -10,6 +10,7 @@
     # cli/tui tools
     _7zz
     abduco
+    aria2
     bat
     deadnix
     file
