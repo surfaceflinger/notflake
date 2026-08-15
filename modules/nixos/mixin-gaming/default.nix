@@ -46,7 +46,6 @@
   programs.steam = {
     enable = true;
     dedicatedServer.openFirewall = true;
-    extest.enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
     extraPackages = with pkgs; [
       nspr
