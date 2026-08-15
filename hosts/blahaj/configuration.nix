@@ -48,12 +48,17 @@
     options iwlwifi power_save=0
   '';
 
-  # need this for correct gpu work (capped at 220w tdp but it can use 280w)
-  # also undervolt
-  hardware.amdgpu.overdrive.enable = true;
+  # gpu
+  hardware.amdgpu = {
+    opencl.enable = true;
+    overdrive.enable = true;
+    zluda.enable = true;
+  };
+
+  # need this for correct gpu work (capped at 220w tdp by default but it can use 280w)
   services.lact.enable = true;
 
-  # rx7800xt is still pretty much fucked in latest mainline and default 165hz is flickering
+  # rx7800xt + samsung odyssey g52a flickers on 165hz
   boot.kernelParams = [ "video=2560x1440@144" ];
 
   # openrgb
