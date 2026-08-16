@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ inputs, ... }:
 let
   i2p_address = "127.0.0.1";
   i2p_port = 37189;
