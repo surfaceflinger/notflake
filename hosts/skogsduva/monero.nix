@@ -33,14 +33,24 @@ in
 
   services.i2pd = {
     enable = true;
-    upnp = {
-      enable = true;
-      name = "I2Pd ${config.networking.hostName}";
-    };
-    proto.socksProxy = {
-      enable = true;
-      address = i2p_address;
-      port = i2p_port;
+    settings = {
+      notransit = true;
+      ntcp2.published = false;
+      ssu2.published = false;
+      exploratory = {
+        inbound = {
+          length = 3;
+          quantity = 5;
+        };
+        outbound = {
+          length = 3;
+          quantity = 5;
+        };
+      };
+      socksproxy = {
+        address = i2p_address;
+        port = i2p_port;
+      };
     };
   };
 }
