@@ -58,9 +58,9 @@
     fontconfig.cache32Bit = true;
     packages = with pkgs; [
       atkinson-hyperlegible-next
-      brill
       cascadia-code
       corefonts
+      lora
       vista-fonts
     ];
   };

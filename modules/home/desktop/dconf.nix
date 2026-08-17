@@ -65,7 +65,7 @@
     "org/gnome/desktop/interface" = {
       accent-color = "pink";
       clock-show-weekday = true;
-      document-font-name = "Brill 14";
+      document-font-name = "Lora 11";
       font-hinting = "none";
       font-name = "Atkinson Hyperlegible Next 11";
       gtk-enable-primary-paste = false;
