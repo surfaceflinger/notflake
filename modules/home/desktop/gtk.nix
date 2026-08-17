@@ -20,7 +20,6 @@
     extensions = with pkgs.gnomeExtensions; [
       { package = appindicator; }
       { package = auto-move-windows; }
-      { package = gamemode-shell-extension; }
       { package = media-progress; }
       { package = pip-on-top; }
       { package = user-themes-x; }

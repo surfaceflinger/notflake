@@ -43,7 +43,6 @@ _: {
     frame_timing=1
     frametime_color=00ff00
     show_fps_limit
-    gamemode
     battery
     exec=echo #add a line for text space
     exec=echo #add a line for text space

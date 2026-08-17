@@ -178,11 +178,6 @@
       icon-saturation = 1.0;
     };
 
-    "org/gnome/shell/extensions/gamemodeshellextension" = {
-      show-icon-only-when-active = true;
-      show-launch-notification = false;
-    };
-
     "org/gnome/shell/extensions/pip-on-top" = {
       stick = true;
     };
