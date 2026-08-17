@@ -68,6 +68,20 @@
   services = {
     power-profiles-daemon.enable = false;
     tlp.enable = false;
-    tuned.enable = true;
+    tuned = {
+      enable = true;
+      ppdSettings = {
+        battery = {
+          power-saver = "powersave";
+          balanced = "balanced-battery";
+          performance = "latency-performance";
+        };
+        profiles = {
+          power-saver = "powersave";
+          balanced = "desktop";
+          performance = "latency-performance";
+        };
+      };
+    };
   };
 }
