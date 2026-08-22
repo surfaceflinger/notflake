@@ -1,6 +1,9 @@
 _: {
   nix-mineral = {
-    extras.network.bluetooth-kmodules = true;
+    kernel-modules.disable = {
+      bluetooth-related = false;
+      joystick-drivers = false;
+    };
     settings = {
       kernel = {
         cpu-mitigations = "smt-on";

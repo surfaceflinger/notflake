@@ -4,6 +4,10 @@
   nix-mineral = {
     enable = true;
     preset = "maximum";
+    kernel-modules = {
+      load = true;
+      disable.unused-filesystems = false;
+    };
     settings = {
       debug.debugfs = true;
       etc.kicksecure-gitconfig = false;
@@ -20,13 +24,10 @@
     };
     extras = {
       entropy.extra-latent-entropy = true;
+      kernel.warn-panic = false;
       misc.ssh-hardening = true;
       network.tcp-window-scaling = true;
       system.minimize-swapping = false;
-      kernel = {
-        load-kernel-modules = true;
-        warn-panic = false;
-      };
     };
     filesystems = {
       special."/proc".options.hidepid = lib.mkForce false;
@@ -45,4 +46,6 @@
 
   # fixup for building
   services.logrotate.checkConfig = false;
+
+  environment.etc.machine-id.text = "b08dfa6083e7567a1921a715000001fb";
 }

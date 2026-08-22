@@ -7,7 +7,7 @@
   # kernel/modules/firmware
   hardware.enableRedistributableFirmware = true;
   boot.kernelModules = [ "kvm-intel" ];
-  nix-mineral.extras.kernel.intelme-kmodules = lib.mkForce true;
+  nix-mineral.kernel-modules.disable.intelme-related = lib.mkForce false;
 
   # misc
   services.hardware.openrgb.motherboard = "intel";
