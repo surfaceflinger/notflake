@@ -9,7 +9,6 @@
     nixosModules.mixin-gaming
     nixosModules.mixin-intel
     nixosModules.user-nat
-    nixosModules.user-natwork
     ./storage.nix
   ];
 
