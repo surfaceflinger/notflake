@@ -3,28 +3,31 @@
 
   systemd.services.bdprochot = {
     description = "Keep BD PROCHOT disabled";
-
-    # Apply MSR values on boot, nixos generation switch and resume
-    wantedBy = [
-      "multi-user.target"
-      "post-resume.target"
+    after = [
+      "hibernate.target"
+      "hybrid-sleep.target"
+      "suspend.target"
+      "suspend-then-hibernate.target"
     ];
-    after = [ "post-resume.target" ];
-
+    wantedBy = [
+      "hibernate.target"
+      "hybrid-sleep.target"
+      "multi-user.target"
+      "suspend.target"
+      "suspend-then-hibernate.target"
+    ];
     serviceConfig = {
-      Type = "oneshot";
-      Restart = "no";
       ExecStart = lib.getExe pkgs.disable-bd-prochot;
+      Type = "oneshot";
     };
   };
 
   systemd.timers.bdprochot = {
-    description = "BD PROCHOT timer to ensure it's off";
-    partOf = [ "bdprochot.service" ];
-    wantedBy = [ "multi-user.target" ];
+    description = "Periodically re-apply BD PROCHOT disable";
+    wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnBootSec = "2min";
       OnUnitActiveSec = "10min";
+      Unit = "bdprochot.service";
     };
   };
 }
