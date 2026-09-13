@@ -11,8 +11,8 @@
     "${inputs.nixos-hardware.result}/common/gpu/amd"
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
-    inputs.atk-info.result.nixosModules.default
     ./audio.nix
+    inputs.atk-info.result.nixosModules.default
     ./media.nix
     nixosModules.common
     nixosModules.desktop-env
@@ -22,6 +22,7 @@
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
+    nixosModules.tower
     nixosModules.user-nat
     ./storage.nix
   ];

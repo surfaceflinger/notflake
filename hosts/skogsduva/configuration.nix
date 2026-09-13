@@ -8,7 +8,6 @@
 {
   imports = [
     "${inputs.nixos-hardware.result}/common/cpu/intel/haswell"
-    "${inputs.nixos-hardware.result}/common/gpu/amd"
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     inputs.xkomhotshot.result.nixosModules.default
@@ -21,6 +20,7 @@
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
     nixosModules.server
+    nixosModules.tower
     nixosModules.user-nat
     ./observability
     ./storage.nix

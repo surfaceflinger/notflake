@@ -15,6 +15,7 @@
     nixosModules.mixin-telemetry
     nixosModules.mixin-www
     nixosModules.server
+    nixosModules.tower
     nixosModules.user-nat
     ./storage.nix
   ];
