@@ -3,7 +3,7 @@
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     "${inputs.nixos-hardware.result}/lenovo/thinkpad/t440p"
     nixosModules.common
-    nixosModules.desktop
+    nixosModules.desktop-env
     nixosModules.laptop
     nixosModules.mixin-bdprochot
     nixosModules.mixin-gaming

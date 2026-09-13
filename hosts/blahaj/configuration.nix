@@ -15,7 +15,7 @@
     ./audio.nix
     ./media.nix
     nixosModules.common
-    nixosModules.desktop
+    nixosModules.desktop-env
     nixosModules.mixin-gaming
     nixosModules.mixin-ryzen
     nixosModules.mixin-telemetry

@@ -8,7 +8,7 @@
   imports = [
     "${inputs.nixos-hardware.result}/framework/12-inch/13th-gen-intel"
     nixosModules.common
-    nixosModules.desktop
+    nixosModules.desktop-env
     nixosModules.laptop
     nixosModules.mixin-gaming
     nixosModules.mixin-intel
