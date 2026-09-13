@@ -44,9 +44,6 @@
     ];
   };
 
-  # this is an old intel and the other mode sucks
-  boot.kernelParams = [ "intel_pstate=passive" ];
-
   systemd.network.networks."10-eth-dhcp" = {
     ipv6AcceptRAConfig.UseAutonomousPrefix = false;
     networkConfig.IPv6AcceptRA = lib.mkForce true;

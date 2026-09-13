@@ -30,9 +30,6 @@
     ];
   };
 
-  # power management
-  boot.kernelParams = [ "intel_pstate=passive" ];
-
   # make fan silent
   services.zcfan.enable = true;
 
