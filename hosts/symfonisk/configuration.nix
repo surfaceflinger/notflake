@@ -8,8 +8,8 @@
   imports = [
     "${inputs.nixos-hardware.result}/common/pc"
     "${inputs.nixos-hardware.result}/common/pc/ssd"
-    ../../modules/nixos/desktop/networkmanager.nix
-    ../../modules/nixos/desktop/pipewire.nix
+    ../../modules/nixos/desktop-env/networkmanager.nix
+    ../../modules/nixos/desktop-env/pipewire.nix
     ./mopidy.nix
     nixosModules.common
     nixosModules.mixin-telemetry

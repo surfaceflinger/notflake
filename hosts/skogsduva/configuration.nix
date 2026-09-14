@@ -12,7 +12,7 @@
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     inputs.xkomhotshot.result.nixosModules.default
     ./media.nix
-    ../../modules/nixos/desktop/mdns.nix
+    ../../modules/nixos/desktop-env/mdns.nix
     ./monero.nix
     nixosModules.common
     nixosModules.mixin-intel
