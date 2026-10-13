@@ -247,7 +247,7 @@ in
 
     settings.plugin = [
       "@dietrichgebert/ponytail@5.1.0"
-      "jew-guard@0.7.1"
+      "jew-guard@0.8.0"
       "opencode-pty@0.4.0"
     ];
 
