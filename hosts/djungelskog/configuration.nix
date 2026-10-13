@@ -1,4 +1,10 @@
-{ inputs, nixosModules, ... }: {
+{
+  inputs,
+  lib,
+  nixosModules,
+  ...
+}:
+{
   imports = [
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     "${inputs.nixos-hardware.result}/lenovo/thinkpad/t440p"
@@ -31,6 +37,9 @@
 
   # make fan silent
   services.zcfan.enable = true;
+
+  # aspm causes issues on this host
+  services.autoaspm.enable = lib.mkForce false;
 
   # disable these fucking pgup/pgdown around arrow up - who came up with this?
   services.keyd = {
