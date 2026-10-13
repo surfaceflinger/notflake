@@ -46,7 +46,6 @@
         # crypto/fin
         feather
         ledger-live-desktop
-        rates
         trezor-suite
 
         # ops
@@ -77,6 +76,7 @@
         android-tools
         binsider
         inputs.claude-code-nix.result.packages."${pkgs.stdenv.hostPlatform.system}".default
+        inputs.kagi-cli.result.packages."${pkgs.stdenv.hostPlatform.system}".default
         nodejs
         python3Packages.python
       ];
