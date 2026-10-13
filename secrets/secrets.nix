@@ -28,8 +28,4 @@ in
     host-jattelik
     user-nat-blahaj
   ];
-  "spacebot-jattelik.age".publicKeys = [
-    host-jattelik
-    user-nat-blahaj
-  ];
 }
