@@ -7,7 +7,6 @@
     enable = true;
 
     security = {
-      #sandbox.enable = false;
       webGPU.enable = true;
       sanitizeOnShutdown.sanitize = {
         formdata = true;
