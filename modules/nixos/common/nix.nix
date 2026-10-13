@@ -10,7 +10,6 @@
   nix = {
     channel.enable = false;
     package = pkgs.lixPackageSets.stable.lix;
-    nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     registry = lib.mapAttrs (name: input: {
       from = {
         type = "indirect";
@@ -24,6 +23,7 @@
     settings = {
       allowed-users = [ "@users" ];
       auto-allocate-uids = true;
+      nix-path = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
       use-cgroups = true;
       use-xdg-base-directories = true;
       experimental-features = lib.mkForce [
