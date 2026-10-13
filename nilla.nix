@@ -4,7 +4,7 @@ let
   nilla = import pins.nilla;
 in
 nilla.create (
-  { config }: {
+  { config, lib }: {
     includes = [ "${pins.nilla-utils}/modules" ];
 
     config = {
@@ -19,6 +19,7 @@ nilla.create (
               "claude-code-nix"
               "copyparty"
               "home-manager"
+              "kagi-cli"
               "nix-index-database"
               "nix-mineral"
               "tgexpiry"
@@ -32,11 +33,9 @@ nilla.create (
 
           # these are nilla projects rather than flakes, so their nixpkgs input
           # is overridden by extending them with a module instead; the src is
-          # already set by their own nilla.nix, so force our value to win
+          # already set by their own nilla.nix, so force our value
           forceOurNixpkgs.settings.extend.modules = [
-            ({ lib, ... }: {
-              config.inputs.nixpkgs.src = config.inputs.nixpkgs.src |> lib.modules.overrides.force;
-            })
+            { config.inputs.nixpkgs.src = config.inputs.nixpkgs.src |> lib.modules.overrides.force; }
           ];
         in
         {
@@ -47,7 +46,7 @@ nilla.create (
 
           # we need nixpkgs loaded as a flake to use it for overriding nixpkgs inputs
           nixpkgs-flake = {
-            inherit (config.inputs.nixpkgs) src;
+            src = pins.nixpkgs;
             loader = "flake";
           };
 
