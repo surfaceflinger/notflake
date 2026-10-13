@@ -1,5 +1,10 @@
-{ inputs, ... }: {
+{ config, inputs, ... }: {
   imports = [ inputs.copyparty.result.nixosModules.default ];
+
+  age.secrets.copyparty-azsurv = {
+    file = ../../../secrets/copyparty-azsurv.age;
+    owner = "copyparty";
+  };
 
   services.copyparty = {
     enable = true;
@@ -33,6 +38,16 @@
           r = "*";
         };
       };
+      "/misc/AzerothSurvivors" = {
+        path = "/srv/fileshare/misc/AzerothSurvivors";
+        access = {
+          r = "*";
+          rwmd = "azsurv";
+        };
+      };
+    };
+    accounts = {
+      azsurv.passwordFile = config.age.secrets.copyparty-azsurv.path;
     };
   };
 

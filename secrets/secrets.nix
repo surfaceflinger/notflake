@@ -28,4 +28,8 @@ in
     host-jattelik
     user-nat-blahaj
   ];
+  "copyparty-azsurv.age".publicKeys = [
+    host-jattelik
+    user-nat-blahaj
+  ];
 }
