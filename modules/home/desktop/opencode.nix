@@ -107,8 +107,8 @@ in
     enableMcpIntegration = true;
 
     settings = {
-      model = "opencode-go/deepseek-v4.1-flash";
-      small_model = "opencode-go/deepseek-v4.1-flash";
+      model = "opencode-go/muse-spark-1.3";
+      small_model = "opencode-go/muse-spark-1.3";
       autoupdate = false;
       share = "disabled";
     };
