@@ -6,9 +6,8 @@
   ...
 }:
 let
-  # NOTE: home-manager serialises attrsets via builtins.toJSON, which SORTS KEYS
-  # ALPHABETICALLY. opencode permissions are "last matching rule wins", so
-  # file order is meaningless: an override must sort *after* the rule it overrides.
+  # hm dumps this via builtins.tojson (keys sorted) and last matching rule wins,
+  # so an override must sort *after* the rule it overrides.
   # "*" always sorts first (good), and `cmd *` < `cmd *-flag*` < `cmd *.env*`.
 
   allow = cmds: lib.genAttrs cmds (_: "allow");
@@ -134,7 +133,7 @@ in
       - When commiting, commit message should on the bottom contain: "Assisted-by: harness:modelslug", eg. "Assisted-by: OpenCode:claude-opus-5-5"
     '';
 
-    # Formatters
+    # formatters
     settings.formatter.nixfmt = {
       command = [
         (lib.getExe pkgs.nixfmt)
@@ -162,17 +161,17 @@ in
       ".terraform/**"
     ];
 
-    # Permission Settings — hardened
+    # permissions
     settings.permission = {
       "*" = "ask";
 
-      # Search: Kagi MCP replaces the Exa-backed built-ins; gh_grep + context7 cover codesearch.
-      # "deny" also removes the tool from the model's tool list (saves tokens).
+      # kagi mcp replaces built-in search; gh_grep + context7 cover codesearch.
+      # deny also hides the tool from the model (saves tokens).
       websearch = "deny";
       codesearch = "deny";
 
-      # webfetch matches the URL. Only well-known doc hosts are auto-allowed;
-      # anything else prompts, which closes the "read secret -> GET evil.com/?d=..." exfil path.
+      # webfetch matches the url; only known doc hosts auto-allow,
+      # rest prompts, so no read-secret-then-fetch-evil.com exfil
       #webfetch = {
       #  "*" = "ask";
       #  "https://github.com/*" = "allow";
@@ -185,7 +184,7 @@ in
       #  "https://opencode.ai/*" = "allow";
       #};
 
-      # An explicit `read = "allow"` overrides opencode's built-in .env deny rules, so restate them.
+      # explicit read=allow would override stock .env denies, so restate them.
       read = {
         "*" = "allow";
         "*.env" = "deny";
@@ -215,12 +214,12 @@ in
       todoread = "allow";
       todowrite = "allow";
 
-      # MCP tools are named <server>_<tool>, so "*" = "ask" was prompting on every single call.
+      # mcp tools are named <server>_<tool>, so "*"=ask prompted on every call.
       "context7_*" = "allow";
       "gh_grep_*" = "allow";
       "github_*" = "allow";
       "kagi_*" = "allow";
-      # these make Kagi fetch an arbitrary URL, i.e. the same exfil channel as webfetch
+      # these make kagi fetch any url, same exfil channel as webfetch
       "kagi_kagi_extract" = "ask";
       "kagi_kagi_summarize" = "ask";
 
@@ -232,7 +231,7 @@ in
         "mkdir *" = "allow";
         "nix build *--dry-run*" = "allow";
 
-        # Allowed commands that can still execute code / write files via flags
+        # these can still exec/write via flags
         "find *-delete*" = "ask";
         "find *-exec*" = "ask";
         "find *-fprint*" = "ask";
@@ -329,7 +328,7 @@ in
     };
   };
 
-  # MCP Configuration
+  # mcp
   programs.mcp = {
     enable = true;
     servers = {

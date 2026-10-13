@@ -42,7 +42,7 @@ in
       export LS_COLORS=$(<${lsColors})
     '';
     promptInit = ''
-      stty stop undef # Disable ctrl-s to freeze terminal.
+      stty stop undef # no ctrl-s freeze
       zstyle ':completion:*' menu select # select-style completions
 
       autoload -Uz vcs_info
@@ -77,8 +77,8 @@ in
           esac
       }
 
-      print -n '\e[5 q' # Use beam shape cursor on startup.
-      preexec() { print -n '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+      print -n '\e[5 q' # beam cursor
+      preexec() { print -n '\e[5 q' ;} # beam cursor
     '';
   };
 }

@@ -23,9 +23,9 @@ zpool create -f \
   /dev/disk/by-id/ata-CT250MX500SSD1_2141E5D95F83-part2 /dev/disk/by-id/ata-CT250MX500SSD1_2141E5D95F96
 ```
 
-Once zpool is imported, every dataset that's marked as canmount=on and has set mountpoint will be mounted automatically. `-R /mnt` will prefix every dataset mountpoint with `/mnt` (temporarily, for OS installation only).
+once zpool is imported, every dataset that's marked as canmount=on and has set mountpoint will be mounted automatically. `-R /mnt` will prefix every dataset mountpoint with `/mnt` (temporarily, for os installation only).
 
-Every `-O` attribute passed to `zpool create` is actually some `-o` setting for dataset. Setting them to zpool will make it so every dataset will have these by default. This includes encryption - zpool isn't encrypted, datasets are. (yeah, this leaks zpool structure)
+every `-O` attribute passed to `zpool create` is actually some `-o` setting for dataset. setting them to zpool will make it so every dataset will have these by default. this includes encryption - zpool isn't encrypted, datasets are. (yeah, this leaks zpool structure)
 
 ## create datasets.
 
@@ -43,11 +43,11 @@ zfs create -o canmount=on                  blahaj/NixOS/var/log
 zfs create -o canmount=on                  blahaj/NixOS/vol/Games
 ```
 
-Why datasets like `blahaj/NixOS` have mountpoints but `canmount` is set to `off`? - Well, you don't have to create these datasets at all. It'll just work like a `container` for eg. `blahaj/NixOS/etc` so `zfs show` can show sum of used space and "slave" datasets will inherit parent `-o` options.
+why datasets like `blahaj/NixOS` have mountpoints but `canmount` is set to `off`? - well, you don't have to create these datasets at all. it'll just work like a `container` for eg. `blahaj/NixOS/etc` so `zfs show` can show sum of used space and "slave" datasets will inherit parent `-o` options.
 
-If you want to eg. create just `blahaj/NixOS/etc/nixos` without "container" datasets then you will have to setup its mountpoint explicitly.
+if you want to eg. create just `blahaj/NixOS/etc/nixos` without "container" datasets then you will have to setup its mountpoint explicitly.
 
-In my example it'll just inherit `mountpoint=/` and because it's a "slave" dataset - it'll transparently append `/etc` to the end.
+in my example it'll just inherit `mountpoint=/` and because it's a "slave" dataset - it'll transparently append `/etc` to the end.
 
 ## example result
 
