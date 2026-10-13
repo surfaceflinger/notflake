@@ -19,7 +19,7 @@ fetch_location() {
   if [[ -z $query ]]; then
     read -rp "Type the name of the location you want to add to GNOME Weather: " query
   fi
-  query="${query// /+}"
+  query=$(jq -rn --arg q "$query" '$q|@uri')
   local result
   result=$(curl "https://nominatim.openstreetmap.org/search?q=$query&format=json&limit=1" -s)
   if [[ -z $result || $result == '[]' ]]; then
