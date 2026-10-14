@@ -172,89 +172,97 @@ in
     settings.permission = {
       "*" = "ask";
 
-      # kagi mcp replaces built-in search; gh_grep + context7 cover codesearch.
-      # deny also hides the tool from the model (saves tokens).
-      websearch = "deny";
-      codesearch = "deny";
-
-      # webfetch matches the url; only known doc hosts auto-allow,
-      # rest prompts, so no read-secret-then-fetch-evil.com exfil
-      #webfetch = {
-      #  "*" = "ask";
-      #  "https://github.com/*" = "allow";
-      #  "https://raw.githubusercontent.com/*" = "allow";
-      #  "https://nixos.org/*" = "allow";
-      #  "https://search.nixos.org/*" = "allow";
-      #  "https://wiki.nixos.org/*" = "allow";
-      #  "https://nix.dev/*" = "allow";
-      #  "https://nix-community.github.io/*" = "allow";
-      #  "https://opencode.ai/*" = "allow";
-      #};
-
-      # explicit read=allow would override stock .env denies, so restate them.
-      read = {
-        "*" = "allow";
-        "*.env" = "deny";
-        "*.env.*" = "deny";
-        "*.env.example" = "allow";
-      };
-
-      edit = {
-        "*" = "allow";
-        "*.env" = "ask";
-        "*.env.*" = "ask";
-        "*.git/*" = "ask";
-      };
-
       external_directory = {
         "/nix/store/*" = "allow";
         "/tmp/opencode/*" = "allow";
       };
-
-      glob = "allow";
-      grep = "allow";
-      list = "allow";
-      lsp = "allow";
-      skill = "allow";
-      # subagents are still bound by these same rules
-      task = "allow";
-      todoread = "allow";
-      todowrite = "allow";
-
-      # mcp tools are named <server>_<tool>, so "*"=ask prompted on every call.
-      "context7_*" = "allow";
-      "gh_grep_*" = "allow";
-      "github_*" = "allow";
-      "kagi_*" = "allow";
-      # these make kagi fetch any url, same exfil channel as webfetch
-      "kagi_kagi_extract" = "ask";
-      "kagi_kagi_summarize" = "ask";
-
-      bash = {
-        "git add *" = "allow"; # local staging only; flakes can't see untracked files
-        "git add" = "allow";
-        "git remote" = "allow";
-        "git reflog" = "allow";
-        "mkdir *" = "allow";
-        "nix build *--dry-run*" = "allow";
-
-        # these can still exec/write via flags
-        "find *-delete*" = "ask";
-        "find *-exec*" = "ask";
-        "find *-fprint*" = "ask";
-        "find *-ok*" = "ask";
-        "git diff *--output*" = "ask";
-        "rg *--pre*" = "ask";
-      }
-      // allowWithArgs roCmds
-      // allowWithArgs gitRo
-      // allowWithArgs nixRo
-      // lib.genAttrs (map (c: "${c} *.env*") roCmds) (_: "ask");
     };
+    #settings.permission = {
+    #  "*" = "ask";
+    #
+    #  # kagi mcp replaces built-in search; gh_grep + context7 cover codesearch.
+    #  # deny also hides the tool from the model (saves tokens).
+    #  websearch = "deny";
+    #  codesearch = "deny";
+    #
+    #  # webfetch matches the url; only known doc hosts auto-allow,
+    #  # rest prompts, so no read-secret-then-fetch-evil.com exfil
+    #  #webfetch = {
+    #  #  "*" = "ask";
+    #  #  "https://github.com/*" = "allow";
+    #  #  "https://raw.githubusercontent.com/*" = "allow";
+    #  #  "https://nixos.org/*" = "allow";
+    #  #  "https://search.nixos.org/*" = "allow";
+    #  #  "https://wiki.nixos.org/*" = "allow";
+    #  #  "https://nix.dev/*" = "allow";
+    #  #  "https://nix-community.github.io/*" = "allow";
+    #  #  "https://opencode.ai/*" = "allow";
+    #  #};
+    #
+    #  # explicit read=allow would override stock .env denies, so restate them.
+    #  read = {
+    #    "*" = "allow";
+    #    "*.env" = "deny";
+    #    "*.env.*" = "deny";
+    #    "*.env.example" = "allow";
+    #  };
+    #
+    #  edit = {
+    #    "*" = "allow";
+    #    "*.env" = "ask";
+    #    "*.env.*" = "ask";
+    #    "*.git/*" = "ask";
+    #  };
+    #
+    #  external_directory = {
+    #    "/nix/store/*" = "allow";
+    #    "/tmp/opencode/*" = "allow";
+    #  };
+    #
+    #  glob = "allow";
+    #  grep = "allow";
+    #  list = "allow";
+    #  lsp = "allow";
+    #  skill = "allow";
+    #  # subagents are still bound by these same rules
+    #  task = "allow";
+    #  todoread = "allow";
+    #  todowrite = "allow";
+    #
+    #  # mcp tools are named <server>_<tool>, so "*"=ask prompted on every call.
+    #  "context7_*" = "allow";
+    #  "gh_grep_*" = "allow";
+    #  "github_*" = "allow";
+    #  "kagi_*" = "allow";
+    #  # these make kagi fetch any url, same exfil channel as webfetch
+    #  "kagi_kagi_extract" = "ask";
+    #  "kagi_kagi_summarize" = "ask";
+    #
+    #  bash = {
+    #    "git add *" = "allow"; # local staging only; flakes can't see untracked files
+    #    "git add" = "allow";
+    #    "git remote" = "allow";
+    #    "git reflog" = "allow";
+    #    "mkdir *" = "allow";
+    #    "nix build *--dry-run*" = "allow";
+    #
+    #    # these can still exec/write via flags
+    #    "find *-delete*" = "ask";
+    #    "find *-exec*" = "ask";
+    #    "find *-fprint*" = "ask";
+    #    "find *-ok*" = "ask";
+    #    "git diff *--output*" = "ask";
+    #    "rg *--pre*" = "ask";
+    #  }
+    #  // allowWithArgs roCmds
+    #  // allowWithArgs gitRo
+    #  // allowWithArgs nixRo
+    #  // lib.genAttrs (map (c: "${c} *.env*") roCmds) (_: "ask");
+    #};
 
     settings.plugin = [
       "@dietrichgebert/ponytail@5.1.0"
-      "jew-guard@0.9.1"
+      "jew-guard@0.9.2"
       "opencode-pty@0.4.0"
     ];
 
