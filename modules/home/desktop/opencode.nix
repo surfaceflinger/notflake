@@ -131,6 +131,13 @@ in
       - If you want to use github and github_* tools aren't enough, you can use gh cli, available on $PATH and already authenticated.
       - If you want to do stuff in an external directory, eg. to untar something, you have always-allow access to /tmp/opencode/*
       - When commiting, commit message should on the bottom contain: "Assisted-by: harness:modelslug", eg. "Assisted-by: OpenCode:claude-opus-5-5"
+      - Prioritize simplicity and maintainability over complexity
+      - Follow best practices without over-engineering
+      - Avoid comments, write self-explanatory code with clear naming
+      - Add comments in English only when they provide non-obvious value
+      - Challenge proposals when you have a better alternative
+      - Keep responses concise and actionable
+      - Avoid sloppy AI prose (as if this was going to help lmao)
     '';
 
     # formatters
@@ -247,7 +254,7 @@ in
 
     settings.plugin = [
       "@dietrichgebert/ponytail@5.1.0"
-      "jew-guard@0.8.0"
+      "jew-guard@0.9.1"
       "opencode-pty@0.4.0"
     ];
 
@@ -332,9 +339,10 @@ in
   programs.mcp = {
     enable = true;
     servers = {
+      context7.url = "https://mcp.context7.com/mcp";
       gh_grep.url = "https://mcp.grep.app";
       github.command = "${githubMcp}";
-      context7.url = "https://mcp.context7.com/mcp";
+      opentofu.url = "https://mcp.opentofu.org/mcp";
       chrome-devtools = {
         command = "npx";
         args = [
