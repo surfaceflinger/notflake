@@ -47,6 +47,12 @@
     scheduler = "scx_pandemonium";
   };
 
+  # git
+  programs.git = {
+    enable = true;
+    lfs.enable = true;
+  };
+
   # configure home-manager
   home-manager = {
     backupFileExtension = "backup";
