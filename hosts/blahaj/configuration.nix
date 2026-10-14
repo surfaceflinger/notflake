@@ -97,6 +97,7 @@
     euphonica
     gpu-screen-recorder-gtk
     obs-studio-plugins.obs-vkcapture
+    rocmPackages.rocm-smi
   ];
 
   # home-manager
