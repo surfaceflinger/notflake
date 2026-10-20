@@ -16,7 +16,6 @@ nilla.create (
             [
               "atk-info"
               "autoaspm"
-              "claude-code-nix"
               "copyparty"
               "home-manager"
               "kagi-cli"

@@ -53,19 +53,6 @@
       "url": "https://github.com/blahaj-pl/homepage/archive/9a399e18bbc72de4cc225756db313f7961d15306.tar.gz",
       "hash": "sha256-NsUno/DdoNPbWIdm4PpmxRUtAA2NoHrVvCu0q0TE8FE="
     },
-    "claude-code-nix": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "sadjow",
-        "repo": "claude-code-nix"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "7a91b64f9378dcff2180dc35b9ba033754d93b0a",
-      "url": "https://github.com/sadjow/claude-code-nix/archive/7a91b64f9378dcff2180dc35b9ba033754d93b0a.tar.gz",
-      "hash": "sha256-e6V9dNQEfoJu1MPHb6ALx3ZJIWUOp8dj2Sn/NYgMJ54="
-    },
     "copyparty": {
       "type": "Git",
       "repository": {
