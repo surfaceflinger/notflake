@@ -27,7 +27,10 @@
       kernel.warn-panic = false;
       misc.ssh-hardening = true;
       network.tcp-window-scaling = true;
-      system.minimize-swapping = false;
+      system = {
+        minimize-swapping = false;
+        secure-chrony = false;
+      };
     };
     filesystems = {
       special."/proc".options.hidepid = lib.mkForce false;

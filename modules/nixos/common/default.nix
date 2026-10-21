@@ -8,6 +8,7 @@
   imports = [
     ./agenix.nix
     ./boot.nix
+    ./chrony.nix
     ./hardening.nix
     inputs.home-manager.result.nixosModules.default
     ./kmscon.nix
