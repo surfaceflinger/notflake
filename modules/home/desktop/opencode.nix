@@ -6,79 +6,20 @@
   ...
 }:
 let
-  # hm dumps this via builtins.tojson (keys sorted) and last matching rule wins,
-  # so an override must sort *after* the rule it overrides.
-  # "*" always sorts first (good), and `cmd *` < `cmd *-flag*` < `cmd *.env*`.
-
-  allow = cmds: lib.genAttrs cmds (_: "allow");
-
-  # `cmd` and `cmd *` instead of `cmd*`, which would also match lsblk, filefrag, ...
-  allowWithArgs =
-    cmds:
-    allow (
-      lib.concatMap (c: [
-        c
-        "${c} *"
-      ]) cmds
-    );
-
-  roCmds = [
-    "df"
-    "du"
-    "file"
-    "find"
-    "grep"
-    "head"
-    "jq"
-    "ls"
-    "pwd"
-    "rg"
-    "stat"
-    "tail"
-    "tree"
-    "type"
-    "wc"
-    "which"
-  ];
-
-  gitRo = [
-    "git blame"
-    "git branch --list"
-    "git branch -a"
-    "git branch -v"
-    "git config --get"
-    "git config --list"
-    "git describe"
-    "git diff"
-    "git log"
-    "git ls-files"
-    "git ls-remote"
-    "git rev-parse"
-    "git remote -v"
-    "git remote get-url"
-    "git remote show"
-    "git reflog show"
-    "git shortlog"
-    "git show"
-    "git stash list"
-    "git status"
-    "git tag --list"
-    "git tag -l"
-  ];
-
-  nixRo = [
-    "nix config show"
-    "nix derivation show"
-    "nix eval"
-    "nix flake check"
-    "nix flake metadata"
-    "nix flake show"
-    "nix log"
-    "nix path-info"
-    "nix search"
-    "nix store diff-closures"
-    "nix why-depends"
-  ];
+  # V2 permissions are ordered; the last matching rule wins, so broad allows
+  # come first and narrow asks/denies last.
+  allow = action: resource: {
+    inherit action resource;
+    effect = "allow";
+  };
+  ask = action: resource: {
+    inherit action resource;
+    effect = "ask";
+  };
+  deny = action: resource: {
+    inherit action resource;
+    effect = "deny";
+  };
 
   githubMcp = pkgs.writeShellScript "github-mcp-wrapper" ''
     set -euo pipefail
@@ -104,21 +45,12 @@ in
 {
   programs.opencode = {
     enable = true;
-    enableMcpIntegration = true;
 
     settings = {
-      model = "opencode-go/muse-spark-1.3";
-      small_model = "opencode-go/muse-spark-1.3";
-      autoupdate = false;
+      model = "opencode-go/deepseek-v4.1-flash";
+      update = "disable";
       share = "disabled";
-    };
-
-    tui = {
-      theme = "system";
-      attention = {
-        enabled = true;
-        sound = false;
-      };
+      agents.title.model = "opencode-go/deepseek-v4.1-flash";
     };
 
     context = ''
@@ -169,101 +101,60 @@ in
     ];
 
     # permissions
-    settings.permission = {
-      "*" = "ask";
+    settings.permissions = [
+      (ask "*" "*")
+      (allow "external_directory" "/nix/store/*")
+      (allow "external_directory" "/tmp/opencode/*")
 
-      external_directory = {
-        "/nix/store/*" = "allow";
-        "/tmp/opencode/*" = "allow";
-      };
-    };
-    #settings.permission = {
-    #  "*" = "ask";
-    #
-    #  # kagi mcp replaces built-in search; gh_grep + context7 cover codesearch.
-    #  # deny also hides the tool from the model (saves tokens).
-    #  websearch = "deny";
-    #  codesearch = "deny";
-    #
-    #  # webfetch matches the url; only known doc hosts auto-allow,
-    #  # rest prompts, so no read-secret-then-fetch-evil.com exfil
-    #  #webfetch = {
-    #  #  "*" = "ask";
-    #  #  "https://github.com/*" = "allow";
-    #  #  "https://raw.githubusercontent.com/*" = "allow";
-    #  #  "https://nixos.org/*" = "allow";
-    #  #  "https://search.nixos.org/*" = "allow";
-    #  #  "https://wiki.nixos.org/*" = "allow";
-    #  #  "https://nix.dev/*" = "allow";
-    #  #  "https://nix-community.github.io/*" = "allow";
-    #  #  "https://opencode.ai/*" = "allow";
-    #  #};
-    #
-    #  # explicit read=allow would override stock .env denies, so restate them.
-    #  read = {
-    #    "*" = "allow";
-    #    "*.env" = "deny";
-    #    "*.env.*" = "deny";
-    #    "*.env.example" = "allow";
-    #  };
-    #
-    #  edit = {
-    #    "*" = "allow";
-    #    "*.env" = "ask";
-    #    "*.env.*" = "ask";
-    #    "*.git/*" = "ask";
-    #  };
-    #
-    #  external_directory = {
-    #    "/nix/store/*" = "allow";
-    #    "/tmp/opencode/*" = "allow";
-    #  };
-    #
-    #  glob = "allow";
-    #  grep = "allow";
-    #  list = "allow";
-    #  lsp = "allow";
-    #  skill = "allow";
-    #  # subagents are still bound by these same rules
-    #  task = "allow";
-    #  todoread = "allow";
-    #  todowrite = "allow";
-    #
-    #  # mcp tools are named <server>_<tool>, so "*"=ask prompted on every call.
-    #  "context7_*" = "allow";
-    #  "gh_grep_*" = "allow";
-    #  "github_*" = "allow";
-    #  "kagi_*" = "allow";
-    #  # these make kagi fetch any url, same exfil channel as webfetch
-    #  "kagi_kagi_extract" = "ask";
-    #  "kagi_kagi_summarize" = "ask";
-    #
-    #  bash = {
-    #    "git add *" = "allow"; # local staging only; flakes can't see untracked files
-    #    "git add" = "allow";
-    #    "git remote" = "allow";
-    #    "git reflog" = "allow";
-    #    "mkdir *" = "allow";
-    #    "nix build *--dry-run*" = "allow";
-    #
-    #    # these can still exec/write via flags
-    #    "find *-delete*" = "ask";
-    #    "find *-exec*" = "ask";
-    #    "find *-fprint*" = "ask";
-    #    "find *-ok*" = "ask";
-    #    "git diff *--output*" = "ask";
-    #    "rg *--pre*" = "ask";
-    #  }
-    #  // allowWithArgs roCmds
-    #  // allowWithArgs gitRo
-    #  // allowWithArgs nixRo
-    #  // lib.genAttrs (map (c: "${c} *.env*") roCmds) (_: "ask");
-    #};
+      # jew-guard skips read-only tools, so allow them here or every read prompts
+      (allow "read" "*")
+      (deny "read" "*.env")
+      (deny "read" "*.env.*")
+      (allow "read" "*.env.example")
+      (allow "glob" "*")
+      (allow "grep" "*")
+      (allow "skill" "*")
+      (allow "subagent" "*")
+      (allow "question" "*")
+      (allow "jew_workspace" "*")
+      (allow "jew_model" "*")
+      (allow "jew_yolo" "*")
 
-    settings.plugin = [
+      # jew-guard judges edits, so its "allow" can skip the prompt
+      (allow "edit" "*")
+      (ask "edit" "*.env")
+      (ask "edit" "*.env.*")
+      (ask "edit" "*.git/*")
+
+      # kagi replaces built-in search
+      (deny "websearch" "*")
+
+      # MCP calls are judged by jew-guard; summarize fetches URLs
+      (allow "context7_*" "*")
+      (allow "gh_grep_*" "*")
+      (allow "github_*" "*")
+      (allow "opentofu_*" "*")
+      (allow "chrome-devtools_*" "*")
+      (allow "kagi_*" "*")
+      (ask "kagi_kagi_summarize" "*")
+
+      # jew-guard judges webfetch; unknown hosts stay ask even when Jev allows
+      (ask "webfetch" "*")
+      (allow "webfetch" "https://github.com/*")
+      (allow "webfetch" "https://raw.githubusercontent.com/*")
+      (allow "webfetch" "https://nixos.org/*")
+      (allow "webfetch" "https://search.nixos.org/*")
+      (allow "webfetch" "https://wiki.nixos.org/*")
+      (allow "webfetch" "https://nix.dev/*")
+      (allow "webfetch" "https://nix-community.github.io/*")
+      (allow "webfetch" "https://opencode.ai/*")
+    ];
+
+    settings.plugins = [
       "@dietrichgebert/ponytail@5.1.0"
-      "jew-guard@0.9.2"
-      "opencode-pty@0.4.0"
+      "jew-guard@0.10.0"
+      # V2 lives behind a subpath export, which cannot carry an @version pin.
+      "opencode-pty/v2"
     ];
 
     settings.lsp = {
@@ -312,7 +203,7 @@ in
       };
       terraform = {
         command = [
-          (lib.getExe pkgs.terraform-ls)
+          (lib.getExe pkgs.tofu-ls)
           "serve"
         ];
         extensions = [
@@ -341,29 +232,39 @@ in
         ];
       };
     };
-  };
 
-  # mcp
-  programs.mcp = {
-    enable = true;
-    servers = {
-      context7.url = "https://mcp.context7.com/mcp";
-      gh_grep.url = "https://mcp.grep.app";
-      github.command = "${githubMcp}";
-      opentofu.url = "https://mcp.opentofu.org/mcp";
+    settings.mcp.servers = {
+      context7 = {
+        type = "remote";
+        url = "https://mcp.context7.com/mcp";
+      };
+      gh_grep = {
+        type = "remote";
+        url = "https://mcp.grep.app";
+      };
+      github = {
+        type = "local";
+        command = [ githubMcp ];
+      };
+      opentofu = {
+        type = "remote";
+        url = "https://mcp.opentofu.org/mcp";
+      };
       chrome-devtools = {
-        command = "npx";
-        args = [
+        type = "local";
+        command = [
+          "npx"
           "-y"
-          "chrome-devtools-mcp@1.10.1"
+          "chrome-devtools-mcp@1.11.0"
           "--no-usage-statistics"
           "--no-performance-crux"
           "--browserUrl=http://127.0.0.1:9222"
         ];
       };
       kagi = {
-        command = lib.getExe inputs.kagi-cli.result.packages."${pkgs.stdenv.hostPlatform.system}".default;
-        args = [
+        type = "local";
+        command = [
+          (lib.getExe inputs.kagi-cli.result.packages."${pkgs.stdenv.hostPlatform.system}".default)
           "mcp"
           "--default-output"
           "toon"
@@ -371,6 +272,18 @@ in
           "kagi_search,kagi_batch_search,kagi_summarize"
         ];
       };
+    };
+  };
+
+  xdg.configFile."opencode/cli.json".text = builtins.toJSON {
+    "$schema" = "https://opencode.ai/v2/cli.json";
+    theme = {
+      name = "system";
+      mode = "system";
+    };
+    attention = {
+      notifications = true;
+      sound = false;
     };
   };
 }
