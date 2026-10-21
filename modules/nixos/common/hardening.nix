@@ -10,7 +10,7 @@
     };
     settings = {
       debug.debugfs = true;
-      etc.kicksecure-gitconfig = false;
+      etc.harden-gitconfig = false;
       system = {
         proc-mem-force = "ptrace";
         yama = "relaxed";
