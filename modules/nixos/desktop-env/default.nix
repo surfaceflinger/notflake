@@ -11,8 +11,6 @@
     ./unharden.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
-
   time.timeZone = "Europe/Warsaw";
   location.provider = "geoclue2";
 

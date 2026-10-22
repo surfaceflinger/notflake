@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.chrony = {
     enable = true;
     # ntppool1 is a single server, but nixpkgs emits `pool` for any name
