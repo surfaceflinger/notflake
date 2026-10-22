@@ -148,13 +148,12 @@ in
       (allow "webfetch" "https://nix.dev/*")
       (allow "webfetch" "https://nix-community.github.io/*")
       (allow "webfetch" "https://opencode.ai/*")
+      (deny "bash" "git push*")
     ];
 
     settings.plugins = [
       "@dietrichgebert/ponytail@5.1.0"
       "jew-guard@0.10.0"
-      # V2 lives behind a subpath export, which cannot carry an @version pin.
-      "opencode-pty/v2"
     ];
 
     settings.lsp = {
