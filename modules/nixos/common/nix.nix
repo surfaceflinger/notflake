@@ -9,6 +9,7 @@
 
   nix = {
     channel.enable = false;
+    nixPath = [ "nixpkgs=flake:nixpkgs" ];
     package = pkgs.nixVersions.latest;
     registry = lib.mapAttrs (name: input: {
       from = {
