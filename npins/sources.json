@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "12363a98390dd72e40a1d34d2a49cb90fef25432",
-      "url": "https://github.com/surfaceflinger/atk-info/archive/12363a98390dd72e40a1d34d2a49cb90fef25432.tar.gz",
-      "hash": "sha256-1VEp/OaCiflGMLXg03tS4ECtLcdLIgwGBiQu3JoMu40="
+      "revision": "60d230672cc0db3b4d0b026f8b41e3f2b0dfb7b6",
+      "url": "https://github.com/surfaceflinger/atk-info/archive/60d230672cc0db3b4d0b026f8b41e3f2b0dfb7b6.tar.gz",
+      "hash": "sha256-04SpzhHD+yey/gnpxsvIgdaXi9Np0QwBJj7U4o3Dw/o="
     },
     "autoaspm": {
       "type": "Git",
