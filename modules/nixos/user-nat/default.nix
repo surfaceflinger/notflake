@@ -52,7 +52,6 @@
         gh
         gnumake
         hcloud
-        k9s
         kubectl
         kubectl-cnpg
         kubectl-df-pv
