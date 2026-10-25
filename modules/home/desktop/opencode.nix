@@ -92,6 +92,38 @@ in
         ".tofu"
       ];
     };
+    settings.formatter.ruff = {
+      command = [
+        (lib.getExe pkgs.ruff)
+        "format"
+        "$FILE"
+      ];
+      extensions = [
+        ".py"
+        ".pyi"
+      ];
+    };
+    settings.formatter.biome = {
+      command = [
+        (lib.getExe pkgs.biome)
+        "format"
+        "--write"
+        "$FILE"
+      ];
+      extensions = [
+        ".js"
+        ".jsx"
+        ".ts"
+        ".tsx"
+        ".mjs"
+        ".cjs"
+        ".mts"
+        ".cts"
+        ".json"
+        ".jsonc"
+        ".css"
+      ];
+    };
 
     settings.watcher.ignore = [
       ".git/**"
@@ -157,13 +189,22 @@ in
     ];
 
     settings.lsp = {
-      nixd = {
-        command = [ (lib.getExe pkgs.nixd) ];
+      nix = {
+        command = [ (lib.getExe pkgs.nil) ];
         extensions = [ ".nix" ];
-        initialization.formatting.command = [ (lib.getExe pkgs.nixfmt) ];
       };
       pyright = {
         command = [ (lib.getExe pkgs.pyright) ];
+        extensions = [
+          ".py"
+          ".pyi"
+        ];
+      };
+      ruff = {
+        command = [
+          (lib.getExe pkgs.ruff)
+          "server"
+        ];
         extensions = [
           ".py"
           ".pyi"
@@ -200,6 +241,14 @@ in
         command = [ (lib.getExe pkgs.rust-analyzer) ];
         extensions = [ ".rs" ];
       };
+      go = {
+        command = [ (lib.getExe pkgs.gopls) ];
+        extensions = [ ".go" ];
+      };
+      lua = {
+        command = [ (lib.getExe pkgs.lua-language-server) ];
+        extensions = [ ".lua" ];
+      };
       terraform = {
         command = [
           (lib.getExe pkgs.tofu-ls)
@@ -228,6 +277,57 @@ in
         extensions = [
           ".json"
           ".jsonc"
+        ];
+      };
+      toml = {
+        command = [
+          (lib.getExe pkgs.taplo)
+          "lsp"
+          "stdio"
+        ];
+        extensions = [ ".toml" ];
+      };
+      markdown = {
+        command = [
+          (lib.getExe pkgs.marksman)
+          "server"
+        ];
+        extensions = [
+          ".md"
+          ".markdown"
+        ];
+      };
+      css = {
+        command = [
+          (lib.getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server")
+          "--stdio"
+        ];
+        extensions = [ ".css" ];
+      };
+      html = {
+        command = [
+          (lib.getExe' pkgs.vscode-langservers-extracted "vscode-html-language-server")
+          "--stdio"
+        ];
+        extensions = [
+          ".html"
+          ".htm"
+        ];
+      };
+      biome = {
+        command = [
+          (lib.getExe pkgs.biome)
+          "lsp-proxy"
+        ];
+        extensions = [
+          ".js"
+          ".jsx"
+          ".ts"
+          ".tsx"
+          ".mjs"
+          ".cjs"
+          ".mts"
+          ".cts"
         ];
       };
     };
