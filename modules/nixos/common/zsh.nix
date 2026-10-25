@@ -34,6 +34,10 @@ in
       tree = lib.getExe tre-command;
     };
     shellInit = ''
+      # home-manager exports its session variables here, not through /etc/profile
+      [[ -r "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]] \
+        && . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+
       [[ -e "$HOME/.config/zsh/history" ]] || {
           mkdir -p "$HOME/.config/zsh" && touch "$HOME/.config/zsh/history"
       }
