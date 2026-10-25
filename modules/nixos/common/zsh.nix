@@ -28,11 +28,39 @@ in
     ];
     shellAliases = with pkgs; rec {
       cat = "${lib.getExe bat} -Pp";
+      dig = lib.getExe doggo;
+      ifconfig = "${lib.getExe' iproute2 "ip"} -brief address show";
+      killall = "${lib.getExe' procps "pkill"} -x";
+      lsof = lib.getExe' util-linux "lsfd";
       ls = "ls --color=auto --group-directories-first --classify=auto";
+      lsscsi = "${lib.getExe' util-linux "lsblk"} -S";
+      lsusb = "${lib.getExe cyme} --lsusb";
+      nslookup = lib.getExe doggo;
+      pstree = "${lib.getExe pkgs.procs} --tree";
       scpi = "${lib.getExe' openssh "scp"} -o IdentitiesOnly=yes";
       sshi = "${lib.getExe' openssh "ssh"} -o IdentitiesOnly=yes";
+      traceroute = "${lib.getExe' trippy "trip"} -m pretty";
+      traceroute6 = "${lib.getExe' trippy "trip"} -6 -m pretty";
       tree = lib.getExe tre-command;
+      whois = lib.getExe rdap;
     };
+    interactiveShellInit = ''
+      # legacy shims for tools replaced by modern alternatives
+      ps() {
+        case "$*" in
+          ""|aux|-ef|-e|-A) ${lib.getExe pkgs.procs} ;;
+          *) command ps "$@" ;;
+        esac
+      }
+
+      netstat() {
+        if (( $# == 0 )); then
+          ${lib.getExe' pkgs.iproute2 "ss"} -tulpn
+        else
+          ${lib.getExe' pkgs.iproute2 "ss"} "$@"
+        fi
+      }
+    '';
     shellInit = ''
       # home-manager exports its session variables here, not through /etc/profile
       [[ -r "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]] \
