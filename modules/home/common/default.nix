@@ -12,6 +12,9 @@
     enableAll = true;
   };
 
+  # HashiCorp tools (packer) phone home through checkpoint
+  home.sessionVariables.CHECKPOINT_DISABLE = "1";
+
   nix.gc = {
     automatic = true;
     randomizedDelaySec = "10min";

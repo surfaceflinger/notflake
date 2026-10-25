@@ -157,6 +157,8 @@
       recent-files-max-age = -1;
       remove-old-temp-files = true;
       remove-old-trash-files = true;
+      report-technical-problems = false;
+      send-software-usage-stats = false;
     };
 
     # extensions
