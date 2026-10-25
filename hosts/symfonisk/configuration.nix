@@ -49,7 +49,5 @@
     HandlePowerKeyLongPress = "poweroff";
     HandlePowerKey = "suspend";
   };
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-  '';
+  systemd.sleep.settings.Sleep.AllowSuspend = lib.mkForce "yes";
 }
