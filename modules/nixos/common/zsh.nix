@@ -38,7 +38,6 @@ in
           mkdir -p "$HOME/.config/zsh" && touch "$HOME/.config/zsh/history"
       }
       zsh-newuser-install () {}
-      lk () {cd "$(${lib.getExe pkgs.walk} "$@")"}
       export LS_COLORS=$(<${lsColors})
     '';
     promptInit = ''
