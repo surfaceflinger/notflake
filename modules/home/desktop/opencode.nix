@@ -46,6 +46,20 @@ in
   programs.opencode = {
     enable = true;
 
+    cli = {
+      theme = {
+        name = "system";
+        mode = "system";
+      };
+      attention = {
+        notifications = true;
+        sound = false;
+      };
+    };
+
+    commands.impeccable = builtins.toPath "${pkgs.impeccable}/share/impeccable/.opencode/commands/impeccable.md";
+    skills.impeccable = "${pkgs.impeccable}/share/impeccable/.opencode/skills/impeccable";
+
     settings = {
       model = "opencode-go/deepseek-v4.1-flash";
       update = "disable";
@@ -161,14 +175,14 @@ in
       # kagi replaces built-in search
       (deny "websearch" "*")
 
-      # MCP calls are judged by jew-guard; summarize fetches URLs
+      # MCP calls are judged by jew-guard
       (allow "context7_*" "*")
       (allow "gh_grep_*" "*")
       (allow "github_*" "*")
       (allow "opentofu_*" "*")
       (allow "chrome-devtools_*" "*")
       (allow "kagi_*" "*")
-      (ask "kagi_kagi_summarize" "*")
+      (allow "probook_*" "*")
 
       # jew-guard judges webfetch; unknown hosts stay ask even when Jev allows
       (ask "webfetch" "*")
@@ -349,6 +363,10 @@ in
         type = "remote";
         url = "https://mcp.opentofu.org/mcp";
       };
+      probook = {
+        type = "remote";
+        url = "http://probook:45818/mcp";
+      };
       chrome-devtools = {
         type = "local";
         command = [
@@ -368,21 +386,9 @@ in
           "--default-output"
           "toon"
           "--tools"
-          "kagi_search,kagi_batch_search,kagi_summarize"
+          "kagi_search,kagi_batch_search"
         ];
       };
-    };
-  };
-
-  xdg.configFile."opencode/cli.json".text = builtins.toJSON {
-    "$schema" = "https://opencode.ai/v2/cli.json";
-    theme = {
-      name = "system";
-      mode = "system";
-    };
-    attention = {
-      notifications = true;
-      sound = false;
     };
   };
 }
