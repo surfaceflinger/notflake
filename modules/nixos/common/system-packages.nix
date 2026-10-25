@@ -14,7 +14,6 @@
     bat
     deadnix
     file
-    flow-control
     inputs.nilla-cli.result.packages.default.result."${pkgs.stdenv.hostPlatform.system}"
     inputs.nilla-utils.result.packages.default.result."${pkgs.stdenv.hostPlatform.system}"
     jq
@@ -28,19 +27,25 @@
     ripgrep
     shellcheck
     statix
-    tre
+    tealdeer
+    tre-command
     (writeScriptBin "7z" ''exec 7zz "$@"'')
     yq-go
 
     # system utilities
     bottom
-    busybox-nat
     config.boot.kernelPackages.cpupower
+    cyme
+    e2fsprogs.bin
+    pciutils
+    procs
     systemctl-tui
 
     # network
     doggo
     goaccess
+    rdap
     speedtest-go
+    trippy
   ];
 }
