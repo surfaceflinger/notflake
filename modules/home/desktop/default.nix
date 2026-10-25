@@ -4,6 +4,7 @@
     ./easyeffects.nix
     ./ghostty.nix
     ./gtk.nix
+    ./k9s.nix
     ./mangohud.nix
     ./mpv.nix
     ./opencode.nix
