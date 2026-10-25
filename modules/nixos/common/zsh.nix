@@ -26,7 +26,7 @@ in
       "prompt_subst"
       "share_history"
     ];
-    shellAliases = with pkgs; rec {
+    shellAliases = with pkgs; {
       cat = "${lib.getExe bat} -Pp";
       dig = lib.getExe doggo;
       ifconfig = "${lib.getExe' iproute2 "ip"} -brief address show";
@@ -75,6 +75,7 @@ in
     promptInit = ''
       stty stop undef # no ctrl-s freeze
       zstyle ':completion:*' menu select # select-style completions
+      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
       autoload -Uz vcs_info
       zstyle ':vcs_info:git:*' check-for-changes true
