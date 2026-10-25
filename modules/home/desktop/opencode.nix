@@ -65,6 +65,10 @@ in
       update = "disable";
       share = "disabled";
       agents.title.model = "opencode-go/deepseek-v4.1-flash";
+      providers."opencode-go".settings = {
+        headerTimeout = 15000;
+        chunkTimeout = 120000;
+      };
     };
 
     context = ''
