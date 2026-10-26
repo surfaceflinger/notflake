@@ -86,6 +86,7 @@ in
       - Avoid comments, write self-explanatory code with clear naming
       - Add comments in English only when they provide non-obvious value
       - Challenge proposals when you have a better alternative
+      - Never push to a remote automatically; only push when explicitly asked
       - Keep responses concise and actionable
       - Avoid sloppy AI prose (as if this was going to help lmao)
     '';
