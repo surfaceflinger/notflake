@@ -18,6 +18,7 @@
     nixosModules.desktop-env
     nixosModules.mixin-gaming
     nixosModules.mixin-ryzen
+    nixosModules.mixin-secureboot
     nixosModules.mixin-telemetry
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation

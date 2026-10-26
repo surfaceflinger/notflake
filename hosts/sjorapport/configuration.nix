@@ -12,6 +12,7 @@
     nixosModules.laptop
     nixosModules.mixin-gaming
     nixosModules.mixin-intel
+    nixosModules.mixin-secureboot
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
     nixosModules.user-nat

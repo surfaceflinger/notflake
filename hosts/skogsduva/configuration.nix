@@ -16,6 +16,7 @@
     ./monero.nix
     nixosModules.common
     nixosModules.mixin-intel
+    nixosModules.mixin-secureboot
     nixosModules.mixin-telemetry
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
@@ -27,22 +28,15 @@
   ];
 
   # bootloader/kernel/modules
-  boot = {
-    loader.limine = {
-      biosDevice = "/dev/disk/by-id/ata-SSDPR-CL100-240-G3_G11004475";
-      biosSupport = true;
-      partitionIndex = 2;
-    };
-    initrd.availableKernelModules = [
-      "ahci"
-      "ehci_pci"
-      "sd_mod"
-      "sr_mod"
-      "usbhid"
-      "usb_storage"
-      "xhci_pci"
-    ];
-  };
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "ehci_pci"
+    "sd_mod"
+    "sr_mod"
+    "usbhid"
+    "usb_storage"
+    "xhci_pci"
+  ];
 
   systemd.network.networks."10-eth-dhcp" = {
     ipv6AcceptRAConfig.UseAutonomousPrefix = false;
