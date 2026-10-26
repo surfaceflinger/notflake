@@ -62,6 +62,10 @@
     enable = true;
     settings = {
       version = 7;
+      daemon = {
+        log_level = "info";
+        admin_group = "wheel";
+      };
       gpus."1002:747E-1DA2:475A-0000:0b:00.0" = {
         power_cap = 280.0;
         max_core_clock = 2475;
