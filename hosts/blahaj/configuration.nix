@@ -58,7 +58,16 @@
   };
 
   # need this for correct gpu work (capped at 220w tdp by default but it can use 280w)
-  services.lact.enable = true;
+  services.lact = {
+    enable = true;
+    settings = {
+      version = 7;
+      gpus."1002:747E-1DA2:475A-0000:0b:00.0" = {
+        power_cap = 280.0;
+        max_core_clock = 2475;
+      };
+    };
+  };
 
   # rx7800xt + samsung odyssey g52a flickers on 165hz
   boot.kernelParams = [ "video=2560x1440@144" ];
