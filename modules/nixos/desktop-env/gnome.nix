@@ -1,4 +1,15 @@
 { pkgs, ... }: {
+  nixpkgs.overlays = [
+    (_final: prev: {
+      mutter = prev.mutter.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          ./mutter-frame-pacing.patch
+          ./mutter-tearing.patch
+        ];
+      });
+    })
+  ];
+
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
