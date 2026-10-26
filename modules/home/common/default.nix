@@ -5,7 +5,7 @@
     inputs.nix-index-database.result.homeModules.nix-index
   ];
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   dont-track-me = {
     enable = true;
