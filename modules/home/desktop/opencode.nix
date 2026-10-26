@@ -179,7 +179,8 @@ in
       # kagi replaces built-in search
       (deny "websearch" "*")
 
-      # MCP calls are judged by jew-guard
+      # MCP actions are <server>_<tool>; invalid chars become _, hyphens stay.
+      # opencode_* is a plugin namespace, not MCP, so it stays ask.
       (allow "context7_*" "*")
       (allow "gh_grep_*" "*")
       (allow "github_*" "*")
