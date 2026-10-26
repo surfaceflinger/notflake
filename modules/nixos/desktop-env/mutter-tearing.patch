@@ -1,6 +1,6 @@
-diff --git c/clutter/clutter/clutter-frame-clock.c w/clutter/clutter/clutter-frame-clock.c
+diff --git i/clutter/clutter/clutter-frame-clock.c w/clutter/clutter/clutter-frame-clock.c
 index effa083..dac9098 100644
---- c/clutter/clutter/clutter-frame-clock.c
+--- i/clutter/clutter/clutter-frame-clock.c
 +++ w/clutter/clutter/clutter-frame-clock.c
 @@ -982,6 +982,7 @@ maybe_want_triple_buffering (ClutterFrameClock *frame_clock)
      {
@@ -79,9 +79,9 @@ index effa083..dac9098 100644
      case CLUTTER_FRAME_CLOCK_MODE_PASSIVE:
        g_assert_not_reached ();
        break;
-diff --git c/clutter/clutter/clutter-frame-clock.h w/clutter/clutter/clutter-frame-clock.h
+diff --git i/clutter/clutter/clutter-frame-clock.h w/clutter/clutter/clutter-frame-clock.h
 index 4dc89e3..b3d5ef6 100644
---- c/clutter/clutter/clutter-frame-clock.h
+--- i/clutter/clutter/clutter-frame-clock.h
 +++ w/clutter/clutter/clutter-frame-clock.h
 @@ -72,6 +72,7 @@ typedef enum _ClutterFrameClockMode
  {
@@ -91,9 +91,9 @@ index 4dc89e3..b3d5ef6 100644
    CLUTTER_FRAME_CLOCK_MODE_PASSIVE,
  } ClutterFrameClockMode;
  
-diff --git c/data/org.gnome.mutter.gschema.xml.in w/data/org.gnome.mutter.gschema.xml.in
+diff --git i/data/org.gnome.mutter.gschema.xml.in w/data/org.gnome.mutter.gschema.xml.in
 index 0912b11..9273cc0 100644
---- c/data/org.gnome.mutter.gschema.xml.in
+--- i/data/org.gnome.mutter.gschema.xml.in
 +++ w/data/org.gnome.mutter.gschema.xml.in
 @@ -5,6 +5,7 @@
      <value nick="kms-modifiers" value="2"/>
@@ -116,9 +116,9 @@ index 0912b11..9273cc0 100644
        </description>
      </key>
  
-diff --git c/meson.build w/meson.build
+diff --git i/meson.build w/meson.build
 index 45d148f..e05e84e 100644
---- c/meson.build
+--- i/meson.build
 +++ w/meson.build
 @@ -53,7 +53,7 @@ wayland_protocols_req = '>= 1.47'
  # native backend version requirements
@@ -129,9 +129,9 @@ index 45d148f..e05e84e 100644
  
  # screen cast version requirements
  libpipewire_req = '>= 1.6.0'
-diff --git c/src/backends/meta-settings-private.h w/src/backends/meta-settings-private.h
+diff --git i/src/backends/meta-settings-private.h w/src/backends/meta-settings-private.h
 index 2ba4443..ed40093 100644
---- c/src/backends/meta-settings-private.h
+--- i/src/backends/meta-settings-private.h
 +++ w/src/backends/meta-settings-private.h
 @@ -31,6 +31,7 @@ typedef enum _MetaExperimentalFeature
    META_EXPERIMENTAL_FEATURE_NONE = 0,
@@ -141,9 +141,9 @@ index 2ba4443..ed40093 100644
  } MetaExperimentalFeature;
  
  typedef enum _MetaXwaylandExtension
-diff --git c/src/backends/meta-settings.c w/src/backends/meta-settings.c
+diff --git i/src/backends/meta-settings.c w/src/backends/meta-settings.c
 index 75385d6..17dc118 100644
---- c/src/backends/meta-settings.c
+--- i/src/backends/meta-settings.c
 +++ w/src/backends/meta-settings.c
 @@ -47,6 +47,7 @@ enum
  static GDebugKey experimental_feature_keys[] = {
@@ -162,9 +162,9 @@ index 75385d6..17dc118 100644
  
        if (feature)
          g_message ("Enabling experimental feature '%s'", feature_str);
-diff --git c/src/backends/native/meta-kms-cursor-manager.c w/src/backends/native/meta-kms-cursor-manager.c
+diff --git i/src/backends/native/meta-kms-cursor-manager.c w/src/backends/native/meta-kms-cursor-manager.c
 index caec412..7e1ebc3 100644
---- c/src/backends/native/meta-kms-cursor-manager.c
+--- i/src/backends/native/meta-kms-cursor-manager.c
 +++ w/src/backends/native/meta-kms-cursor-manager.c
 @@ -442,6 +442,83 @@ maybe_update_cursor_plane (MetaKmsCursorManagerImpl  *cursor_manager_impl,
    return update;
@@ -278,9 +278,9 @@ index caec412..7e1ebc3 100644
    if (flags & META_KMS_UPDATE_FLAG_TEST_ONLY)
      return update;
  
-diff --git c/src/backends/native/meta-kms-device.c w/src/backends/native/meta-kms-device.c
+diff --git i/src/backends/native/meta-kms-device.c w/src/backends/native/meta-kms-device.c
 index 4a3415c..224e014 100644
---- c/src/backends/native/meta-kms-device.c
+--- i/src/backends/native/meta-kms-device.c
 +++ w/src/backends/native/meta-kms-device.c
 @@ -140,6 +140,12 @@ meta_kms_device_uses_monotonic_clock (MetaKmsDevice *device)
    return device->caps.uses_monotonic_clock;
@@ -295,9 +295,9 @@ index 4a3415c..224e014 100644
  GList *
  meta_kms_device_get_connectors (MetaKmsDevice *device)
  {
-diff --git c/src/backends/native/meta-kms-device.h w/src/backends/native/meta-kms-device.h
+diff --git i/src/backends/native/meta-kms-device.h w/src/backends/native/meta-kms-device.h
 index 6dfa5a7..49d68b1 100644
---- c/src/backends/native/meta-kms-device.h
+--- i/src/backends/native/meta-kms-device.h
 +++ w/src/backends/native/meta-kms-device.h
 @@ -51,6 +51,9 @@ gboolean meta_kms_device_prefers_shadow_buffer (MetaKmsDevice *device);
  META_EXPORT_TEST
@@ -309,9 +309,9 @@ index 6dfa5a7..49d68b1 100644
  META_EXPORT_TEST
  GList * meta_kms_device_get_connectors (MetaKmsDevice *device);
  
-diff --git c/src/backends/native/meta-kms-impl-device-atomic.c w/src/backends/native/meta-kms-impl-device-atomic.c
+diff --git i/src/backends/native/meta-kms-impl-device-atomic.c w/src/backends/native/meta-kms-impl-device-atomic.c
 index c020c00..b02f3c7 100644
---- c/src/backends/native/meta-kms-impl-device-atomic.c
+--- i/src/backends/native/meta-kms-impl-device-atomic.c
 +++ w/src/backends/native/meta-kms-impl-device-atomic.c
 @@ -1075,6 +1075,8 @@ commit_flags_string (uint32_t commit_flags)
      commit_flag_strings[i++] = "PAGE_FLIP_EVENT";
@@ -362,9 +362,9 @@ index c020c00..b02f3c7 100644
    ret = drmModeAtomicCommit (fd, req, commit_flags, impl_device);
    if (ret < 0)
      {
-diff --git c/src/backends/native/meta-kms-impl-device.c w/src/backends/native/meta-kms-impl-device.c
+diff --git i/src/backends/native/meta-kms-impl-device.c w/src/backends/native/meta-kms-impl-device.c
 index 3bfa9a6..85112c5 100644
---- c/src/backends/native/meta-kms-impl-device.c
+--- i/src/backends/native/meta-kms-impl-device.c
 +++ w/src/backends/native/meta-kms-impl-device.c
 @@ -576,6 +576,7 @@ init_caps (MetaKmsImplDevice *impl_device)
    uint64_t prefer_shadow;
@@ -386,9 +386,9 @@ index 3bfa9a6..85112c5 100644
  }
  
  static void
-diff --git c/src/backends/native/meta-kms-impl-device.h w/src/backends/native/meta-kms-impl-device.h
+diff --git i/src/backends/native/meta-kms-impl-device.h w/src/backends/native/meta-kms-impl-device.h
 index 5717392..9a445a0 100644
---- c/src/backends/native/meta-kms-impl-device.h
+--- i/src/backends/native/meta-kms-impl-device.h
 +++ w/src/backends/native/meta-kms-impl-device.h
 @@ -39,6 +39,7 @@ typedef struct _MetaKmsDeviceCaps
    gboolean uses_monotonic_clock;
@@ -398,9 +398,9 @@ index 5717392..9a445a0 100644
  } MetaKmsDeviceCaps;
  
  
-diff --git c/src/backends/native/meta-kms-plane-private.h w/src/backends/native/meta-kms-plane-private.h
+diff --git i/src/backends/native/meta-kms-plane-private.h w/src/backends/native/meta-kms-plane-private.h
 index c34488e..1e48147 100644
---- c/src/backends/native/meta-kms-plane-private.h
+--- i/src/backends/native/meta-kms-plane-private.h
 +++ w/src/backends/native/meta-kms-plane-private.h
 @@ -28,6 +28,7 @@ typedef enum _MetaKmsPlaneProp
    META_KMS_PLANE_PROP_TYPE = 0,
@@ -410,9 +410,9 @@ index c34488e..1e48147 100644
    META_KMS_PLANE_PROP_SRC_X,
    META_KMS_PLANE_PROP_SRC_Y,
    META_KMS_PLANE_PROP_SRC_W,
-diff --git c/src/backends/native/meta-kms-plane.c w/src/backends/native/meta-kms-plane.c
+diff --git i/src/backends/native/meta-kms-plane.c w/src/backends/native/meta-kms-plane.c
 index 268981a..16017e4 100644
---- c/src/backends/native/meta-kms-plane.c
+--- i/src/backends/native/meta-kms-plane.c
 +++ w/src/backends/native/meta-kms-plane.c
 @@ -58,6 +58,8 @@ struct _MetaKmsPlane
     */
@@ -591,9 +591,9 @@ index 268981a..16017e4 100644
  }
  
  static void
-diff --git c/src/backends/native/meta-kms-plane.h w/src/backends/native/meta-kms-plane.h
+diff --git i/src/backends/native/meta-kms-plane.h w/src/backends/native/meta-kms-plane.h
 index adcabfc..fde33a4 100644
---- c/src/backends/native/meta-kms-plane.h
+--- i/src/backends/native/meta-kms-plane.h
 +++ w/src/backends/native/meta-kms-plane.h
 @@ -85,6 +85,9 @@ gboolean meta_kms_plane_supports_cursor_hotspot (MetaKmsPlane *plane);
  GArray * meta_kms_plane_get_modifiers_for_format (MetaKmsPlane *plane,
@@ -605,9 +605,9 @@ index adcabfc..fde33a4 100644
  GArray * meta_kms_plane_copy_drm_format_list (MetaKmsPlane *plane);
  
  gboolean meta_kms_plane_is_format_supported (MetaKmsPlane *plane,
-diff --git c/src/backends/native/meta-kms-types.h w/src/backends/native/meta-kms-types.h
+diff --git i/src/backends/native/meta-kms-types.h w/src/backends/native/meta-kms-types.h
 index 51d7f57..0f38c22 100644
---- c/src/backends/native/meta-kms-types.h
+--- i/src/backends/native/meta-kms-types.h
 +++ w/src/backends/native/meta-kms-types.h
 @@ -80,6 +80,7 @@ typedef enum _MetaKmsUpdateFlag
    META_KMS_UPDATE_FLAG_NONE = 0,
@@ -617,9 +617,9 @@ index 51d7f57..0f38c22 100644
  } MetaKmsUpdateFlag;
  
  typedef enum _MetaKmsPlaneType MetaKmsPlaneType;
-diff --git c/src/backends/native/meta-kms-update.c w/src/backends/native/meta-kms-update.c
+diff --git i/src/backends/native/meta-kms-update.c w/src/backends/native/meta-kms-update.c
 index dce5bd2..fb085a5 100644
---- c/src/backends/native/meta-kms-update.c
+--- i/src/backends/native/meta-kms-update.c
 +++ w/src/backends/native/meta-kms-update.c
 @@ -52,6 +52,8 @@ struct _MetaKmsUpdate
  
@@ -658,9 +658,9 @@ index dce5bd2..fb085a5 100644
  gboolean
  meta_kms_update_is_empty (MetaKmsUpdate *update)
  {
-diff --git c/src/backends/native/meta-kms-update.h w/src/backends/native/meta-kms-update.h
+diff --git i/src/backends/native/meta-kms-update.h w/src/backends/native/meta-kms-update.h
 index 7243a62..b9e4241 100644
---- c/src/backends/native/meta-kms-update.h
+--- i/src/backends/native/meta-kms-update.h
 +++ w/src/backends/native/meta-kms-update.h
 @@ -179,6 +179,13 @@ int64_t meta_kms_update_get_target_presentation_time (MetaKmsUpdate *update);
  void meta_kms_update_set_target_presentation_time (MetaKmsUpdate *update,
@@ -676,9 +676,9 @@ index 7243a62..b9e4241 100644
  void meta_kms_plane_assignment_set_fb_damage (MetaKmsPlaneAssignment *plane_assignment,
                                                const MtkRegion        *region);
  
-diff --git c/src/backends/native/meta-onscreen-native.c w/src/backends/native/meta-onscreen-native.c
+diff --git i/src/backends/native/meta-onscreen-native.c w/src/backends/native/meta-onscreen-native.c
 index 9ab9a1c..bd1410e 100644
---- c/src/backends/native/meta-onscreen-native.c
+--- i/src/backends/native/meta-onscreen-native.c
 +++ w/src/backends/native/meta-onscreen-native.c
 @@ -154,6 +154,11 @@ struct _MetaOnscreenNative
    gboolean vrr_allowed;
@@ -838,9 +838,9 @@ index 9ab9a1c..bd1410e 100644
    return onscreen_native;
  }
  
-diff --git c/src/backends/native/meta-onscreen-native.h w/src/backends/native/meta-onscreen-native.h
+diff --git i/src/backends/native/meta-onscreen-native.h w/src/backends/native/meta-onscreen-native.h
 index 5a191d3..a67a617 100644
---- c/src/backends/native/meta-onscreen-native.h
+--- i/src/backends/native/meta-onscreen-native.h
 +++ w/src/backends/native/meta-onscreen-native.h
 @@ -70,3 +70,8 @@ void meta_onscreen_native_detach (MetaOnscreenNative *onscreen_native);
  
@@ -851,9 +851,9 @@ index 5a191d3..a67a617 100644
 +                                           gboolean            enabled);
 +
 +gboolean meta_onscreen_native_is_tearing_enabled (MetaOnscreenNative *onscreen_native);
-diff --git c/src/compositor/meta-compositor-native.c w/src/compositor/meta-compositor-native.c
+diff --git i/src/compositor/meta-compositor-native.c w/src/compositor/meta-compositor-native.c
 index 704cbad..12b0307 100644
---- c/src/compositor/meta-compositor-native.c
+--- i/src/compositor/meta-compositor-native.c
 +++ w/src/compositor/meta-compositor-native.c
 @@ -39,12 +39,12 @@ meta_compositor_native_before_paint (MetaCompositor     *compositor,
      META_COMPOSITOR_VIEW_NATIVE (compositor_view);
@@ -871,9 +871,9 @@ index 704cbad..12b0307 100644
    parent_class = META_COMPOSITOR_CLASS (meta_compositor_native_parent_class);
    parent_class->before_paint (compositor, compositor_view, frame);
  }
-diff --git c/src/compositor/meta-compositor-view-native.c w/src/compositor/meta-compositor-view-native.c
-index b2c51a5..8bfa5c2 100644
---- c/src/compositor/meta-compositor-view-native.c
+diff --git i/src/compositor/meta-compositor-view-native.c w/src/compositor/meta-compositor-view-native.c
+index b2c51a5..b0466f6 100644
+--- i/src/compositor/meta-compositor-view-native.c
 +++ w/src/compositor/meta-compositor-view-native.c
 @@ -89,7 +89,17 @@ static void
  on_fullscreen_actor_destroyed (MetaSurfaceActor         *surface_actor,
@@ -908,15 +908,7 @@ index b2c51a5..8bfa5c2 100644
  
    surface_actor = find_candidate (compositor_view,
                                    compositor,
-@@ -290,6 +308,7 @@ find_scanout_candidate (MetaCompositorView  *compositor_view,
-     return FALSE;
- 
-   if (!meta_stage_view_is_cursor_overlay_inhibited (view) &&
-+      !meta_onscreen_native_is_tearing_enabled (META_ONSCREEN_NATIVE (framebuffer)) &&
-       surface_actor_has_overlapping_cursor_overlays (compositor,
-                                                      compositor_view,
-                                                      surface_actor))
-@@ -307,14 +326,6 @@ find_scanout_candidate (MetaCompositorView  *compositor_view,
+@@ -307,14 +325,6 @@ find_scanout_candidate (MetaCompositorView  *compositor_view,
        return FALSE;
      }
  
@@ -931,7 +923,7 @@ index b2c51a5..8bfa5c2 100644
    onscreen = COGL_ONSCREEN (framebuffer);
    if (!meta_onscreen_native_supports_direct_scanout (onscreen))
      {
-@@ -447,31 +458,37 @@ update_fullscreen_actor (MetaCompositorViewNative *view_native,
+@@ -447,31 +457,37 @@ update_fullscreen_actor (MetaCompositorViewNative *view_native,
      META_COMPOSITOR_VIEW (view_native);
    ClutterStageView *stage_view;
    CoglFramebuffer *framebuffer;
@@ -991,7 +983,7 @@ index b2c51a5..8bfa5c2 100644
  
    stage_view = meta_compositor_view_get_stage_view (compositor_view);
  
-@@ -481,6 +498,43 @@ update_fullscreen_actor (MetaCompositorViewNative *view_native,
+@@ -481,6 +497,43 @@ update_fullscreen_actor (MetaCompositorViewNative *view_native,
  
    meta_onscreen_native_allow_vrr (META_ONSCREEN_NATIVE (framebuffer),
                                    surface_actor != NULL);
@@ -1035,7 +1027,7 @@ index b2c51a5..8bfa5c2 100644
  }
  
  void
-@@ -492,9 +546,6 @@ meta_compositor_view_native_maybe_update_fullscreen_actor (MetaCompositorViewNat
+@@ -492,9 +545,6 @@ meta_compositor_view_native_maybe_update_fullscreen_actor (MetaCompositorViewNat
  
    fullscreen_actor = find_fullscreen_candidate (compositor_view, compositor);
  
@@ -1045,9 +1037,9 @@ index b2c51a5..8bfa5c2 100644
    update_fullscreen_actor (view_native, fullscreen_actor);
  }
  
-diff --git c/src/meson.build w/src/meson.build
+diff --git i/src/meson.build w/src/meson.build
 index 9410646..4384890 100644
---- c/src/meson.build
+--- i/src/meson.build
 +++ w/src/meson.build
 @@ -638,6 +638,8 @@ mutter_sources += [
    'wayland/meta-wayland-tablet-seat.h',
@@ -1066,9 +1058,9 @@ index 9410646..4384890 100644
    ['text-input-unstable-v3', 'private', ],
    ['viewporter', 'stable', ],
    ['xdg-activation', 'staging', 1, ],
-diff --git c/src/wayland/meta-wayland-dma-buf.c w/src/wayland/meta-wayland-dma-buf.c
+diff --git i/src/wayland/meta-wayland-dma-buf.c w/src/wayland/meta-wayland-dma-buf.c
 index 23a47cf..8c0dea0 100644
---- c/src/wayland/meta-wayland-dma-buf.c
+--- i/src/wayland/meta-wayland-dma-buf.c
 +++ w/src/wayland/meta-wayland-dma-buf.c
 @@ -631,10 +631,20 @@ has_modifier (GArray   *modifiers,
  }
@@ -1181,9 +1173,9 @@ index 23a47cf..8c0dea0 100644
                  continue;
              }
  
-diff --git c/src/wayland/meta-wayland-surface-private.h w/src/wayland/meta-wayland-surface-private.h
+diff --git i/src/wayland/meta-wayland-surface-private.h w/src/wayland/meta-wayland-surface-private.h
 index c9dce70..5928f58 100644
---- c/src/wayland/meta-wayland-surface-private.h
+--- i/src/wayland/meta-wayland-surface-private.h
 +++ w/src/wayland/meta-wayland-surface-private.h
 @@ -154,6 +154,9 @@ struct _MetaWaylandSurfaceState
    MetaMultiTextureCoefficients coeffs;
@@ -1212,9 +1204,9 @@ index c9dce70..5928f58 100644
  void meta_wayland_surface_set_scanout_candidate (MetaWaylandSurface *surface,
                                                   MetaCrtc           *crtc);
  
-diff --git c/src/wayland/meta-wayland-surface.c w/src/wayland/meta-wayland-surface.c
+diff --git i/src/wayland/meta-wayland-surface.c w/src/wayland/meta-wayland-surface.c
 index ebbd3f3..d53d221 100644
---- c/src/wayland/meta-wayland-surface.c
+--- i/src/wayland/meta-wayland-surface.c
 +++ w/src/wayland/meta-wayland-surface.c
 @@ -430,6 +430,7 @@ meta_wayland_surface_state_set_default (MetaWaylandSurfaceState *state)
    state->dx = 0;
@@ -1271,7 +1263,7 @@ index ebbd3f3..d53d221 100644
  static MetaWaylandSurface *
  meta_wayland_surface_role_get_toplevel (MetaWaylandSurfaceRole *surface_role)
  {
-diff --git c/src/wayland/meta-wayland-tearing-control.c w/src/wayland/meta-wayland-tearing-control.c
+diff --git i/src/wayland/meta-wayland-tearing-control.c w/src/wayland/meta-wayland-tearing-control.c
 new file mode 100644
 index 0000000..615b784
 --- /dev/null
@@ -1541,7 +1533,7 @@ index 0000000..615b784
 +  quark_tearing_surface_data =
 +    g_quark_from_static_string ("-meta-wayland-tearing-surface-data");
 +}
-diff --git c/src/wayland/meta-wayland-tearing-control.h w/src/wayland/meta-wayland-tearing-control.h
+diff --git i/src/wayland/meta-wayland-tearing-control.h w/src/wayland/meta-wayland-tearing-control.h
 new file mode 100644
 index 0000000..45b2356
 --- /dev/null
@@ -1586,18 +1578,18 @@ index 0000000..45b2356
 +#include "wayland/meta-wayland-types.h"
 +
 +void meta_wayland_tearing_controller_init (MetaWaylandCompositor *compositor);
-diff --git c/src/wayland/meta-wayland-versions.h w/src/wayland/meta-wayland-versions.h
+diff --git i/src/wayland/meta-wayland-versions.h w/src/wayland/meta-wayland-versions.h
 index 9da5e1e..61ceed0 100644
---- c/src/wayland/meta-wayland-versions.h
+--- i/src/wayland/meta-wayland-versions.h
 +++ w/src/wayland/meta-wayland-versions.h
 @@ -70,3 +70,4 @@
  #define META_WP_COLOR_REPRESENTATION_VERSION 1
  #define META_WL_FIXES_VERSION 1
  #define META_WP_POINTER_WARP_VERSION 1
 +#define META_WP_TEARING_CONTROL_V1_VERSION 1
-diff --git c/src/wayland/meta-wayland.c w/src/wayland/meta-wayland.c
+diff --git i/src/wayland/meta-wayland.c w/src/wayland/meta-wayland.c
 index cc303d3..6ca5525 100644
---- c/src/wayland/meta-wayland.c
+--- i/src/wayland/meta-wayland.c
 +++ w/src/wayland/meta-wayland.c
 @@ -63,6 +63,7 @@
  #include "wayland/meta-wayland-subsurface.h"
