@@ -81,6 +81,7 @@ in
       - If you want to use github and github_* tools aren't enough, you can use gh cli, available on $PATH and already authenticated.
       - If you want to do stuff in an external directory, eg. to untar something, you have always-allow access to /tmp/opencode/*
       - When commiting, commit message should on the bottom contain: "Assisted-by: harness:modelslug", eg. "Assisted-by: OpenCode:claude-opus-5-5"
+      - Wrap git commit message bodies at 72 columns
       - Prioritize simplicity and maintainability over complexity
       - Follow best practices without over-engineering
       - Avoid comments, write self-explanatory code with clear naming
