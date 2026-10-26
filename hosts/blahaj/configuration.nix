@@ -50,6 +50,8 @@
     options iwlwifi power_save=0
   '';
 
+  services.fwupd.enable = true;
+
   # gpu
   hardware.amdgpu = {
     opencl.enable = true;

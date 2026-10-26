@@ -30,6 +30,8 @@
     "xhci_pci"
   ];
 
+  services.fwupd.enable = true;
+
   # make fan silent
   services.zcfan.enable = true;
 
