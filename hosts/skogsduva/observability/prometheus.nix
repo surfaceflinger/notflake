@@ -44,12 +44,15 @@
             targets = [
               "jattelik:9100"
               "skogsduva:9100"
-              "sucrose:9100"
             ];
           }
           {
             labels.role = "workstation";
             targets = [ "blahaj:9100" ];
+          }
+          {
+            labels.role = "agent";
+            targets = [ "sucrose:9100" ];
           }
         ];
       }
