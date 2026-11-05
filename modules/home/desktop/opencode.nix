@@ -211,7 +211,7 @@ in
 
     settings.plugins = [
       "@dietrichgebert/ponytail@5.3.3"
-      "jew-guard@0.10.0"
+      "jew-guard@0.11.0"
     ];
 
     settings.lsp = {
