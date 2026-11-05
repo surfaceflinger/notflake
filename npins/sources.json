@@ -118,6 +118,19 @@
       "url": "https://github.com/Microck/kagi-cli/archive/e75dbf7e81c5a55f0851dce0633cf037171767c7.tar.gz",
       "hash": "sha256-uYjD3dG5C0a4t6Ynl5WCYe+WWlaxhkersVFrCDETR/Q="
     },
+    "llm-agents": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "llm-agents.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "98309b147b1c011b7d3c16d63402ca7b6805e952",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/98309b147b1c011b7d3c16d63402ca7b6805e952.tar.gz",
+      "hash": "sha256-yqPCd/pPhocRFu3/LCKvaWfVygR4GOf+jRSX3LdA61A="
+    },
     "monero-banlist": {
       "type": "Git",
       "repository": {
