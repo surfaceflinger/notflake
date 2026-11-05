@@ -57,9 +57,6 @@ in
       };
     };
 
-    commands.impeccable = builtins.toPath "${pkgs.impeccable}/share/impeccable/.opencode/commands/impeccable.md";
-    skills.impeccable = "${pkgs.impeccable}/share/impeccable/.opencode/skills/impeccable";
-
     settings = {
       model = "opencode-go/deepseek-v4.1-flash";
       update = "disable";
