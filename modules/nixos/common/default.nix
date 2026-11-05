@@ -41,13 +41,6 @@
   # openssh everywhere
   services.openssh.enable = true;
 
-  # enable scx
-  services.scx = {
-    enable = true;
-    package = pkgs.scx.rustscheds;
-    scheduler = "scx_pandemonium";
-  };
-
   # git
   programs.git = {
     enable = true;
