@@ -29,7 +29,6 @@
       ]
       ++ lib.optionals config.xdg.portal.enable [
         # random desktop software
-        brave
         burpsuite
         comaps
         constrict
