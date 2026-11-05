@@ -19,6 +19,7 @@ nilla.create (
               "copyparty"
               "home-manager"
               "kagi-cli"
+              "llm-agents"
               "nix-index-database"
               "nix-mineral"
               "tgexpiry"

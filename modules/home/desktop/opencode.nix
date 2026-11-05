@@ -46,6 +46,14 @@ in
   programs.opencode = {
     enable = true;
 
+    package =
+      inputs.llm-agents.result.packages."${pkgs.stdenv.hostPlatform.system}".opencode2.overrideAttrs
+        (old: {
+          postInstall = (old.postInstall or "") + ''
+            ln -s opencode2 $out/bin/opencode
+          '';
+        });
+
     cli = {
       theme = {
         name = "system";
