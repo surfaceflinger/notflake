@@ -200,14 +200,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "surfaceflinger",
+        "owner": "cynicsketch",
         "repo": "nix-mineral"
       },
-      "branch": "scripted-stage-1-removal",
+      "branch": "main",
       "submodules": false,
-      "revision": "11acd9af1e7e6ed18b6f87452b51945306539c3f",
-      "url": "https://github.com/surfaceflinger/nix-mineral/archive/11acd9af1e7e6ed18b6f87452b51945306539c3f.tar.gz",
-      "hash": "sha256-oy+w41yoSlEZKpuaahxBMEc7zy+cv+qtZeem3d1g8+k="
+      "revision": "6b0e3b51aab7f05edea205e5ebac85225211aa0b",
+      "url": "https://github.com/cynicsketch/nix-mineral/archive/6b0e3b51aab7f05edea205e5ebac85225211aa0b.tar.gz",
+      "hash": "sha256-t0iH5C346dtLKRRlgjHGFj4pbaKlX0NjNRdOBAXW1bM="
     },
     "nixos-hardware": {
       "type": "Git",
