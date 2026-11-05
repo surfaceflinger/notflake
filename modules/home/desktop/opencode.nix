@@ -202,7 +202,7 @@ in
     ];
 
     settings.plugins = [
-      "@dietrichgebert/ponytail@5.1.0"
+      "@dietrichgebert/ponytail@5.3.3"
       "jew-guard@0.10.0"
     ];
 
