@@ -18,7 +18,7 @@
       PUSH_ENABLED = true;
       SMTP_HOST = "smtp.postmarkapp.com";
       SMTP_FROM = "root@vault.nekopon.pl";
-      EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "cxp-export-mobile,cxp-import-mobile,pm-25373-windows-biometrics-v2,pm-30529-webauthn-related-origins,pm-5594-safari-account-switching,ssh-agent,ssh-agent-v2,ssh-key-vault-item";
+      EXPERIMENTAL_CLIENT_FEATURE_FLAGS = "enable-basic-auth-response,pm-30529-webauthn-related-origins,pm-32009-new-item-types,pm-32413-multi-client-password-management,pm-34171-card-scanner,pm-5594-safari-account-switching,ssh-agent-v2";
     };
   };
 
