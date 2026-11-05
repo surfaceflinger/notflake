@@ -16,6 +16,7 @@
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
     nixosModules.user-nat
+    ./power.nix
     ./storage.nix
   ];
 
