@@ -201,7 +201,7 @@ in
       (allow "webfetch" "https://nix.dev/*")
       (allow "webfetch" "https://nix-community.github.io/*")
       (allow "webfetch" "https://opencode.ai/*")
-      (deny "bash" "git push*")
+      (deny "shell" "git push*")
     ];
 
     settings.plugins = [
