@@ -42,7 +42,7 @@
   };
   # some mitigations arent available on via eden x2 so its pointless
   # also its literally just a music streamer
-  nix-mineral.settings.kernel.cpu-mitigations = lib.mkForce "off";
+  nix-mineral.settings.kernel.cpu-mitigations = lib.mkForce "unspecified";
 
   # allow suspend
   services.logind.settings.Login = {

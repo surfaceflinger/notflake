@@ -29,7 +29,9 @@
       network.tcp-window-scaling = true;
       system = {
         minimize-swapping = false;
-        secure-chrony = false;
+        # preset "maximum" enables the deprecated secure-chrony module; null opts out
+        # while common/chrony.nix owns the chrony configuration
+        secure-chrony = null;
       };
     };
     filesystems = {
