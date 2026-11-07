@@ -22,8 +22,10 @@
       MEM_SLEEP_ON_AC = "";
       MEM_SLEEP_ON_BAT = "";
       MEM_SLEEP_ON_SAV = "";
-      # disable turbo on powersaver
-      CPU_HWP_DYN_BOOST_ON_SAV = 0;
+      # disable turbo on powersaver; TLP only resets no_turbo when the
+      # profile has an explicit value, so AC/BAT must ask for it too
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 1;
       CPU_BOOST_ON_SAV = 0;
     };
   };

@@ -3,9 +3,9 @@
   # perf-first: thermald is just another thing that throttles, throttled owns the CPU limits
   services.thermald.enable = lib.mkForce false;
 
-  # TLP keeps charge thresholds; throttled drives EPP on AC and throttle limits
+  # TLP owns EPP/boost and (where supported) charge thresholds; throttled owns PL1/PL2
   services.tlp.settings = {
-    CPU_ENERGY_PERF_POLICY_ON_AC = "";
+    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
     CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
   };
 
@@ -24,7 +24,6 @@
       PL1_Duration_s: 28
       PL2_Tdp_W: 55
       PL2_Duration_S: 0.0024
-      HWP_Mode: True
       cTDP: 0
       Disable_BDPROCHOT: True
 
