@@ -4,6 +4,19 @@
   pkgs,
   ...
 }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+
+  # the release binary embeds rust-src paths in panic messages, dragging the
+  # whole fenix nightly toolchain (~2 GiB) into the system closure
+  nilla-cli = pkgs.runCommandLocal "nilla" { nativeBuildInputs = [ pkgs.removeReferencesTo ]; } ''
+    cp -a ${inputs.nilla-cli.result.packages.default.result.${system}}/. $out/
+    chmod -R u+w $out
+    for path in $(grep -ao '/nix/store/[a-z0-9]\{32\}-rust-nightly-complete[^/]*' $out/bin/nilla | cut -d/ -f1-4 | sort -u); do
+      remove-references-to -t "$path" $out/bin/nilla
+    done
+  '';
+in
 {
   # other software
   environment.systemPackages = with pkgs; [
@@ -14,8 +27,8 @@
     bat
     deadnix
     file
-    inputs.nilla-cli.result.packages.default.result."${pkgs.stdenv.hostPlatform.system}"
-    inputs.nilla-utils.result.packages.default.result."${pkgs.stdenv.hostPlatform.system}"
+    nilla-cli
+    inputs.nilla-utils.result.packages.default.result.${system}
     jq
     lurk
     magic-wormhole-rs
