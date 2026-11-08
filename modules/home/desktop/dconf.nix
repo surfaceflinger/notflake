@@ -42,7 +42,6 @@
         "slack.desktop"
         "org.squidowl.halloy.desktop"
         "dev.geopjr.Tuba.desktop"
-        "timedoctor-desktop.desktop"
         "org.gnome.Geary.desktop"
         "io.bassi.Amberol.desktop"
         "io.github.htkhiem.Euphonica.desktop"
@@ -176,7 +175,6 @@
         "lunarclient.desktop:3"
         "org.prismlauncher.PrismLauncher.desktop:3"
         "slack.desktop:3"
-        "timedoctor-desktop.desktop:3"
         "steam.desktop:4"
       ];
     };
