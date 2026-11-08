@@ -128,10 +128,9 @@ in
         ".pyi"
       ];
     };
-    settings.formatter.biome = {
+    settings.formatter.prettier = {
       command = [
-        (lib.getExe pkgs.biome)
-        "format"
+        (lib.getExe pkgs.prettier)
         "--write"
         "$FILE"
       ];
@@ -249,7 +248,11 @@ in
         ];
       };
       clangd = {
-        command = [ (lib.getExe' pkgs.clang-tools "clangd") ];
+        # minimal wrapper has no embedded clang resource dir
+        command = [
+          (lib.getExe' pkgs.clangd-minimal "clangd")
+          "--resource-dir=${pkgs.clangd-minimal}/lib/clang/${lib.versions.major pkgs.llvmPackages.clang.version}"
+        ];
         extensions = [
           ".c"
           ".cpp"
@@ -264,7 +267,7 @@ in
         ];
       };
       rust = {
-        command = [ (lib.getExe pkgs.rust-analyzer) ];
+        command = [ (lib.getExe pkgs.rust-analyzer-unwrapped) ];
         extensions = [ ".rs" ];
       };
       go = {
@@ -314,10 +317,7 @@ in
         extensions = [ ".toml" ];
       };
       markdown = {
-        command = [
-          (lib.getExe pkgs.marksman)
-          "server"
-        ];
+        command = [ (lib.getExe pkgs.markdown-oxide) ];
         extensions = [
           ".md"
           ".markdown"
@@ -340,10 +340,10 @@ in
           ".htm"
         ];
       };
-      biome = {
+      typescript = {
         command = [
-          (lib.getExe pkgs.biome)
-          "lsp-proxy"
+          (lib.getExe pkgs.typescript-language-server)
+          "--stdio"
         ];
         extensions = [
           ".js"
