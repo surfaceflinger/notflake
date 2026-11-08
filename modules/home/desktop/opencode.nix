@@ -20,27 +20,6 @@ let
     inherit action resource;
     effect = "deny";
   };
-
-  githubMcp = pkgs.writeShellScript "github-mcp-wrapper" ''
-    set -euo pipefail
-    token="$(${lib.getExe pkgs.gh} auth token)"
-    export GITHUB_PERSONAL_ACCESS_TOKEN="$token"
-    exec ${lib.getExe pkgs.github-mcp-server} \
-      --read-only \
-      --toolsets ${lib.concatStringsSep "," githubToolsets} \
-      stdio
-  '';
-
-  githubToolsets = [
-    "context" # who am I / which repo
-    "repos" # files, commits, branches, releases, search
-    "git" # trees, blobs, refs
-    "issues"
-    "pull_requests" # incl. diffs, review comments, status checks
-    "discussions"
-    "actions" # workflow runs + job logs: "why is CI red?"
-    "labels"
-  ];
 in
 {
   programs.opencode = {
@@ -369,7 +348,7 @@ in
       };
       github = {
         type = "local";
-        command = [ githubMcp ];
+        command = [ (lib.getExe' pkgs.github-mcp-wrapper "github-mcp-wrapper") ];
       };
       opentofu = {
         type = "remote";
