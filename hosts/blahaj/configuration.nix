@@ -52,12 +52,7 @@
 
   services.fwupd.enable = true;
 
-  # gpu
-  hardware.amdgpu = {
-    opencl.enable = true;
-    overdrive.enable = true;
-    zluda.enable = true;
-  };
+  hardware.amdgpu.overdrive.enable = true;
 
   # need this for correct gpu work (capped at 220w tdp by default but it can use 280w)
   services.lact = {
@@ -113,7 +108,6 @@
     euphonica
     gpu-screen-recorder-gtk
     obs-studio-plugins.obs-vkcapture
-    rocmPackages.rocm-smi
   ];
 
   # home-manager
