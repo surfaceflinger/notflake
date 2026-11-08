@@ -6,7 +6,7 @@
   ...
 }:
 let
-  # V2 permissions are ordered; the last matching rule wins, so broad allows
+  # v2 permissions are ordered; the last matching rule wins, so broad allows
   # come first and narrow asks/denies last.
   allow = action: resource: {
     inherit action resource;
@@ -186,7 +186,7 @@ in
       # kagi replaces built-in search
       (deny "websearch" "*")
 
-      # MCP actions are <server>_<tool>; invalid chars become _, hyphens stay.
+      # mcp actions are <server>_<tool>; invalid chars become _, hyphens stay.
       # opencode_* is a plugin namespace, not MCP, so it stays ask.
       (allow "context7_*" "*")
       (allow "gh_grep_*" "*")
