@@ -59,6 +59,7 @@ in
       - When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.
       - When writing scripts, use nix shell shebangs.
       - You can access any tool that's missing in $PATH by using nix commands, eg. nix run.
+      - You can locate any binary with `nix-locate bin/<name>`, e.g. `nix-locate bin/vi`.
       - On $PATH you already have node, python3 and jq for processing stuff.
       - Try to use grep, head, tail etc. when appropriate when running commands to save tokens on file, log reads etc.
       - For web search use the kagi_kagi_search tool. For library docs use context7, for real-world code examples use gh_grep.
