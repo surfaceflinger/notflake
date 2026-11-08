@@ -1,17 +1,14 @@
 {
-  bc,
-  curl,
-  dconf,
-  jq,
-  writeShellApplication,
+  libgweather,
+  python3Packages,
+  writers,
 }:
-writeShellApplication {
-  name = "gnome-weather-set";
-  runtimeInputs = [
-    curl
-    dconf
-    jq
-    bc
+writers.writePython3Bin "gnome-weather-set" {
+  libraries = [ python3Packages.pygobject3 ];
+  # the project formats python with ruff (88 columns)
+  flakeIgnore = [ "E501" ];
+  makeWrapperArgs = [
+    "--prefix GI_TYPELIB_PATH : ${libgweather}/lib/girepository-1.0"
+    "--prefix LD_LIBRARY_PATH : ${libgweather}/lib"
   ];
-  text = builtins.readFile ./weather.sh;
-}
+} (builtins.readFile ./gnome-weather-set.py)
