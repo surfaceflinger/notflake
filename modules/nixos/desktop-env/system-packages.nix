@@ -9,7 +9,7 @@
 
     # media
     ffmpeg-full
-    krita
+    pinta
     yt-dlp
 
     # system utilities
