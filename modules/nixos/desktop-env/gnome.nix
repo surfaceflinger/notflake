@@ -3,9 +3,7 @@
     (_final: prev: {
       mutter = prev.mutter.overrideAttrs (old: {
         # 51.0 rebase of upstream MR !4903, from CachyOS PKGBUILDS
-        patches = (old.patches or [ ]) ++ [
-          ./mutter-tearing.patch
-        ];
+        patches = (old.patches or [ ]) ++ [ ./mutter-tearing.patch ];
       });
     })
   ];
@@ -77,4 +75,8 @@
   };
 
   services.power-profiles-daemon.enable = false;
+
+  # the system-wide speech-dispatcher pulls every synthesizer and mbrola voice
+  # (~700 MiB); apps that need it bring their own minimal copy
+  services.speechd.enable = false;
 }
