@@ -190,6 +190,7 @@ in
     settings.plugins = [
       "@dietrichgebert/ponytail@5.3.3"
       "jew-guard@0.11.0"
+      "${pkgs.opencode-v2-lsp-support}"
     ];
 
     settings.lsp = {
