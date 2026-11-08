@@ -1,3 +1,1 @@
-_: {
-  services.pipewire.alsa.support32Bit = true;
-}
+_: { services.pipewire.alsa.support32Bit = true; }

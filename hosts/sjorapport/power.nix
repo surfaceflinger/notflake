@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   # perf-first: thermald is just another thing that throttles, throttled owns the CPU limits
   services.thermald.enable = lib.mkForce false;
 
