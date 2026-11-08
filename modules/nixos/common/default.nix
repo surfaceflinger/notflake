@@ -9,6 +9,7 @@
     ./agenix.nix
     ./boot.nix
     ./chrony.nix
+    ./documentation.nix
     ./hardening.nix
     inputs.home-manager.result.nixosModules.default
     ./kmscon.nix
