@@ -1,0 +1,26 @@
+--- a/internal/config/color.go
++++ b/internal/config/color.go
+@@ -56,12 +56,11 @@
+ 	if c == DefaultColor {
+ 		return "-"
+ 	}
+-	col := c.Color().TrueColor().Hex()
+-	if col < 0 {
++	if c.Color() == tcell.ColorDefault {
+ 		return "-"
+ 	}
+ 
+-	return fmt.Sprintf("#%06x", col)
++	return string(c)
+ }
+ 
+ func (c Color) isHex() bool {
+@@ -74,7 +73,7 @@
+ 		return tcell.ColorDefault
+ 	}
+ 
+-	return tcell.GetColor(string(c)).TrueColor()
++	return tcell.GetColor(string(c))
+ }
+ 
+ // maxChromaForLH finds the maximum chroma at a given lightness and hue

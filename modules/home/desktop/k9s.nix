@@ -1,47 +1,7 @@
-{ pkgs, ... }:
-let
-  k9s = pkgs.k9s.overrideAttrs (old: {
-    patches = (old.patches or [ ]) ++ [
-      (pkgs.writeText "k9s-ansi.patch" (
-        builtins.concatStringsSep "\n" [
-          "--- a/internal/config/color.go"
-          "+++ b/internal/config/color.go"
-          "@@ -56,12 +56,11 @@"
-          " \tif c == DefaultColor {"
-          " \t\treturn \"-\""
-          " \t}"
-          "-\tcol := c.Color().TrueColor().Hex()"
-          "-\tif col < 0 {"
-          "+\tif c.Color() == tcell.ColorDefault {"
-          " \t\treturn \"-\""
-          " \t}"
-          " "
-          "-\treturn fmt.Sprintf(\"#%06x\", col)"
-          "+\treturn string(c)"
-          " }"
-          " "
-          " func (c Color) isHex() bool {"
-          "@@ -74,7 +73,7 @@"
-          " \t\treturn tcell.ColorDefault"
-          " \t}"
-          " "
-          "-\treturn tcell.GetColor(string(c)).TrueColor()"
-          "+\treturn tcell.GetColor(string(c))"
-          " }"
-          " "
-          " // maxChromaForLH finds the maximum chroma at a given lightness and hue"
-          ""
-        ]
-      ))
-    ];
-    # tests assert the old truecolor values
-    doCheck = false;
-  });
-in
-{
+{ pkgs, ... }: {
   programs.k9s = {
     enable = true;
-    package = k9s;
+    package = pkgs.k9s-ansi;
 
     settings.k9s.ui.skin = "ansi";
 
