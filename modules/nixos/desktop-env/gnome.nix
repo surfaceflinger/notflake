@@ -2,8 +2,8 @@
   nixpkgs.overlays = [
     (_final: prev: {
       mutter = prev.mutter.overrideAttrs (old: {
+        # 51.0 rebase of upstream MR !4903, from CachyOS PKGBUILDS
         patches = (old.patches or [ ]) ++ [
-          ./mutter-frame-pacing.patch
           ./mutter-tearing.patch
         ];
       });

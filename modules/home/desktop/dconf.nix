@@ -9,8 +9,13 @@
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
-      experimental-features = [ "variable-refresh-rate" ];
       workspaces-only-on-primary = true;
+    };
+
+    "org/gnome/mutter/experimental" = {
+      auto-fullscreen-tearing = true;
+      autoclose-xwayland = true;
+      tearing = true;
     };
 
     "org/gnome/desktop/wm/preferences" = {
