@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./git.nix
     inputs.dont-track-me.result.homeManagerModules.default
@@ -7,12 +7,16 @@
 
   home.stateVersion = "26.05";
 
+  # full nix-index database costs ~180 MiB; the small one is good enough
+  programs.nix-index.package =
+    inputs.nix-index-database.result.packages.${pkgs.stdenv.hostPlatform.system}.nix-index-with-small-db;
+
   dont-track-me = {
     enable = true;
     enableAll = true;
   };
 
-  # HashiCorp tools (packer) phone home through checkpoint
+  # hashicorp tools (packer) phone home through checkpoint
   home.sessionVariables.CHECKPOINT_DISABLE = "1";
 
   nix.gc = {
