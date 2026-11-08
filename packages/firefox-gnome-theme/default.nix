@@ -1,14 +1,15 @@
 { stdenvNoCC, fetchFromGitHub }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
+stdenvNoCC.mkDerivation (_finalAttrs: {
   pname = "firefox-gnome-theme";
-  version = "153";
+  version = "0-unstable-2026-10-04";
 
   src = fetchFromGitHub {
     owner = "rafaelmardojai";
     repo = "firefox-gnome-theme";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-PbnJr+eB+9Czol3ReI83dUgEhcn0sDK6TSy6ODTQm88=";
+    # newest commit safe on firefox 153 esr; 154+ renamed --tab-block-margin
+    rev = "bae508108d0e5d1962b1ba255d5194d58da916ac";
+    hash = "sha256-HPCX6uHZFNE5STes/Zu+Vs8mv9BAYgZNaLeCoA5ojFQ=";
   };
 
   dontConfigure = true;
