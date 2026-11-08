@@ -29,7 +29,7 @@
       ]
       ++ lib.optionals config.xdg.portal.enable [
         # random desktop software
-        burpsuite
+        caido-desktop
         comaps
         constrict
         diebahn
