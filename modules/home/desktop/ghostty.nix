@@ -2,11 +2,12 @@ _: {
   programs.ghostty = {
     enable = true;
     settings = {
+      background-blur = true;
+      background-opacity = 0.9;
       cursor-style = "bar";
       font-family = "Cascadia Mono PL";
       font-size = 11;
       grapheme-width-method = "legacy";
-      term = "xterm-256color";
       theme = "light:mylight,dark:mydark";
       window-padding-x = 4;
       window-padding-y = 4;
