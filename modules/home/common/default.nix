@@ -21,6 +21,7 @@
 
   nix.gc = {
     automatic = true;
+    dates = "weekly";
     randomizedDelaySec = "10min";
     options = "--delete-older-than 7d";
   };
