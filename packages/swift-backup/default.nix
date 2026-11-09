@@ -1,9 +1,12 @@
 {
   writeShellApplication,
   mbuffer,
+  python3Packages,
   rage,
-  swiftclient,
 }:
+let
+  swiftclient = python3Packages.toPythonApplication python3Packages.python-swiftclient;
+in
 writeShellApplication {
   name = "swift-backup";
 
