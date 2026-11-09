@@ -57,7 +57,6 @@
         kubectl-images
         kubectl-neat
         kubectl-rabbitmq
-        kubectl-validate
         kubeconform
         kubelogin-oidc
         kubernetes-helm
