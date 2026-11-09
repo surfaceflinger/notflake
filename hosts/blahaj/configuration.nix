@@ -96,18 +96,11 @@
     reverse_proxy ${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}
   '';
 
-  # obs with gstreamer and vkcapture; gpu-screen-recorder
+  # gpu-screen-recorder
   programs.gpu-screen-recorder.enable = true;
   environment.systemPackages = with pkgs; [
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [
-        obs-vaapi
-        obs-vkcapture
-      ];
-    })
     euphonica
     gpu-screen-recorder-gtk
-    obs-studio-plugins.obs-vkcapture
   ];
 
   # home-manager
