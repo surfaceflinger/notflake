@@ -69,6 +69,7 @@
     "org/gnome/desktop/interface" = {
       accent-color = "pink";
       clock-show-weekday = true;
+      cursor-size = 32; # native size of the pixel art miku cursors
       document-font-name = "Lora 11";
       font-hinting = "none";
       font-name = "Atkinson Hyperlegible Next 11";
