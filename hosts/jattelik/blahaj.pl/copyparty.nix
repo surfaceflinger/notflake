@@ -1,4 +1,10 @@
-{ config, inputs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   imports = [ inputs.copyparty.result.nixosModules.default ];
 
   age.secrets.copyparty-azsurv = {
@@ -8,6 +14,14 @@
 
   services.copyparty = {
     enable = true;
+
+    package = pkgs.copyparty.override {
+      ffmpeg = pkgs.ffmpeg-headless;
+      withCertgen = false;
+      withFTP = false;
+      withZeroMQ = false;
+    };
+
     settings = {
       i = "::1";
       name = "files.blahaj.pl";
