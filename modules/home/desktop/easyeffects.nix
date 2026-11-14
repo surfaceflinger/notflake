@@ -3,8 +3,8 @@
 
   xdg.dataFile = {
     "easyeffects/irs/google-pixel-buds-pro-autoeq.irs".source = pkgs.fetchurl {
-      url = "https://github.com/jaakkopasanen/AutoEq/raw/3.0.0/results/Rtings/in-ear/Google%20Pixel%20Buds%20Pro/Google%20Pixel%20Buds%20Pro%20minimum%20phase%2048000Hz.wav";
-      hash = "sha256-Oh4+QegYb2W1uWUTiBPOT95VOSyhFT/QSRahNxGDONs=";
+      url = "https://github.com/jaakkopasanen/AutoEq/raw/4.1.2/results/Rtings/in-ear/Google%20Pixel%20Buds%20Pro/Google%20Pixel%20Buds%20Pro%20minimum%20phase%2048000Hz.wav";
+      hash = "sha256-igbwgieL0nRLEfD2sSk5uxPIhsh7ddkfRcYhuPyP6pk=";
     };
 
     "easyeffects/irs/sennheiser-hd-599-autoeq.irs".source = ./eq/hd599.wav;
