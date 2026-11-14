@@ -77,9 +77,9 @@
         [
           (dashboard "Node Exporter Full" {
             name = "node-exporter-full";
-            hash = "sha256-ti/AY15FYlKm0w7I8t4jVKvAvMRkK0xCTR1zBx6JLQU=";
+            hash = "sha256-yP2bRVVN3xYV0oDhmikLzLmNUMp4oy5i2f6syaCVeDo=";
             id = 1860;
-            version = 41;
+            version = 46;
           })
           (dashboard "OpenWRT" {
             name = "asus-openwrt-router";
