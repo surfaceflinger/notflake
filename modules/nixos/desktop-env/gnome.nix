@@ -2,8 +2,12 @@
   nixpkgs.overlays = [
     (_final: prev: {
       mutter = prev.mutter.overrideAttrs (old: {
-        # 51.0 rebase of upstream MR !4903, from CachyOS PKGBUILDS
-        patches = (old.patches or [ ]) ++ [ ./mutter-tearing.patch ];
+        patches = (old.patches or [ ]) ++ [
+          (prev.fetchurl {
+            url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/1fe3a99366801e90362b4995f5d3d0d48dad9d8e/mutter/Add-support-for-tearing.patch";
+            hash = "sha256-Fh5DG6fJTpAS/Y5KxnXo6Y13MC4Qe/nCzCnD2Rwx9Sc=";
+          })
+        ];
       });
     })
   ];
