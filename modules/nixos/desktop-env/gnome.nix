@@ -1,13 +1,18 @@
 { pkgs, ... }: {
   nixpkgs.overlays = [
-    (_final: prev: {
+    (final: prev: {
       mutter = prev.mutter.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           (prev.fetchurl {
             url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/1fe3a99366801e90362b4995f5d3d0d48dad9d8e/mutter/Add-support-for-tearing.patch";
             hash = "sha256-Fh5DG6fJTpAS/Y5KxnXo6Y13MC4Qe/nCzCnD2Rwx9Sc=";
           })
+          ./mutter-xdg-toplevel-icon.patch
         ];
+      });
+
+      gnome-shell = (prev.gnome-shell.override { mutter = final.mutter; }).overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [ ./gnome-shell-window-icon.patch ];
       });
     })
   ];

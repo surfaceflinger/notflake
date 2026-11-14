@@ -1,0 +1,659 @@
+diff --git c/src/core/window-private.h i/src/core/window-private.h
+index 00abada..63d1135 100644
+--- c/src/core/window-private.h
++++ i/src/core/window-private.h
+@@ -31,6 +31,8 @@
+ 
+ #pragma once
+ 
++#include <cairo.h>
++
+ #include "backends/meta-logical-monitor-private.h"
+ #include "clutter/clutter.h"
+ #include "core/meta-window-config-private.h"
+@@ -355,6 +357,10 @@ struct _MetaWindow
+   /* Cached net_wm_icon_geometry */
+   MtkRectangle icon_geometry;
+ 
++  cairo_surface_t *icon;
++  cairo_surface_t *mini_icon;
++  char *icon_name;
++
+   /* x/y/w/h here get filled with ConfigureRequest values */
+   MetaSizeHints size_hints;
+ 
+@@ -956,3 +962,14 @@ void meta_window_set_target_monitor_from_number (MetaWindow *window,
+ void meta_window_notify_ready (MetaWindow *window);
+ 
+ gboolean meta_window_is_ready (MetaWindow *window);
++
++cairo_surface_t * meta_window_get_icon (MetaWindow *window);
++cairo_surface_t * meta_window_get_mini_icon (MetaWindow *window);
++const char * meta_window_get_icon_name (MetaWindow *window);
++
++void meta_window_set_icon (MetaWindow      *window,
++                           cairo_surface_t *icon,
++                           cairo_surface_t *mini_icon);
++
++void meta_window_set_icon_name (MetaWindow *window,
++                                const char *icon_name);
+diff --git c/src/core/window.c i/src/core/window.c
+index c84a387..c99d3c2 100644
+--- c/src/core/window.c
++++ i/src/core/window.c
+@@ -205,6 +205,9 @@ enum
+   PROP_0,
+ 
+   PROP_TITLE,
++  PROP_ICON,
++  PROP_MINI_ICON,
++  PROP_ICON_NAME,
+   PROP_DECORATED,
+   PROP_FULLSCREEN,
+   PROP_MAXIMIZED_HORIZONTALLY,
+@@ -419,6 +422,9 @@ meta_window_finalize (GObject *object)
+   g_free (window->a11y_object_path);
+   g_free (window->placement.rule);
+   g_free (window->tag);
++  g_free (window->icon_name);
++  g_clear_pointer (&window->icon, cairo_surface_destroy);
++  g_clear_pointer (&window->mini_icon, cairo_surface_destroy);
+ 
+   g_clear_pointer (&priv->external_constraints, g_hash_table_destroy);
+ 
+@@ -440,6 +446,15 @@ meta_window_get_property (GObject         *object,
+     case PROP_TITLE:
+       g_value_set_string (value, window->title);
+       break;
++    case PROP_ICON:
++      g_value_set_pointer (value, window->icon);
++      break;
++    case PROP_MINI_ICON:
++      g_value_set_pointer (value, window->mini_icon);
++      break;
++    case PROP_ICON_NAME:
++      g_value_set_string (value, window->icon_name);
++      break;
+     case PROP_DECORATED:
+       g_value_set_boolean (value, window->decorated);
+       break;
+@@ -586,6 +601,16 @@ meta_window_class_init (MetaWindowClass *klass)
+     g_param_spec_string ("title", NULL, NULL,
+                          NULL,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
++  obj_props[PROP_ICON] =
++    g_param_spec_pointer ("icon", NULL, NULL,
++                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
++  obj_props[PROP_MINI_ICON] =
++    g_param_spec_pointer ("mini-icon", NULL, NULL,
++                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
++  obj_props[PROP_ICON_NAME] =
++    g_param_spec_string ("icon-name", NULL, NULL,
++                         NULL,
++                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+   obj_props[PROP_DECORATED] =
+     g_param_spec_boolean ("decorated", NULL, NULL,
+                           TRUE,
+@@ -5875,6 +5900,62 @@ meta_window_set_icon_geometry (MetaWindow   *window,
+     }
+ }
+ 
++cairo_surface_t *
++meta_window_get_icon (MetaWindow *window)
++{
++  return window->icon;
++}
++
++cairo_surface_t *
++meta_window_get_mini_icon (MetaWindow *window)
++{
++  return window->mini_icon;
++}
++
++const char *
++meta_window_get_icon_name (MetaWindow *window)
++{
++  return window->icon_name;
++}
++
++void
++meta_window_set_icon (MetaWindow      *window,
++                      cairo_surface_t *icon,
++                      cairo_surface_t *mini_icon)
++{
++  cairo_surface_t *new_icon = NULL;
++  cairo_surface_t *new_mini_icon = NULL;
++  gboolean changed;
++
++  if (icon)
++    new_icon = cairo_surface_reference (icon);
++  if (mini_icon)
++    new_mini_icon = cairo_surface_reference (mini_icon);
++
++  changed = window->icon != new_icon || window->mini_icon != new_mini_icon;
++
++  g_clear_pointer (&window->icon, cairo_surface_destroy);
++  g_clear_pointer (&window->mini_icon, cairo_surface_destroy);
++  window->icon = new_icon;
++  window->mini_icon = new_mini_icon;
++
++  if (!changed)
++    return;
++
++  g_object_freeze_notify (G_OBJECT (window));
++  g_object_notify (G_OBJECT (window), "icon");
++  g_object_notify (G_OBJECT (window), "mini-icon");
++  g_object_thaw_notify (G_OBJECT (window));
++}
++
++void
++meta_window_set_icon_name (MetaWindow *window,
++                           const char *icon_name)
++{
++  if (g_set_str (&window->icon_name, icon_name))
++    g_object_notify (G_OBJECT (window), "icon-name");
++}
++
+ static GList*
+ meta_window_get_workspaces (MetaWindow *window)
+ {
+diff --git c/src/meson.build i/src/meson.build
+index 01e9359..6b4ddbc 100644
+--- c/src/meson.build
++++ i/src/meson.build
+@@ -636,6 +636,8 @@ mutter_sources += [
+   'wayland/meta-wayland-xdg-shell.h',
+   'wayland/meta-wayland-xdg-dialog.c',
+   'wayland/meta-wayland-xdg-dialog.h',
++  'wayland/meta-wayland-xdg-toplevel-icon.c',
++  'wayland/meta-wayland-xdg-toplevel-icon.h',
+   'wayland/meta-wayland-xdg-toplevel-tag.c',
+   'wayland/meta-wayland-xdg-toplevel-tag.h',
+   'wayland/meta-window-wayland.c',
+@@ -1040,6 +1042,7 @@ wayland_protocols = [
+   ['xdg-shell', 'stable', ],
+   ['xdg-system-bell', 'staging', 1, ],
+   ['xdg-toplevel-drag', 'staging', 1, ],
++  ['xdg-toplevel-icon', 'staging', 1, ],
+   ['xdg-toplevel-tag', 'staging', 1, ],
+ ]
+ 
+diff --git c/src/wayland/meta-wayland-versions.h i/src/wayland/meta-wayland-versions.h
+index 14bce1f..d460e86 100644
+--- c/src/wayland/meta-wayland-versions.h
++++ i/src/wayland/meta-wayland-versions.h
+@@ -72,3 +72,4 @@
+ #define META_WP_POINTER_WARP_VERSION 1
+ #define META_EXT_BACKGROUND_EFFECT_V1_VERSION 1
+ #define META_WP_TEARING_CONTROL_V1_VERSION 1
++#define META_XDG_TOPLEVEL_ICON_V1_VERSION 1
+diff --git c/src/wayland/meta-wayland-xdg-toplevel-icon.c i/src/wayland/meta-wayland-xdg-toplevel-icon.c
+new file mode 100644
+index 0000000..29a1b24
+--- /dev/null
++++ i/src/wayland/meta-wayland-xdg-toplevel-icon.c
+@@ -0,0 +1,409 @@
++/* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*- */
++
++/*
++ * Copyright (C) 2026 Linux Mint
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful, but
++ * WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "config.h"
++
++#include "wayland/meta-wayland-xdg-toplevel-icon.h"
++
++#include <string.h>
++#include <wayland-server.h>
++
++#include "core/window-private.h"
++#include "meta/meta-base.h"
++#include "meta/meta-wayland-surface.h"
++#include "wayland/meta-wayland-private.h"
++#include "wayland/meta-wayland-surface-private.h"
++#include "wayland/meta-wayland-versions.h"
++#include "wayland/meta-wayland-xdg-shell.h"
++
++#include "xdg-toplevel-icon-v1-server-protocol.h"
++
++#define TOPLEVEL_ICON_DATA "meta-wayland-xdg-toplevel-icon"
++
++typedef struct _MetaWaylandXdgToplevelIconBuffer
++{
++  cairo_surface_t *surface;
++  int size;
++  int scale;
++  struct wl_list link;
++} MetaWaylandXdgToplevelIconBuffer;
++
++typedef struct _MetaWaylandXdgToplevelIcon
++{
++  char *icon_name;
++  struct wl_list buffers;
++  gboolean immutable;
++} MetaWaylandXdgToplevelIcon;
++
++typedef struct _MetaWaylandToplevelIconData
++{
++  cairo_surface_t *icon;
++  char *icon_name;
++} MetaWaylandToplevelIconData;
++
++static gboolean
++shm_format_to_cairo (uint32_t        format,
++                     cairo_format_t *cairo_format)
++{
++  switch (format)
++    {
++    case WL_SHM_FORMAT_ARGB8888:
++      *cairo_format = CAIRO_FORMAT_ARGB32;
++      return TRUE;
++    case WL_SHM_FORMAT_XRGB8888:
++      *cairo_format = CAIRO_FORMAT_RGB24;
++      return TRUE;
++    default:
++      return FALSE;
++    }
++}
++
++static cairo_surface_t *
++surface_from_shm_buffer (struct wl_shm_buffer *shm_buffer)
++{
++  int width, height, stride, dst_stride, y;
++  cairo_format_t cairo_format;
++  cairo_surface_t *surface;
++  unsigned char *dst, *src;
++
++  if (!shm_format_to_cairo (wl_shm_buffer_get_format (shm_buffer), &cairo_format))
++    return NULL;
++
++  width = wl_shm_buffer_get_width (shm_buffer);
++  height = wl_shm_buffer_get_height (shm_buffer);
++  stride = wl_shm_buffer_get_stride (shm_buffer);
++
++  surface = cairo_image_surface_create (cairo_format, width, height);
++  if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
++    {
++      cairo_surface_destroy (surface);
++      return NULL;
++    }
++
++  dst_stride = cairo_image_surface_get_stride (surface);
++  dst = cairo_image_surface_get_data (surface);
++
++  wl_shm_buffer_begin_access (shm_buffer);
++  src = wl_shm_buffer_get_data (shm_buffer);
++  for (y = 0; y < height; y++)
++    memcpy (dst + y * dst_stride, src + y * stride, MIN (stride, dst_stride));
++  wl_shm_buffer_end_access (shm_buffer);
++
++  cairo_surface_mark_dirty (surface);
++  return surface;
++}
++
++static MetaWaylandXdgToplevelIcon *
++icon_from_resource (struct wl_resource *resource)
++{
++  return wl_resource_get_user_data (resource);
++}
++
++static void
++toplevel_icon_data_free (MetaWaylandToplevelIconData *data)
++{
++  g_clear_pointer (&data->icon, cairo_surface_destroy);
++  g_free (data->icon_name);
++  g_free (data);
++}
++
++static MetaWaylandToplevelIconData *
++toplevel_icon_data_new (MetaWaylandXdgToplevelIcon *icon)
++{
++  MetaWaylandXdgToplevelIconBuffer *buffer;
++  MetaWaylandXdgToplevelIconBuffer *best = NULL;
++  MetaWaylandToplevelIconData *data;
++  int best_size = 0;
++
++  data = g_new0 (MetaWaylandToplevelIconData, 1);
++
++  if (!icon)
++    return data;
++
++  data->icon_name = g_strdup (icon->icon_name);
++
++  wl_list_for_each (buffer, &icon->buffers, link)
++    {
++      int size = buffer->size / MAX (buffer->scale, 1);
++
++      if (!best || size > best_size)
++        {
++          best = buffer;
++          best_size = size;
++        }
++    }
++
++  if (best)
++    data->icon = cairo_surface_reference (best->surface);
++
++  return data;
++}
++
++static void
++apply_icon_data (MetaWindow                  *window,
++                 MetaWaylandToplevelIconData *data)
++{
++  meta_window_set_icon (window,
++                        data ? data->icon : NULL,
++                        NULL);
++  meta_window_set_icon_name (window,
++                             data ? data->icon_name : NULL);
++}
++
++void
++meta_wayland_xdg_toplevel_icon_apply_pending (MetaWaylandSurface *surface,
++                                              MetaWindow         *window)
++{
++  MetaWaylandToplevelIconData *data;
++
++  data = g_object_steal_data (G_OBJECT (surface), TOPLEVEL_ICON_DATA);
++  if (!data)
++    return;
++
++  apply_icon_data (window, data);
++  toplevel_icon_data_free (data);
++}
++
++static void
++icon_destroy (struct wl_client   *client,
++              struct wl_resource *resource)
++{
++  wl_resource_destroy (resource);
++}
++
++static void
++icon_set_name (struct wl_client   *client,
++               struct wl_resource *resource,
++               const char         *icon_name)
++{
++  MetaWaylandXdgToplevelIcon *icon = icon_from_resource (resource);
++
++  if (icon->immutable)
++    {
++      wl_resource_post_error (resource, XDG_TOPLEVEL_ICON_V1_ERROR_IMMUTABLE,
++                              "the icon has already been assigned to a toplevel");
++      return;
++    }
++
++  g_free (icon->icon_name);
++  icon->icon_name = icon_name[0] == '\0' ? NULL : g_strdup (icon_name);
++}
++
++static void
++icon_add_buffer (struct wl_client   *client,
++                 struct wl_resource *resource,
++                 struct wl_resource *buffer_resource,
++                 int32_t             scale)
++{
++  MetaWaylandXdgToplevelIcon *icon = icon_from_resource (resource);
++  MetaWaylandXdgToplevelIconBuffer *icon_buffer;
++  struct wl_shm_buffer *shm_buffer;
++  cairo_surface_t *surface;
++  cairo_format_t cairo_format;
++  int width, height;
++
++  if (icon->immutable)
++    {
++      wl_resource_post_error (resource, XDG_TOPLEVEL_ICON_V1_ERROR_IMMUTABLE,
++                              "the icon has already been assigned to a toplevel");
++      return;
++    }
++
++  shm_buffer = wl_shm_buffer_get (buffer_resource);
++  if (shm_buffer == NULL)
++    {
++      wl_resource_post_error (resource, XDG_TOPLEVEL_ICON_V1_ERROR_INVALID_BUFFER,
++                              "the provided buffer is not backed by wl_shm");
++      return;
++    }
++
++  width = wl_shm_buffer_get_width (shm_buffer);
++  height = wl_shm_buffer_get_height (shm_buffer);
++  if (width != height || width <= 0)
++    {
++      wl_resource_post_error (resource, XDG_TOPLEVEL_ICON_V1_ERROR_INVALID_BUFFER,
++                              "the provided buffer is not square");
++      return;
++    }
++
++  if (!shm_format_to_cairo (wl_shm_buffer_get_format (shm_buffer), &cairo_format))
++    {
++      wl_resource_post_error (resource, XDG_TOPLEVEL_ICON_V1_ERROR_INVALID_BUFFER,
++                              "the provided buffer has an unsupported format");
++      return;
++    }
++
++  surface = surface_from_shm_buffer (shm_buffer);
++  if (surface == NULL)
++    {
++      g_warning ("xdg-toplevel-icon: failed to create a %dx%d cairo surface",
++                 width, height);
++      return;
++    }
++
++  wl_list_for_each (icon_buffer, &icon->buffers, link)
++    {
++      if (icon_buffer->size == width && icon_buffer->scale == scale)
++        {
++          cairo_surface_destroy (icon_buffer->surface);
++          icon_buffer->surface = surface;
++          return;
++        }
++    }
++
++  icon_buffer = g_new0 (MetaWaylandXdgToplevelIconBuffer, 1);
++  icon_buffer->surface = surface;
++  icon_buffer->size = width;
++  icon_buffer->scale = scale;
++  wl_list_insert (&icon->buffers, &icon_buffer->link);
++}
++
++static const struct xdg_toplevel_icon_v1_interface icon_implementation = {
++  icon_destroy,
++  icon_set_name,
++  icon_add_buffer,
++};
++
++static void
++icon_resource_destroy (struct wl_resource *resource)
++{
++  MetaWaylandXdgToplevelIcon *icon = icon_from_resource (resource);
++  MetaWaylandXdgToplevelIconBuffer *icon_buffer, *tmp;
++
++  wl_list_for_each_safe (icon_buffer, tmp, &icon->buffers, link)
++    {
++      wl_list_remove (&icon_buffer->link);
++      cairo_surface_destroy (icon_buffer->surface);
++      g_free (icon_buffer);
++    }
++
++  g_free (icon->icon_name);
++  g_free (icon);
++}
++
++static void
++manager_destroy (struct wl_client   *client,
++                 struct wl_resource *resource)
++{
++  wl_resource_destroy (resource);
++}
++
++static void
++manager_create_icon (struct wl_client   *client,
++                     struct wl_resource *resource,
++                     uint32_t            id)
++{
++  MetaWaylandXdgToplevelIcon *icon;
++  struct wl_resource *icon_resource;
++
++  icon = g_new0 (MetaWaylandXdgToplevelIcon, 1);
++  wl_list_init (&icon->buffers);
++
++  icon_resource = wl_resource_create (client,
++                                      &xdg_toplevel_icon_v1_interface,
++                                      wl_resource_get_version (resource),
++                                      id);
++  wl_resource_set_implementation (icon_resource, &icon_implementation,
++                                  icon, icon_resource_destroy);
++}
++
++static void
++manager_set_icon (struct wl_client   *client,
++                  struct wl_resource *resource,
++                  struct wl_resource *toplevel_resource,
++                  struct wl_resource *icon_resource)
++{
++  MetaWaylandXdgToplevel *xdg_toplevel;
++  MetaWaylandSurfaceRole *surface_role;
++  MetaWaylandSurface *surface;
++  MetaWaylandXdgToplevelIcon *icon = NULL;
++  MetaWaylandToplevelIconData *data;
++  MetaWindow *window;
++
++  if (toplevel_resource == NULL)
++    return;
++
++  xdg_toplevel = wl_resource_get_user_data (toplevel_resource);
++  surface_role = META_WAYLAND_SURFACE_ROLE (xdg_toplevel);
++  surface = meta_wayland_surface_role_get_surface (surface_role);
++
++  if (surface == NULL)
++    return;
++
++  if (icon_resource != NULL)
++    {
++      icon = icon_from_resource (icon_resource);
++      icon->immutable = TRUE;
++    }
++
++  data = toplevel_icon_data_new (icon);
++  window = meta_wayland_surface_get_window (surface);
++
++  if (window)
++    {
++      apply_icon_data (window, data);
++      toplevel_icon_data_free (data);
++    }
++  else
++    {
++      g_object_set_data_full (G_OBJECT (surface), TOPLEVEL_ICON_DATA, data,
++                              (GDestroyNotify) toplevel_icon_data_free);
++    }
++}
++
++static const struct xdg_toplevel_icon_manager_v1_interface manager_implementation = {
++  manager_destroy,
++  manager_create_icon,
++  manager_set_icon,
++};
++
++static void
++bind_xdg_toplevel_icon (struct wl_client *client,
++                        void             *data,
++                        uint32_t          version,
++                        uint32_t          id)
++{
++  struct wl_resource *resource;
++
++  resource = wl_resource_create (client,
++                                 &xdg_toplevel_icon_manager_v1_interface,
++                                 version, id);
++  wl_resource_set_implementation (resource, &manager_implementation, NULL, NULL);
++
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 16);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 24);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 32);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 48);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 64);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 96);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 128);
++  xdg_toplevel_icon_manager_v1_send_icon_size (resource, 256);
++  xdg_toplevel_icon_manager_v1_send_done (resource);
++}
++
++void
++meta_wayland_xdg_toplevel_icon_init (MetaWaylandCompositor *compositor)
++{
++  if (wl_global_create (compositor->wayland_display,
++                        &xdg_toplevel_icon_manager_v1_interface,
++                        META_XDG_TOPLEVEL_ICON_V1_VERSION,
++                        NULL,
++                        bind_xdg_toplevel_icon) == NULL)
++    g_error ("Failed to register a global xdg-toplevel-icon object");
++}
+diff --git c/src/wayland/meta-wayland-xdg-toplevel-icon.h i/src/wayland/meta-wayland-xdg-toplevel-icon.h
+new file mode 100644
+index 0000000..afa481f
+--- /dev/null
++++ i/src/wayland/meta-wayland-xdg-toplevel-icon.h
+@@ -0,0 +1,9 @@
++#pragma once
++
++#include "meta/window.h"
++#include "wayland/meta-wayland-types.h"
++
++void meta_wayland_xdg_toplevel_icon_init (MetaWaylandCompositor *compositor);
++
++void meta_wayland_xdg_toplevel_icon_apply_pending (MetaWaylandSurface *surface,
++                                                   MetaWindow         *window);
+diff --git c/src/wayland/meta-wayland.c i/src/wayland/meta-wayland.c
+index 85d26ca..4c48097 100644
+--- c/src/wayland/meta-wayland.c
++++ i/src/wayland/meta-wayland.c
+@@ -69,6 +69,7 @@
+ #include "wayland/meta-wayland-xdg-dialog.h"
+ #include "wayland/meta-wayland-xdg-foreign.h"
+ #include "wayland/meta-wayland-xdg-session-manager.h"
++#include "wayland/meta-wayland-xdg-toplevel-icon.h"
+ #include "wayland/meta-wayland-xdg-toplevel-tag.h"
+ 
+ #ifdef HAVE_XWAYLAND
+@@ -1016,6 +1017,7 @@ meta_wayland_compositor_new (MetaContext *context)
+   meta_wayland_xdg_session_management_init (compositor);
+   meta_wayland_init_system_bell (compositor);
+   meta_wayland_xdg_toplevel_tag_init (compositor);
++  meta_wayland_xdg_toplevel_icon_init (compositor);
+   meta_wayland_drm_lease_manager_init (compositor);
+   meta_wayland_commit_timing_init (compositor);
+   meta_wayland_fifo_init (compositor);
+diff --git c/src/wayland/meta-window-wayland.c i/src/wayland/meta-window-wayland.c
+index daa7162..b921065 100644
+--- c/src/wayland/meta-window-wayland.c
++++ i/src/wayland/meta-window-wayland.c
+@@ -44,6 +44,7 @@
+ #include "wayland/meta-wayland-transaction.h"
+ #include "wayland/meta-wayland-window-configuration.h"
+ #include "wayland/meta-wayland-xdg-shell.h"
++#include "wayland/meta-wayland-xdg-toplevel-icon.h"
+ 
+ enum
+ {
+@@ -137,6 +138,7 @@ meta_window_wayland_manage (MetaWindow *window)
+   }
+ 
+   meta_wayland_surface_window_managed (wl_window->surface, window);
++  meta_wayland_xdg_toplevel_icon_apply_pending (wl_window->surface, window);
+ }
+ 
+ static void
