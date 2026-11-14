@@ -384,4 +384,11 @@ in
       };
     };
   };
+
+  xdg.configFile."jew-guard/config.json".text = builtins.toJSON {
+    endpoint = "openrouter";
+    url = "https://openrouter.ai/api/alpha/decisions";
+    keyProvider = "openrouter";
+    model = "~perplexity/pplx-decider-latest";
+  };
 }
