@@ -38,7 +38,7 @@
         gnome-podcasts
         newsflash
         signal-desktop
-        (telegram-desktop.override { withWebkit = false; })
+        telegram-desktop-hardened
         tuba
         vesktop
 
