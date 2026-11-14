@@ -11,11 +11,12 @@
   ];
 
   boot = {
-    extraModulePackages = [ config.boot.kernelPackages.zenergy ];
+    extraModulePackages = [ config.boot.kernelPackages.zenpower ];
     kernelModules = [
       "kvm-amd"
-      "zenergy"
+      "zenpower"
     ];
+    blacklistedKernelModules = [ "k10temp" ];
   };
 
   services.hardware.openrgb.motherboard = "amd";
