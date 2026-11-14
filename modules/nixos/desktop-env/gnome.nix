@@ -11,7 +11,7 @@
         ];
       });
 
-      gnome-shell = (prev.gnome-shell.override { mutter = final.mutter; }).overrideAttrs (old: {
+      gnome-shell = (prev.gnome-shell.override { inherit (final) mutter; }).overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [ ./gnome-shell-window-icon.patch ];
       });
     })
