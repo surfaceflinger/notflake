@@ -8,7 +8,7 @@
     papers
 
     # media
-    ffmpeg-full
+    ffmpeg-headless
     pinta
     yt-dlp
 
