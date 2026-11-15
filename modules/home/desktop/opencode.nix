@@ -53,6 +53,7 @@ in
 
     context = ''
       - When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.
+      - Always use opencode's read, write, and edit tools for file access; only use python or shell when no tool fits. Opencode edits go through the LSPs and formatter; shell edits bypass them.
       - When writing scripts, use nix shell shebangs.
       - You can access any tool that's missing in $PATH by using nix commands, eg. nix run.
       - You can locate any binary with `nix-locate bin/<name>`, e.g. `nix-locate bin/vi`.
@@ -67,6 +68,9 @@ in
       - Follow best practices without over-engineering
       - Avoid comments, write self-explanatory code with clear naming
       - Add comments in English only when they provide non-obvious value
+      - If an explanation needs more than one line, put it in the commit message, not a comment; git blame finds it there
+      - Never write changelog comments; eg. when an option or a NixOS module schema changes, do not add "this changed in nixpkgs". The code shows the current state; put the why in the commit message
+      - Avoid em-dashes
       - Challenge proposals when you have a better alternative
       - Never push to a remote automatically; only push when explicitly asked
       - Keep responses concise and actionable
