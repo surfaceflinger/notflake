@@ -3,9 +3,14 @@
   environment.systemPackages = with pkgs; [
     # desktop software
     buffer
+    ffmpegthumbnailer
     gnome-obfuscate
     metadata-cleaner
     papers
+
+    # gtk theming, paired with modules/home/desktop/gtk.nix
+    adw-gtk3
+    morewaita-icon-theme
 
     # media
     ffmpeg-headless
