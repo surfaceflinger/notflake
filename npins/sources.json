@@ -252,14 +252,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "schizofox",
+        "owner": "surfaceflinger",
         "repo": "schizofox"
       },
-      "branch": "main",
+      "branch": "ff-esr-153",
       "submodules": false,
-      "revision": "a181afda6a249947e3bf7cc4147d034e3f4901dc",
-      "url": "https://github.com/schizofox/schizofox/archive/a181afda6a249947e3bf7cc4147d034e3f4901dc.tar.gz",
-      "hash": "sha256-hhQoMWA6EQI8MBNwbeSBYtrDUiTHsprbzCdUOU1NHC8="
+      "revision": "db8aa69a244df3e3846af7e50f853810cd69de26",
+      "url": "https://github.com/surfaceflinger/schizofox/archive/db8aa69a244df3e3846af7e50f853810cd69de26.tar.gz",
+      "hash": "sha256-DvsbOqX4vnVugiC8ayyob2T41P5deH4YYzkMcFT0Gaw="
     },
     "srvos": {
       "type": "Git",
