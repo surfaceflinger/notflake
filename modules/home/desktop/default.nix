@@ -12,5 +12,6 @@
     ./schizofox.nix
     ./tailscale.nix
     ./xdg.nix
+    ../gnome
   ];
 }
