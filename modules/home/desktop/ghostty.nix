@@ -7,6 +7,7 @@ _: {
       cursor-style = "bar";
       grapheme-width-method = "legacy";
       term = "xterm-256color";
+      window-show-tab-bar = "always";
       window-padding-x = 4;
       window-padding-y = 4;
       window-theme = "ghostty";
