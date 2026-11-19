@@ -3,7 +3,7 @@ let
   lock = lib.getExe pkgs.hyprlock;
 
   lockAndBlank = pkgs.writeShellScript "idle-lock" ''
-    ${lib.getExe pkgs.niri} msg action power-off-monitors
+    niri msg action power-off-monitors
     exec ${lock}
   '';
 
@@ -22,7 +22,7 @@ in
       listener = [
         {
           timeout = 30;
-          on-timeout = "${lib.getExe' pkgs.procps "pidof"} hyprlock && ${lib.getExe pkgs.niri} msg action power-off-monitors";
+          on-timeout = "${lib.getExe' pkgs.procps "pidof"} hyprlock && niri msg action power-off-monitors";
         }
         {
           timeout = 300;
