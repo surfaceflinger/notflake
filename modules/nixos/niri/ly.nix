@@ -7,4 +7,6 @@ _: {
       x11Support = false;
     };
   };
+
+  systemd.tmpfiles.rules = [ "d /etc/ly/custom-sessions 0755 root root -" ];
 }
