@@ -5,6 +5,8 @@
     buffer
     ffmpegthumbnailer
     gnome-obfuscate
+    gnome-text-editor
+    loupe
     metadata-cleaner
     papers
 

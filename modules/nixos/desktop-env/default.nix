@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }: {
   imports = [
     "${inputs.srvos.result}/nixos/desktop"
-    ../gnome
     ./bluetooth.nix
     ./mdns.nix
     ./networkmanager.nix
@@ -33,16 +32,35 @@
     ];
   };
 
-  # graphical-desktop enables speechd for every desktop, but the system-wide
-  # dispatcher pulls every synthesizer and mbrola voice (~700 MiB)
-  services.speechd.enable = false;
-  # power management is tlp/tuned's job
-  services.power-profiles-daemon.enable = false;
+  services = {
+    kmscon.config = {
+      font-name = "Cascadia Mono PL";
+      hwaccel = true;
+    };
 
-  services.kmscon.config = {
-    font-name = "Cascadia Mono PL";
-    hwaccel = true;
+    libinput.enable = true;
+    upower.enable = true;
+    gnome.at-spi2-core.enable = true;
+    gvfs.enable = true;
+
+    gnome.gnome-keyring.enable = false;
+    gnome.gcr-ssh-agent.enable = false;
+    oo7.enable = true;
+
+    # graphical-desktop enables speechd for every desktop, but the system-wide
+    # dispatcher pulls every synthesizer and mbrola voice (~700 MiB)
+    speechd.enable = false;
+    # power management is tlp/tuned's job
+    power-profiles-daemon.enable = false;
+
+    logind.settings.Login.HandlePowerKey = "ignore";
   };
+
+  xdg.portal.enable = true;
+
+  programs.dconf.enable = true;
+
+  programs.ssh.startAgent = true;
 
   # fix qt crashes
   environment.extraInit = ''
