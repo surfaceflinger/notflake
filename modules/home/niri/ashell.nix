@@ -56,6 +56,8 @@
       settings.max_volume = 150;
 
       media_player.menu_visualizer = true;
+      # a title in the bar widens the right group and pushes the clock off-center
+      media_player.indicator_format = "Icon";
 
       tempo.weather_location = {
         City = "Warsaw";
