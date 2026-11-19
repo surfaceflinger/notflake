@@ -11,7 +11,7 @@ in
     general = {
       theme = "dark";
       font_family = config.stylix.fonts.sansSerif.name;
-      opacity = 0.95;
+      opacity = 0.9;
       raise_running = true;
       preview.mono_font_family = config.stylix.fonts.monospace.name;
       theme_colors = {
