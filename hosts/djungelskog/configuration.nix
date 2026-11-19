@@ -11,12 +11,12 @@
     nixosModules.common
     nixosModules.desktop-env
     nixosModules.laptop
-    nixosModules.mixin-bdprochot
     nixosModules.mixin-gaming
     nixosModules.mixin-intel
     nixosModules.mixin-secureboot
     nixosModules.niri
     nixosModules.user-nat
+    ./power.nix
     ./storage.nix
   ];
 
