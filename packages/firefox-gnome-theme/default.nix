@@ -1,4 +1,8 @@
-{ stdenvNoCC, fetchFromGitHub }:
+{
+  stdenvNoCC,
+  fetchFromGitHub,
+  python3,
+}:
 
 stdenvNoCC.mkDerivation (_finalAttrs: {
   pname = "firefox-gnome-theme";
@@ -14,6 +18,8 @@ stdenvNoCC.mkDerivation (_finalAttrs: {
 
   dontConfigure = true;
   dontBuild = true;
+
+  nativeBuildInputs = [ python3 ];
 
   postPatch = ''
     patchShebangs ./scripts
@@ -43,6 +49,15 @@ stdenvNoCC.mkDerivation (_finalAttrs: {
     install -Dm644 ./icon.svg ./user{Chrome,Content}.css -t $out/share/firefox-gnome-theme
     install -Dm644 ./configuration/user.js -t $out/share/firefox-gnome-theme/configuration
     cp -r ./theme $out/share/firefox-gnome-theme
+
+    # inline the @import chain: schizofox registers the sheet from the store,
+    # where relative imports and icon urls do not resolve
+    theme=$out/share/firefox-gnome-theme
+    mkdir -p $theme/flat
+    for file in userChrome userContent; do
+      ${python3}/bin/python3 ${./flatten.py} "$theme" "$file.css" "file://$theme" \
+        >"$theme/flat/$file.css"
+    done
 
     runHook postInstall
   '';

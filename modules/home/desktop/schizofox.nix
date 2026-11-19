@@ -1,4 +1,55 @@
-{ inputs, pkgs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  c = config.lib.stylix.colors;
+  theme = "${pkgs.firefox-gnome-theme}/share/firefox-gnome-theme/flat";
+
+  stylixColors = ''
+    :root {
+      --gnome-accent-bg: #${c.base0D};
+      --gnome-destructive-bg: #${c.base08};
+      --gnome-success-bg: #${c.base0B};
+      --gnome-warning-bg: #${c.base0A};
+      --gnome-error-bg: #${c.base08};
+      --gnome-toolbar-star-button: #${c.base0A};
+
+      --gnome-window-background: #${c.base00};
+      --gnome-window-color: #${c.base05};
+      --gnome-view-background: #${c.base00};
+      --gnome-sidebar-background: #${c.base01};
+      --gnome-sidebar-border-color: #${c.base02};
+      --gnome-secondary-sidebar-background: #${c.base01};
+
+      --gnome-card-background: #${c.base01};
+      --gnome-card-shade-color: #${c.base02};
+
+      --gnome-menu-background: #${c.base01};
+      --gnome-headerbar-background: #${c.base01};
+      --gnome-headerbar-shade-color: #${c.base02};
+      --gnome-shade-color: #${c.base02};
+
+      --gnome-private-wordmark: #${c.base05};
+      --gnome-private-in-content-page-background: #${c.base00};
+      --gnome-private-text-primary-color: #${c.base05};
+
+      --gnome-tabbar-identity-color-blue: #${c.base0D};
+      --gnome-tabbar-identity-color-green: #${c.base0B};
+      --gnome-tabbar-identity-color-yellow: #${c.base0A};
+      --gnome-tabbar-identity-color-orange: #${c.base09};
+      --gnome-tabbar-identity-color-red: #${c.base08};
+      --gnome-tabbar-identity-color-purple: #${c.base0E};
+    }
+
+    :root[privatebrowsingmode="temporary"] {
+      --gnome-headerbar-background: #${c.base01};
+    }
+  '';
+in
+{
   imports = [ inputs.schizofox.result.homeManagerModules.default ];
 
   home.sessionVariables.BROWSER = "schizofox";
@@ -119,8 +170,8 @@
     theme = {
       defaultUserChrome.enable = false;
       defaultUserContent.enable = false;
-      extraUserChrome = builtins.readFile "${pkgs.firefox-gnome-theme}/share/firefox-gnome-theme/userChrome.css";
-      extraUserContent = builtins.readFile "${pkgs.firefox-gnome-theme}/share/firefox-gnome-theme/userContent.css";
+      extraUserChrome = builtins.readFile "${theme}/userChrome.css" + stylixColors;
+      extraUserContent = builtins.readFile "${theme}/userContent.css";
     };
   };
 }
