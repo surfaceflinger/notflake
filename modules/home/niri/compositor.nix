@@ -77,7 +77,7 @@ in
           matches = [ { app-id = "^ashell-tui$"; } ];
           open-floating = true;
           default-column-width.proportion = 0.7;
-          default-window-height.fixed = 650;
+          default-window-height.proportion = 0.6;
         }
         {
           matches = [ { app-id = "^com\\.chmouel\\.raffi$"; } ];
