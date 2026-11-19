@@ -87,6 +87,13 @@ in
         }
       ];
 
+      workspaces = {
+        "1" = { };
+        "2" = { };
+        "3" = { };
+        "4" = { };
+      };
+
       spawn-at-startup = [ { argv = [ "ashell" ]; } ];
     };
   };
