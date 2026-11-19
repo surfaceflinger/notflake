@@ -69,6 +69,12 @@ in
 
       window-rules = [
         {
+          # niri otherwise paints a solid border-coloured rect behind every
+          # CSD window, which hides translucency and makes blur sample a
+          # flat fill
+          draw-border-with-background = false;
+        }
+        {
           matches = [ { app-id = "^(bitwarden|org\\.telegram\\.desktop|vesktop)$"; } ];
           open-on-workspace = "1";
         }
@@ -95,11 +101,17 @@ in
           open-floating = true;
           default-column-width.proportion = 0.45;
           default-window-height.proportion = 0.78;
-          background-effect.blur = true;
+          background-effect = {
+            blur = true;
+            xray = false;
+          };
         }
         {
           matches = [ { app-id = "^com\\.mitchellh\\.ghostty$"; } ];
-          background-effect.blur = true;
+          background-effect = {
+            blur = true;
+            xray = true;
+          };
         }
       ];
 
