@@ -90,4 +90,6 @@
     };
   };
 
+  # the media menu visualizer shells out to cava
+  home.packages = [ pkgs.cava ];
 }
