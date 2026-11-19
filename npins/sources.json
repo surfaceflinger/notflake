@@ -196,6 +196,19 @@
       "url": "https://github.com/arnarg/nilla-utils/archive/0cc9579ebe8319543d9ffafb6857e41d1c92621b.tar.gz",
       "hash": "sha256-j06HB74eJJw/IDKNIvuB4TrEe1chEmtYUjIGSNGeKwk="
     },
+    "niri-flake": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "epireyn",
+        "repo": "niri-flake"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e9bbde312d92c7686493752c7e90bfed11546693",
+      "url": "https://github.com/epireyn/niri-flake/archive/e9bbde312d92c7686493752c7e90bfed11546693.tar.gz",
+      "hash": "sha256-n7YLsZ2IlnLJjoJp14c8a2GimxUgLBl907H+xHlI61k="
+    },
     "nix-index-database": {
       "type": "Git",
       "repository": {
@@ -274,6 +287,19 @@
       "url": "https://github.com/nix-community/srvos/archive/d2e8951b0b98452779565ab9ff5375f221a9a1e2.tar.gz",
       "hash": "sha256-EROQCd/xoO6rGK2HEjvCxLe7WkP97KY0DQm6c7yef7M="
     },
+    "stylix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "stylix"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "44aafe27b8b3427201dd53c6a464c196b6a956dd",
+      "url": "https://github.com/nix-community/stylix/archive/44aafe27b8b3427201dd53c6a464c196b6a956dd.tar.gz",
+      "hash": "sha256-u9VYWK6f9T8ZuMliRvX4LUuvJ/k5+6M5y35cZgsyJ8A="
+    },
     "tgexpiry": {
       "type": "Git",
       "repository": {
@@ -286,6 +312,19 @@
       "revision": "8e1e28ffe325262d2a632125b39d782f79fd7065",
       "url": "https://github.com/surfaceflinger/tgexpiry/archive/8e1e28ffe325262d2a632125b39d782f79fd7065.tar.gz",
       "hash": "sha256-MTVcDrrOV4iL/lkBJ/1wzeN2qFqmmIyQl2W3n6ptyXs="
+    },
+    "xdg-desktop-portal-gtk4": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "JohnRTitor",
+        "repo": "xdg-desktop-portal-gtk4"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "ae26584679f40536049b4612d7ab062e4c04ee5d",
+      "url": "https://github.com/JohnRTitor/xdg-desktop-portal-gtk4/archive/ae26584679f40536049b4612d7ab062e4c04ee5d.tar.gz",
+      "hash": "sha256-anejyZoWn0i7U6ndTGAfH9T+VzNhxB/gJW7P1pHJFok="
     },
     "xkomhotshot": {
       "type": "Git",

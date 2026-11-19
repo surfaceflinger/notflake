@@ -22,7 +22,10 @@ nilla.create (
               "llm-agents"
               "nix-index-database"
               "nix-mineral"
+              "niri-flake"
+              "stylix"
               "tgexpiry"
+              "xdg-desktop-portal-gtk4"
               "xkomhotshot"
             ]
             |> map (name: {
