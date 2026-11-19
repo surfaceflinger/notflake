@@ -39,6 +39,9 @@
       sizes.applications = 11;
     };
 
-    opacity.terminal = 0.9;
+    opacity = {
+      desktop = 0.9;
+      terminal = 0.9;
+    };
   };
 }
