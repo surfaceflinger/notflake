@@ -8,7 +8,7 @@
     ./mangohud.nix
     ./mpv.nix
     ./opencode.nix
-    ./qt.nix
+    ./prismlauncher.nix
     ./schizofox.nix
     ./tailscale.nix
     ./xdg.nix

@@ -1,14 +1,9 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [ ./dconf.nix ];
 
+  stylix.targets.gtk.extraCss = "window.background { border-radius: 0; }";
+
   gtk = {
-    enable = true;
-    gtk3.extraCss = builtins.readFile ./gtk.css;
-    gtk4.theme = config.gtk.theme;
-    cursorTheme = {
-      name = "miku-cursor";
-      package = pkgs.miku-cursor;
-    };
     iconTheme = {
       name = "MoreWaita";
       package = pkgs.morewaita-icon-theme;

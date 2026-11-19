@@ -25,7 +25,6 @@
     pcsx2 # ps2 emu
     rpcs3 # ps3 emu
     steamguard-cli # steam MFA
-    (prismlauncher.override { jdks = [ jdk25 ]; }) # minecraft (good one)
   ];
 
   # for roblox

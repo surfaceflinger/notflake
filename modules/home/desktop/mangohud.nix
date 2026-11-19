@@ -1,6 +1,12 @@
-_: {
+{ config, ... }:
+let
+  c = config.lib.stylix.colors;
+in
+{
   programs.mangohud.enable = true;
 
+  # plain text: the nix settings module sorts keys, and the trailing exec
+  # lines cannot be expressed twice as attributes
   xdg.configFile."MangoHud/MangoHud.conf".text = ''
     toggle_fps_limit=F1
     toggle_hud=Shift_R+F12
@@ -11,11 +17,11 @@ _: {
     offset_x=12
     offset_y=12
     round_corners=12
-    background_color=14111C
+    background_color=${c.base00}
     background_alpha=0.75
-    text_color=F7F3FF
+    text_color=${c.base05}
     text_outline
-    text_outline_color=0B0910
+    text_outline_color=${c.base00}
     text_outline_thickness=1.5
     font_size=24
 
@@ -32,9 +38,9 @@ _: {
     gpu_efficiency
     gpu_load_change
     gpu_load_value=50,90
-    gpu_load_color=A8F0C6,FFD166,FFA8A8
+    gpu_load_color=${c.base0B},${c.base0A},${c.base08}
     gpu_text=GPU
-    gpu_color=8BE9C0
+    gpu_color=${c.base0B}
 
     cpu_stats
     cpu_temp
@@ -45,14 +51,14 @@ _: {
     core_load_change
     cpu_load_change
     cpu_load_value=50,90
-    cpu_load_color=A8F0C6,FFD166,FFA8A8
+    cpu_load_color=${c.base0B},${c.base0A},${c.base08}
     cpu_text=CPU
-    cpu_color=8CC8FF
+    cpu_color=${c.base0D}
 
     vram
-    vram_color=D2B2FF
+    vram_color=${c.base0E}
     ram
-    ram_color=FFA3C9
+    ram_color=${c.base0F}
     swap
     procmem
     procmem_shared
@@ -62,24 +68,24 @@ _: {
     fps
     fps_color_change
     fps_value=30,60
-    fps_color=FFA8A8,FFD166,8CE99A
+    fps_color=${c.base08},${c.base0A},${c.base0B}
     frametime
     frame_timing=1
     throttling_status
     throttling_status_graph
-    frametime_color=9DFFB0
+    frametime_color=${c.base0B}
     show_fps_limit
 
     wine
     winesync
-    wine_color=FFA8B7
+    wine_color=${c.base08}
     present_mode
 
     battery
     battery_icon
     battery_watt
     battery_time
-    battery_color=FFD98A
+    battery_color=${c.base0A}
 
     exec=echo
     exec=echo
