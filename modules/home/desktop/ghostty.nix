@@ -2,7 +2,7 @@ _: {
   programs.ghostty = {
     enable = true;
     settings = {
-      window-decoration = "none";
+      gtk-titlebar = false;
       background-blur = true;
       cursor-style = "bar";
       grapheme-width-method = "legacy";
