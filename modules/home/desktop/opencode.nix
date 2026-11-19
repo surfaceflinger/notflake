@@ -35,7 +35,7 @@ in
 
     cli = {
       theme = {
-        name = "system";
+        name = "stylix";
         mode = "system";
       };
       attention = {
