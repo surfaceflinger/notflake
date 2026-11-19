@@ -84,6 +84,18 @@ in
           open-floating = true;
           default-column-width.proportion = 0.45;
           default-window-height.proportion = 0.78;
+          background-effect.blur = true;
+        }
+        {
+          matches = [ { app-id = "^com\\.mitchellh\\.ghostty$"; } ];
+          background-effect.blur = true;
+        }
+      ];
+
+      layer-rules = [
+        {
+          matches = [ { namespace = "^ashell-"; } ];
+          background-effect.blur = true;
         }
       ];
 
