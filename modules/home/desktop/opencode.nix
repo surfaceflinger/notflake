@@ -53,13 +53,13 @@ in
 
     context = ''
       - When you encounter a file reference (e.g., @rules/general.md), use your Read tool to load it on a need-to-know basis. They're relevant to the SPECIFIC task at hand.
-      - Always use opencode's read, write, and edit tools for file access; only use python or shell when no tool fits. Opencode edits go through the LSPs and formatter; shell edits bypass them.
+      - Always use opencode's read, write, and edit tools for file access; only use python or shell when no tool fits. Opencode edits go through the formatter; shell edits bypass it.
       - When writing scripts, use nix shell shebangs.
       - You can access any tool that's missing in $PATH by using nix commands, eg. nix run.
       - You can locate any binary with `nix-locate bin/<name>`, e.g. `nix-locate bin/vi`.
       - On $PATH you already have node, python3 and jq for processing stuff.
       - Try to use grep, head, tail etc. when appropriate when running commands to save tokens on file, log reads etc.
-      - For web search use the kagi_kagi_search tool. For library docs use context7, for real-world code examples use gh_grep.
+      - For web search use the kagi_kagi_search tool. For library docs use context7.
       - If you want to use github and github_* tools aren't enough, you can use gh cli, available on $PATH and already authenticated.
       - If you want to do stuff in an external directory, eg. to untar something, you have always-allow access to /tmp/opencode/*
       - When commiting, commit message should on the bottom contain: "Assisted-by: harness:modelslug", eg. "Assisted-by: OpenCode:claude-opus-5-5"
@@ -168,7 +168,6 @@ in
       # mcp actions are <server>_<tool>; invalid chars become _, hyphens stay.
       # opencode_* is a plugin namespace, not MCP, so it stays ask.
       (allow "context7_*" "*")
-      (allow "gh_grep_*" "*")
       (allow "github_*" "*")
       (allow "opentofu_*" "*")
       (allow "chrome-devtools_*" "*")
@@ -191,162 +190,12 @@ in
     settings.plugins = [
       "@dietrichgebert/ponytail@5.3.3"
       "jew-guard@0.12.0"
-      "${pkgs.opencode-v2-lsp-support}"
     ];
-
-    settings.lsp = {
-      nix = {
-        command = [ (lib.getExe pkgs.nil) ];
-        extensions = [ ".nix" ];
-      };
-      pyright = {
-        command = [ (lib.getExe pkgs.pyright) ];
-        extensions = [
-          ".py"
-          ".pyi"
-        ];
-      };
-      ruff = {
-        command = [
-          (lib.getExe pkgs.ruff)
-          "server"
-        ];
-        extensions = [
-          ".py"
-          ".pyi"
-        ];
-      };
-      bash = {
-        command = [
-          (lib.getExe pkgs.bash-language-server)
-          "start"
-        ];
-        extensions = [
-          ".bash"
-          ".ksh"
-          ".sh"
-          ".zsh"
-        ];
-      };
-      clangd = {
-        # minimal wrapper has no embedded clang resource dir
-        command = [
-          (lib.getExe' pkgs.clangd-minimal "clangd")
-          "--resource-dir=${pkgs.clangd-minimal}/lib/clang/${lib.versions.major pkgs.llvmPackages.clang.version}"
-        ];
-        extensions = [
-          ".c"
-          ".cpp"
-          ".cc"
-          ".cxx"
-          ".c++"
-          ".h"
-          ".hpp"
-          ".hh"
-          ".hxx"
-          ".h++"
-        ];
-      };
-      rust = {
-        command = [ (lib.getExe pkgs.rust-analyzer-unwrapped) ];
-        extensions = [ ".rs" ];
-      };
-      go = {
-        command = [ (lib.getExe pkgs.gopls) ];
-        extensions = [ ".go" ];
-      };
-      lua = {
-        command = [ (lib.getExe pkgs.lua-language-server) ];
-        extensions = [ ".lua" ];
-      };
-      terraform = {
-        command = [
-          (lib.getExe pkgs.tofu-ls)
-          "serve"
-        ];
-        extensions = [
-          ".tf"
-          ".tfvars"
-        ];
-      };
-      yaml-ls = {
-        command = [
-          (lib.getExe pkgs.yaml-language-server)
-          "--stdio"
-        ];
-        extensions = [
-          ".yaml"
-          ".yml"
-        ];
-      };
-      json-ls = {
-        command = [
-          (lib.getExe' pkgs.vscode-langservers-extracted "vscode-json-language-server")
-          "--stdio"
-        ];
-        extensions = [
-          ".json"
-          ".jsonc"
-        ];
-      };
-      toml = {
-        command = [
-          (lib.getExe pkgs.taplo)
-          "lsp"
-          "stdio"
-        ];
-        extensions = [ ".toml" ];
-      };
-      markdown = {
-        command = [ (lib.getExe pkgs.markdown-oxide) ];
-        extensions = [
-          ".md"
-          ".markdown"
-        ];
-      };
-      css = {
-        command = [
-          (lib.getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server")
-          "--stdio"
-        ];
-        extensions = [ ".css" ];
-      };
-      html = {
-        command = [
-          (lib.getExe' pkgs.vscode-langservers-extracted "vscode-html-language-server")
-          "--stdio"
-        ];
-        extensions = [
-          ".html"
-          ".htm"
-        ];
-      };
-      typescript = {
-        command = [
-          (lib.getExe pkgs.typescript-language-server)
-          "--stdio"
-        ];
-        extensions = [
-          ".js"
-          ".jsx"
-          ".ts"
-          ".tsx"
-          ".mjs"
-          ".cjs"
-          ".mts"
-          ".cts"
-        ];
-      };
-    };
 
     settings.mcp.servers = {
       context7 = {
         type = "remote";
         url = "https://mcp.context7.com/mcp";
-      };
-      gh_grep = {
-        type = "remote";
-        url = "https://mcp.grep.app";
       };
       github = {
         type = "local";
