@@ -38,15 +38,4 @@
 
   # aspm causes issues on this host
   services.autoaspm.enable = lib.mkForce false;
-
-  services.keyd = {
-    enable = true;
-    keyboards."liteon" = {
-      ids = [ "0001:0001" ];
-      settings.main = {
-        pageup = "noop";
-        pagedown = "noop";
-      };
-    };
-  };
 }
