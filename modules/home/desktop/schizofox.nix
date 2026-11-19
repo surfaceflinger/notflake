@@ -171,7 +171,7 @@ in
       defaultUserChrome.enable = false;
       defaultUserContent.enable = false;
       extraUserChrome = builtins.readFile "${theme}/userChrome.css" + stylixColors;
-      extraUserContent = builtins.readFile "${theme}/userContent.css";
+      extraUserContent = builtins.readFile "${theme}/userContent.css" + stylixColors;
     };
   };
 }
