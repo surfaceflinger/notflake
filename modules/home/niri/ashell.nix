@@ -50,6 +50,8 @@
       ];
 
       settings.lock_cmd = lib.getExe pkgs.hyprlock;
+      # loginctl kill-user leaves kmscon stuck on its notice screen after logout
+      settings.logout_cmd = "niri msg action quit";
       # wiremix and the ashell OSD should allow the same overdrive
       settings.max_volume = 150;
 
