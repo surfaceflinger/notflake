@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  osConfig,
   pkgs,
   ...
 }:
@@ -51,10 +52,20 @@ in
             "DVI-I-1"
             "Virtual-1"
           ]
-          (_: {
-            scale = 1;
-            variable-refresh-rate = true;
-          });
+          (
+            name:
+            {
+              scale = 1;
+              variable-refresh-rate = true;
+            }
+            // lib.optionalAttrs (osConfig.networking.hostName == "blahaj" && !(lib.hasPrefix "eDP-" name)) {
+              mode = {
+                width = 2560;
+                height = 1440;
+                refresh = 144.0;
+              };
+            }
+          );
 
       window-rules = [
         {
