@@ -23,6 +23,7 @@
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
     nixosModules.mixin-www
+    nixosModules.niri
     nixosModules.tower
     nixosModules.user-nat
     ./storage.nix

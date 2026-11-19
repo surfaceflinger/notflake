@@ -15,6 +15,7 @@
     nixosModules.mixin-secureboot
     nixosModules.mixin-tpm20
     nixosModules.mixin-virtualisation
+    nixosModules.niri
     nixosModules.user-nat
     ./power.nix
     ./storage.nix

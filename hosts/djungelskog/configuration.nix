@@ -15,6 +15,7 @@
     nixosModules.mixin-gaming
     nixosModules.mixin-intel
     nixosModules.mixin-secureboot
+    nixosModules.niri
     nixosModules.user-nat
     ./storage.nix
   ];
@@ -38,7 +39,6 @@
   # aspm causes issues on this host
   services.autoaspm.enable = lib.mkForce false;
 
-  # disable these fucking pgup/pgdown around arrow up - who came up with this?
   services.keyd = {
     enable = true;
     keyboards."liteon" = {
