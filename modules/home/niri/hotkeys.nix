@@ -7,7 +7,7 @@
       action.spawn = "ghostty";
     };
     "Mod+D" = {
-      action.spawn = "raffi";
+      action.spawn-sh = "pidof raffi >/dev/null || raffi";
     };
     "Mod+O" = {
       repeat = false;
