@@ -16,6 +16,9 @@
     "Super+Alt+L" = {
       action.spawn-sh = config.services.hypridle.settings.general.lock_cmd;
     };
+    "Mod+Shift+N" = {
+      action.spawn-sh = "if systemctl --user is-active --quiet redland; then systemctl --user stop redland; else systemctl --user start redland; fi";
+    };
     "Ctrl+M" = {
       allow-when-locked = true;
       action.spawn = [
