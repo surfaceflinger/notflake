@@ -100,5 +100,17 @@ Project-specific guidance. The global `AGENTS.md` still applies.
 
 ## Commits
 
+- One logical change per commit; if a file carries unrelated edits, stage
+  them separately instead of bundling.
+- Prefix the subject with the repo-relative path that changed:
+  `modules/home/niri/idle: use the running niri cli`,
+  `hosts/djungelskog: drop the keyd remap`, `AGENTS.md: describe ...`.
+  Never use a bare file or module basename such as `niri/idle:` or
+  `opencode:`.
+- When a change spans several files in one tree, name the shared directory
+  (`modules/home: theme everything through stylix`); for parallel trees use
+  brace shorthand (`modules/{nixos,home}/gnome: drop the GNOME session`).
+- Subject is lowercase and imperative, no trailing period, no changelog
+  phrasing; the why and the detail belong in the body.
 - End with `Assisted-by: harness:modelslug`; wrap bodies at 72 columns.
 - Do not push unless asked.
