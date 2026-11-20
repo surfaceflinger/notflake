@@ -45,5 +45,7 @@
     package = pkgs.waydroid-nftables;
   };
 
+  services.iio-niri.enable = true;
+
   home-manager.sharedModules = [ ./niri.nix ];
 }
