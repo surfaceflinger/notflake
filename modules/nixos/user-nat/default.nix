@@ -82,11 +82,11 @@
   home-manager.users.nat = { ... }: {
     imports = [
       homeModules.common
-      homeModules.stylix
     ]
     ++ lib.optionals config.xdg.portal.enable [
       ./halloy.nix
       homeModules.desktop
+      homeModules.stylix
     ];
 
     programs.git.settings.user = {
