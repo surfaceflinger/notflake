@@ -1,4 +1,4 @@
-{ homeModules, inputs, ... }: {
+{ homeModules, ... }: {
   imports = [
     ./compositor.nix
     ./ly.nix

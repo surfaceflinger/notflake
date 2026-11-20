@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 let
   niriFlake = inputs.niri-flake.result;
 in
