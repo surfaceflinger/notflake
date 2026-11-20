@@ -12,9 +12,26 @@ in
   imports = [ niriFlake.homeModules.config ];
 
   programs.niri = {
-    package = niriFlake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+    package = inputs.niri.result.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 
     settings = {
+      includes = [
+        {
+          # niri-flake's settings can't render allow-tearing; a derivation path
+          # also needs the string coercion or kdl prints it as a typed value
+          path = "${pkgs.writeText "niri-tearing.kdl" ''
+            window-rule {
+                match app-id=r#"^steam_app_"#
+                allow-tearing true
+            }
+            window-rule {
+                match app-id=r#"^java$"#
+                allow-tearing true
+            }
+          ''}";
+        }
+      ];
+
       input = {
         keyboard.xkb.layout = "pl";
         touchpad = {

@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }:
 let
-  niriPkg = inputs.niri-flake.result.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
+  niriPkg = inputs.niri.result.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 in
 {
   environment.systemPackages = [

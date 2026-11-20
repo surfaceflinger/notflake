@@ -196,6 +196,19 @@
       "url": "https://github.com/arnarg/nilla-utils/archive/0cc9579ebe8319543d9ffafb6857e41d1c92621b.tar.gz",
       "hash": "sha256-j06HB74eJJw/IDKNIvuB4TrEe1chEmtYUjIGSNGeKwk="
     },
+    "niri": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "urayde",
+        "repo": "niri"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "80e0f89018e0386152b690dc3d0cc46e84010d9f",
+      "url": "https://github.com/urayde/niri/archive/80e0f89018e0386152b690dc3d0cc46e84010d9f.tar.gz",
+      "hash": "sha256-KPIME/sZ8E77Qqco9i1PpoVR07XjcGXyELGqlsLXLjE="
+    },
     "niri-flake": {
       "type": "Git",
       "repository": {

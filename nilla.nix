@@ -22,6 +22,7 @@ nilla.create (
               "llm-agents"
               "nix-index-database"
               "nix-mineral"
+              "niri"
               "niri-flake"
               "stylix"
               "tgexpiry"
