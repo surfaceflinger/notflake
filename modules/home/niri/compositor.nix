@@ -16,9 +16,10 @@ in
     settings = {
       includes = [
         {
-          # niri-flake's settings can't render allow-tearing; a derivation path
-          # also needs the string coercion or kdl prints it as a typed value
-          path = "${pkgs.writeText "niri-tearing.kdl" ''
+          # niri-flake can't render allow-tearing or fullscreen-only VRR; a
+          # derivation path also needs the string coercion or kdl prints it
+          # as a typed value
+          path = "${pkgs.writeText "niri-window-rules.kdl" ''
             window-rule {
                 match app-id=r#"^steam_app_"#
                 allow-tearing true
@@ -26,6 +27,9 @@ in
             window-rule {
                 match app-id=r#"^java$"#
                 allow-tearing true
+            }
+            window-rule {
+                variable-refresh-rate "fullscreen-only"
             }
           ''}";
         }
