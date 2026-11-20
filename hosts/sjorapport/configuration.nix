@@ -39,6 +39,12 @@
     "xe.force_probe=a721"
   ];
 
+  # waydroid's 32-bit bionic needs the vsyscall page and 32-bit vdso
+  nix-mineral.settings.kernel = {
+    vsyscall = true;
+    vdso32 = true;
+  };
+
   # i need angry birds and subway surfers
   virtualisation.waydroid = {
     enable = true;
