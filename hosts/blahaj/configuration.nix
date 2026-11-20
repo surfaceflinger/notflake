@@ -105,6 +105,7 @@
   ];
 
   # home-manager
+  home-manager.sharedModules = [ ./niri.nix ];
   home-manager.users.nat = { ... }: {
     imports = [ inputs.tgexpiry.result.homeModules.tgexpiry ];
 

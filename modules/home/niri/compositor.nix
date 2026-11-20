@@ -1,7 +1,6 @@
 {
   inputs,
   lib,
-  osConfig,
   pkgs,
   ...
 }:
@@ -40,9 +39,6 @@ in
         };
         mouse.accel-profile = "flat";
 
-        # framework 12 touchscreen
-        touch.map-to-output = "eDP-1";
-
         # the power key goes to logind, see desktop-env
         power-key-handling.enable = false;
       };
@@ -54,35 +50,6 @@ in
         bottom-left = false;
         bottom-right = false;
       };
-
-      outputs =
-        lib.genAttrs
-          [
-            "eDP-1"
-            "eDP-2"
-            "HDMI-A-1"
-            "HDMI-A-2"
-            "DP-1"
-            "DP-2"
-            "DP-3"
-            "DP-4"
-            "DVI-I-1"
-            "Virtual-1"
-          ]
-          (
-            name:
-            {
-              scale = 1;
-              variable-refresh-rate = true;
-            }
-            // lib.optionalAttrs (osConfig.networking.hostName == "blahaj" && !(lib.hasPrefix "eDP-" name)) {
-              mode = {
-                width = 2560;
-                height = 1440;
-                refresh = 144.0;
-              };
-            }
-          );
 
       window-rules = [
         {
