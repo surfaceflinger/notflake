@@ -1,6 +1,5 @@
 { inputs, pkgs, ... }: {
   imports = [
-    inputs.niri-flake.result.homeModules.stylix
     inputs.stylix.result.homeModules.stylix
   ];
 

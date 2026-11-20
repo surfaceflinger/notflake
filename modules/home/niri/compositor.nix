@@ -8,7 +8,10 @@ let
   niriFlake = inputs.niri-flake.result;
 in
 {
-  imports = [ niriFlake.homeModules.config ];
+  imports = [
+    niriFlake.homeModules.config
+    niriFlake.homeModules.stylix
+  ];
 
   programs.niri = {
     package = inputs.niri.result.packages.${pkgs.stdenv.hostPlatform.system}.niri;
