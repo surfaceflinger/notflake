@@ -20,6 +20,8 @@
     ./storage.nix
   ];
 
+  home-manager.sharedModules = [ ./niri.nix ];
+
   # bootloader/kernel/modules
   boot.initrd.availableKernelModules = [
     "ahci"
