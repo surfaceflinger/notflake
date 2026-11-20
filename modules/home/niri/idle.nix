@@ -25,8 +25,19 @@ in
           on-timeout = "${lib.getExe' pkgs.procps "pidof"} hyprlock && niri msg action power-off-monitors";
         }
         {
-          timeout = 300;
+          timeout = 180;
           on-timeout = "${lockAndBlank}";
+        }
+        {
+          timeout = 300;
+          on-timeout = "${pkgs.writeShellScript "idle-suspend-battery" ''
+            for status in /sys/class/power_supply/BAT*/status; do
+              [ -r "$status" ] || continue
+              if [ "$(cat "$status")" = "Discharging" ]; then
+                exec ${lib.getExe' pkgs.systemd "systemctl"} suspend
+              fi
+            done
+          ''}";
         }
         {
           timeout = 1200;
