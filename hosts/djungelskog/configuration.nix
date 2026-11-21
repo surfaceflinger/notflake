@@ -37,7 +37,15 @@
   services.fwupd.enable = true;
 
   # make fan silent
-  services.zcfan.enable = true;
+  services.zcfan = {
+    enable = true;
+    settings = {
+      low_temp = 80;
+      med_temp = 90;
+      max_temp = 95;
+      watchdog_secs = 60;
+    };
+  };
 
   # aspm causes issues on this host
   services.autoaspm.enable = lib.mkForce false;
