@@ -16,7 +16,7 @@ _: {
     enableReload = false;
     globalConfig = ''
       cert_issuer acme https://acme-v02.api.letsencrypt.org/directory {
-        profile tlsserver
+        profile shortlived
       }
 
       admin off
