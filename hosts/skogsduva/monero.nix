@@ -34,9 +34,12 @@ in
   services.i2pd = {
     enable = true;
     settings = {
+      bandwidth = "O";
       notransit = true;
       ntcp2.published = false;
       ssu2.published = false;
+      http.enabled = false;
+      httpproxy.enabled = false;
       exploratory = {
         inbound = {
           length = 3;
