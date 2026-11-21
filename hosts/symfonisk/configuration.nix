@@ -12,7 +12,6 @@
     ../../modules/nixos/desktop-env/pipewire.nix
     ./mopidy.nix
     nixosModules.common
-    nixosModules.mixin-telemetry
     nixosModules.mixin-www
     nixosModules.server
     nixosModules.tower
