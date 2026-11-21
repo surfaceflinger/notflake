@@ -136,6 +136,52 @@
           }
         ];
       }
+      {
+        job_name = "chrony";
+        static_configs = [
+          {
+            targets = [
+              "blahaj:9123"
+              "jattelik:9123"
+              "skogsduva:9123"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "smartctl";
+        static_configs = [
+          {
+            targets = [
+              "blahaj:9633"
+              "jattelik:9633"
+              "skogsduva:9633"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "zfs";
+        static_configs = [
+          {
+            targets = [
+              "blahaj:9134"
+              "jattelik:9134"
+              "skogsduva:9134"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "snowflake";
+        metrics_path = "/internal/metrics";
+        static_configs = [
+          {
+            labels.service = "snowflake";
+            targets = [ "jattelik:9999" ];
+          }
+        ];
+      }
     ];
   };
 

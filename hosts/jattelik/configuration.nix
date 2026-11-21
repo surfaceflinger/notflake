@@ -51,6 +51,11 @@
   services.snowflake-proxy = {
     enable = true;
     capacity = 100;
+    extraFlags = [
+      "-metrics"
+      "-metrics-address"
+      "0.0.0.0"
+    ];
   };
 
   # other software
