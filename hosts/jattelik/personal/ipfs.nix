@@ -1,4 +1,5 @@
 _: {
+  users.users.caddy.extraGroups = [ "ipfs" ];
   users.users.nat.extraGroups = [ "ipfs" ];
 
   services.kubo = {
