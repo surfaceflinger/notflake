@@ -154,7 +154,6 @@
           {
             targets = [
               "blahaj:9633"
-              "jattelik:9633"
               "skogsduva:9633"
             ];
           }
