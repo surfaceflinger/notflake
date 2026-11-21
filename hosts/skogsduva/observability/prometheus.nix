@@ -1,4 +1,67 @@
-{ config, ... }: {
+{
+  config,
+  lib,
+  ...
+}:
+let
+  prom = config.services.prometheus;
+  grafana = config.services.grafana.settings.server;
+  jsonExporter = prom.exporters.json;
+  monero = config.services.monero;
+
+  nodePort = prom.exporters.node.port;
+  telemetryHosts = [
+    "blahaj"
+    "jattelik"
+    "skogsduva"
+  ];
+
+  scrapeJob =
+    {
+      name,
+      port,
+      hosts,
+      labels ? { },
+      path ? null,
+      interval ? null,
+    }:
+    {
+      job_name = name;
+      static_configs = [
+        (
+          {
+            targets = map (host: "${host}:${toString port}") hosts;
+          }
+          // lib.optionalAttrs (labels != { }) { inherit labels; }
+        )
+      ];
+    }
+    // lib.optionalAttrs (path != null) { metrics_path = path; }
+    // lib.optionalAttrs (interval != null) { scrape_interval = interval; };
+
+  nodeRoles = [
+    {
+      role = "router";
+      targets = [ "_gateway" ];
+    }
+    {
+      role = "server";
+      targets = [
+        "jattelik"
+        "skogsduva"
+      ];
+    }
+    {
+      role = "workstation";
+      targets = [ "blahaj" ];
+    }
+    {
+      role = "agent";
+      targets = [ "sucrose" ];
+    }
+  ];
+in
+{
   services.prometheus = {
     enable = true;
     webExternalUrl = "http://prometheus.natalia.ovh/";
@@ -9,98 +72,56 @@
       scrape_timeout = "5s";
     };
     scrapeConfigs = [
-      # self
-      {
-        job_name = "prometheus";
-        static_configs = [
-          {
-            targets = [
-              "${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}"
-            ];
-          }
-        ];
-      }
-      # grafana
-      {
-        job_name = "grafana";
-        static_configs = [
-          {
-            targets = [
-              "[${config.services.grafana.settings.server.http_addr}]:${toString config.services.grafana.settings.server.http_port}"
-            ];
-          }
-        ];
-      }
-      # hosts
+      (scrapeJob {
+        name = "prometheus";
+        port = prom.port;
+        hosts = [ prom.listenAddress ];
+      })
+      (scrapeJob {
+        name = "grafana";
+        port = grafana.http_port;
+        hosts = [ "[${grafana.http_addr}]" ];
+      })
       {
         job_name = "node";
-        static_configs = [
+        static_configs = map (
+          { role, targets }:
           {
-            labels.role = "router";
-            targets = [ "_gateway:9100" ];
+            labels.role = role;
+            targets = map (target: "${target}:${toString nodePort}") targets;
           }
-          {
-            labels.role = "server";
-            targets = [
-              "jattelik:9100"
-              "skogsduva:9100"
-            ];
-          }
-          {
-            labels.role = "workstation";
-            targets = [ "blahaj:9100" ];
-          }
-          {
-            labels.role = "agent";
-            targets = [ "sucrose:9100" ];
-          }
-        ];
+        ) nodeRoles;
       }
-      # hosts - low power
-      {
-        job_name = "node-lowpower";
-        scrape_interval = "60s";
-        static_configs = [
-          {
-            labels.role = "vacuum";
-            targets = [
-              "valetudo-floor:9100"
-              "valetudo-ground:9100"
-            ];
-          }
+      (scrapeJob {
+        name = "node-lowpower";
+        port = nodePort;
+        hosts = [
+          "valetudo-floor"
+          "valetudo-ground"
         ];
-      }
-      {
-        job_name = "node-laptop";
-        scrape_interval = "60s";
-        static_configs = [
-          {
-            labels.role = "laptop";
-            targets = [
-              "djungelskog:9100"
-              "sjorapport:9100"
-            ];
-          }
+        labels.role = "vacuum";
+        interval = "60s";
+      })
+      (scrapeJob {
+        name = "node-laptop";
+        port = nodePort;
+        hosts = [
+          "djungelskog"
+          "sjorapport"
         ];
-      }
-      # json exporter
-      {
-        job_name = "json_exporter";
-        static_configs = [
-          {
-            targets = [
-              "${config.services.prometheus.exporters.json.listenAddress}:${toString config.services.prometheus.exporters.json.port}"
-            ];
-          }
-        ];
-      }
-      # monero via json exporter
+        labels.role = "laptop";
+        interval = "60s";
+      })
+      (scrapeJob {
+        name = "json_exporter";
+        port = jsonExporter.port;
+        hosts = [ jsonExporter.listenAddress ];
+      })
+      # monero goes through the json exporter's probe endpoint
       {
         job_name = "json";
         metrics_path = "/probe";
-        params = {
-          module = [ "monero" ];
-        };
+        params.module = [ "monero" ];
         relabel_configs = [
           {
             source_labels = [ "__address__" ];
@@ -112,97 +133,61 @@
           }
           {
             target_label = "__address__";
-            replacement = "${config.services.prometheus.exporters.json.listenAddress}:${toString config.services.prometheus.exporters.json.port}";
+            replacement = "${jsonExporter.listenAddress}:${toString jsonExporter.port}";
           }
         ];
         static_configs = [
           {
-            # monero
             labels.service = "monero";
             targets = [
-              "http://${config.services.monero.rpc.address}:${toString config.services.monero.rpc.port}/get_info"
+              "http://${monero.rpc.address}:${toString monero.rpc.port}/get_info"
             ];
           }
         ];
       }
-      # caddy
-      {
-        job_name = "caddy";
-        static_configs = [
-          {
-            labels.service = "caddy";
-            targets = [
-              "blahaj:2019"
-              "jattelik:2019"
-              "skogsduva:2019"
-            ];
-          }
+      (scrapeJob {
+        name = "caddy";
+        port = 2019;
+        hosts = telemetryHosts;
+        labels.service = "caddy";
+      })
+      (scrapeJob {
+        name = "gotosocial";
+        port = 2020;
+        hosts = [ "jattelik" ];
+        labels.service = "gotosocial";
+      })
+      (scrapeJob {
+        name = "chrony";
+        port = prom.exporters.chrony.port;
+        hosts = telemetryHosts;
+      })
+      (scrapeJob {
+        name = "smartctl";
+        port = prom.exporters.smartctl.port;
+        hosts = [
+          "blahaj"
+          "skogsduva"
         ];
-      }
-      # gotosocial
-      {
-        job_name = "gotosocial";
-        static_configs = [
-          {
-            labels.service = "gotosocial";
-            targets = [ "jattelik:2020" ];
-          }
-        ];
-      }
-      {
-        job_name = "chrony";
-        static_configs = [
-          {
-            targets = [
-              "blahaj:9123"
-              "jattelik:9123"
-              "skogsduva:9123"
-            ];
-          }
-        ];
-      }
-      {
-        job_name = "smartctl";
-        static_configs = [
-          {
-            targets = [
-              "blahaj:9633"
-              "skogsduva:9633"
-            ];
-          }
-        ];
-      }
-      {
-        job_name = "zfs";
-        static_configs = [
-          {
-            targets = [
-              "blahaj:9134"
-              "jattelik:9134"
-              "skogsduva:9134"
-            ];
-          }
-        ];
-      }
-      {
-        job_name = "kubo";
-        static_configs = [
-          {
-            labels.service = "ipfs";
-            targets = [ "jattelik:2021" ];
-          }
-        ];
-      }
-      {
-        job_name = "snowflake";
-        metrics_path = "/internal/metrics";
-        static_configs = [
-          {
-            labels.service = "snowflake";
-            targets = [ "jattelik:9999" ];
-          }
-        ];
-      }
+      })
+      (scrapeJob {
+        name = "zfs";
+        port = prom.exporters.zfs.port;
+        hosts = telemetryHosts;
+      })
+      (scrapeJob {
+        name = "kubo";
+        port = 2021;
+        hosts = [ "jattelik" ];
+        labels.service = "ipfs";
+      })
+      (scrapeJob {
+        name = "snowflake";
+        port = 9999;
+        hosts = [ "jattelik" ];
+        labels.service = "snowflake";
+        path = "/internal/metrics";
+      })
     ];
   };
 
@@ -214,7 +199,7 @@
       bind [fd7a:115c:a1e0::ed01:8243] [::1]
       tls internal
 
-      reverse_proxy ${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}
+      reverse_proxy ${prom.listenAddress}:${toString prom.port}
     '';
   };
 }
