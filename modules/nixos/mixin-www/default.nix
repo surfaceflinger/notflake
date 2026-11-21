@@ -15,6 +15,8 @@ _: {
     email = "ssl@nekopon.pl";
     enableReload = false;
     globalConfig = ''
+      tls_resolvers 8.8.4.4 1.0.0.1
+
       cert_issuer acme https://acme-v02.api.letsencrypt.org/directory {
         profile shortlived
       }
