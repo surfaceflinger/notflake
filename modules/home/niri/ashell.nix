@@ -50,6 +50,8 @@
       ];
 
       settings.lock_cmd = lib.getExe pkgs.hyprlock;
+      # an explicit click should not be blocked by idle inhibitors
+      settings.suspend_cmd = "${lib.getExe' pkgs.systemd "systemctl"} suspend --ignore-inhibitors";
       # loginctl kill-user leaves kmscon stuck on its notice screen after logout
       settings.logout_cmd = "niri msg action quit";
       # wiremix and the ashell OSD should allow the same overdrive
