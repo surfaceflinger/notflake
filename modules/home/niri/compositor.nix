@@ -65,6 +65,15 @@ in
           open-on-workspace = "1";
         }
         {
+          matches = [
+            {
+              app-id = "^org\\.telegram\\.desktop$";
+              title = "^Media viewer$";
+            }
+          ];
+          open-floating = true;
+        }
+        {
           matches = [ { app-id = "^(Schizofox|firefox)$"; } ];
           open-on-workspace = "2";
         }
