@@ -4,6 +4,7 @@
 
   services.caddy = {
     environmentFile = config.age.secrets.caddy-desec-skogsduva.path;
+    logFormat = "level DEBUG";
     package = pkgs.caddy-desec;
     globalConfig = ''
       acme_dns desec {
