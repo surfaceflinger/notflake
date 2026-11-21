@@ -6,10 +6,16 @@ _: {
     localDiscovery = false;
     enableGC = true;
     settings = {
-      Adresses.API = [ ];
+      Datastore = {
+        GCPeriod = "12h";
+        StorageMax = "30GB";
+      };
       Discovery.MDNS.Enabled = false;
       Plugins.Plugins.telemetry.Config.Mode = "off";
-      Provide.DHT.SweepEnabled = true;
+      Provide = {
+        DHT.SweepEnabled = true;
+        Strategy = "pinned";
+      };
     };
   };
 
