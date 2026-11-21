@@ -8,7 +8,11 @@
       dns desec {
         token {env.DESEC_API_TOKEN}
       }
-      acme_dns
+      cert_issuer acme https://acme-v02.api.letsencrypt.org/directory {
+        profile shortlived
+        dns
+        propagation_delay 10m
+      }
       ech ech.natalia.ovh
     '';
     virtualHosts."www.natalia.ovh, www.nekopon.pl, www.blahaj.pl".extraConfig = ''

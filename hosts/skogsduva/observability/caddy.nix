@@ -6,8 +6,12 @@
     environmentFile = config.age.secrets.caddy-desec-skogsduva.path;
     package = pkgs.caddy-desec;
     globalConfig = ''
-      acme_dns desec {
-        token {env.DESEC_API_TOKEN}
+      cert_issuer acme https://acme-v02.api.letsencrypt.org/directory {
+        profile shortlived
+        dns desec {
+          token {env.DESEC_API_TOKEN}
+        }
+        propagation_delay 10m
       }
     '';
   };
