@@ -17,4 +17,15 @@ _: {
     allowedTCPPorts = [ 4001 ];
     allowedUDPPorts = [ 4001 ];
   };
+
+  # the api has no tcp listener, proxy its prometheus endpoint for scraping
+  services.caddy.virtualHosts.":2021" = {
+    logFormat = "output discard";
+    extraConfig = ''
+      route /metrics {
+        rewrite * /debug/metrics/prometheus
+        reverse_proxy unix//run/ipfs.sock
+      }
+    '';
+  };
 }

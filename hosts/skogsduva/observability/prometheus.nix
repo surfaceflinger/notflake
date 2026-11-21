@@ -172,6 +172,15 @@
         ];
       }
       {
+        job_name = "kubo";
+        static_configs = [
+          {
+            labels.service = "ipfs";
+            targets = [ "jattelik:2021" ];
+          }
+        ];
+      }
+      {
         job_name = "snowflake";
         metrics_path = "/internal/metrics";
         static_configs = [
