@@ -6,7 +6,7 @@
     environmentFile = config.age.secrets.caddy-desec-skogsduva.path;
     package = pkgs.caddy-desec;
     globalConfig = ''
-      dns desec {
+      acme_dns desec {
         token {env.DESEC_API_TOKEN}
       }
     '';

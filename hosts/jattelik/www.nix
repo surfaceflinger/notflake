@@ -8,6 +8,7 @@
       dns desec {
         token {env.DESEC_API_TOKEN}
       }
+      acme_dns
       ech ech.natalia.ovh
     '';
     virtualHosts."www.natalia.ovh, www.nekopon.pl, www.blahaj.pl".extraConfig = ''
