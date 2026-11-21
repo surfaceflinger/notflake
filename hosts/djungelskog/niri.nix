@@ -1,3 +1,1 @@
-_: {
-  programs.niri.settings.outputs."eDP-1".scale = 1.0;
-}
+_: { programs.niri.settings.outputs."eDP-1".scale = 1.0; }
