@@ -46,6 +46,7 @@ in
       };
 
       hotkey-overlay.skip-at-startup = true;
+      screenshot.path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
       gestures.hot-corners = {
         top-left = true;
         top-right = false;
@@ -86,6 +87,38 @@ in
           open-on-workspace = "4";
         }
         {
+          matches = [
+            {
+              app-id = "^steam$";
+              title = "^notificationtoasts_[0-9]+_desktop$";
+            }
+          ];
+          open-floating = true;
+          open-focused = false;
+          default-floating-position = {
+            x = 10;
+            y = 10;
+            relative-to = "bottom-right";
+          };
+        }
+        {
+          matches = [
+            { app-id = "^hyprpolkitagent$"; }
+            { app-id = "^xdg-desktop-portal-gtk4$"; }
+            { title = "^(Open File|Save File|Save As|Open Folder|File Upload|Authentication Required)$"; }
+          ];
+          open-floating = true;
+        }
+        {
+          matches = [
+            {
+              app-id = "^(Schizofox|firefox)$";
+              title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+            }
+          ];
+          open-floating = true;
+        }
+        {
           matches = [ { app-id = "^ashell-tui$"; } ];
           open-floating = true;
           default-column-width.proportion = 0.7;
@@ -107,6 +140,10 @@ in
             blur = true;
             xray = true;
           };
+        }
+        {
+          matches = [ { is-floating = true; } ];
+          background-effect.xray = false;
         }
       ];
 
