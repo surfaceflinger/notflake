@@ -197,7 +197,6 @@ in
       import common
 
       bind [fd7a:115c:a1e0::ed01:8243] [::1]
-      tls internal
 
       reverse_proxy ${prom.listenAddress}:${toString prom.port}
     '';

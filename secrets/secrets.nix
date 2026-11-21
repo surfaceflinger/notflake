@@ -28,6 +28,10 @@ in
     host-jattelik
     user-nat-blahaj
   ];
+  "caddy-desec-skogsduva.age".publicKeys = [
+    host-skogsduva
+    user-nat-blahaj
+  ];
   "copyparty-azsurv.age".publicKeys = [
     host-jattelik
     user-nat-blahaj

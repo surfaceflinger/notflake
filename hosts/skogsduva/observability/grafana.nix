@@ -102,7 +102,6 @@
       import common
 
       bind [fd7a:115c:a1e0::ed01:8243] [::1]
-      tls internal
 
       reverse_proxy [${config.services.grafana.settings.server.http_addr}]:${toString config.services.grafana.settings.server.http_port}
     '';
