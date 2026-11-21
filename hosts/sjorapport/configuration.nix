@@ -7,6 +7,7 @@
 {
   imports = [
     "${inputs.nixos-hardware.result}/framework/12-inch/13th-gen-intel"
+    ../../modules/nixos/mixin-telemetry/node.nix
     nixosModules.common
     nixosModules.desktop-env
     nixosModules.laptop

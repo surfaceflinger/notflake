@@ -8,6 +8,7 @@
   imports = [
     "${inputs.nixos-hardware.result}/common/pc/ssd"
     "${inputs.nixos-hardware.result}/lenovo/thinkpad/t440p"
+    ../../modules/nixos/mixin-telemetry/node.nix
     nixosModules.common
     nixosModules.desktop-env
     nixosModules.laptop

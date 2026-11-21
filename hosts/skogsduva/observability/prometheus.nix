@@ -70,6 +70,19 @@
           }
         ];
       }
+      {
+        job_name = "node-laptop";
+        scrape_interval = "60s";
+        static_configs = [
+          {
+            labels.role = "laptop";
+            targets = [
+              "djungelskog:9100"
+              "sjorapport:9100"
+            ];
+          }
+        ];
+      }
       # json exporter
       {
         job_name = "json_exporter";
