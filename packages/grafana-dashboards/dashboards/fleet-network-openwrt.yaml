@@ -1,0 +1,718 @@
+title: Fleet / Network / OpenWRT
+uid: fleet-network-openwrt
+tags: [Fleet, OpenWRT, Wireless, Prometheus]
+timezone: browser
+refresh: 30s
+time:
+  from: now-6h
+  to: now
+schemaVersion: 39
+graphTooltip: 1
+editable: true
+links:
+  - title: Overview
+    url: /d/fleet-views-overview
+    type: link
+    icon: dashboard
+  - title: Host detail
+    url: /d/fleet-views-host
+    type: link
+    icon: dashboard
+templating:
+  list:
+    - name: host
+      label: Router
+      type: query
+      datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+      query:
+        query: label_values(node_openwrt_info, host)
+        refId: PrometheusVariableQueryEditor-VariableQuery
+      refresh: 1
+      sort: 1
+      hide: 0
+      multi: false
+      includeAll: false
+panels:
+  - id: 1
+    type: stat
+    title: Uptime
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 0, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: dtdurations
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: time() - node_boot_time_seconds{host="$host"}
+  - id: 2
+    type: stat
+    title: Memory used
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 4, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * (1 - node_memory_MemAvailable_bytes{host="$host"} / node_memory_MemTotal_bytes{host="$host"})
+  - id: 3
+    type: stat
+    title: Load 1m
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 8, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_load1{host="$host"}
+  - id: 4
+    type: stat
+    title: Wifi stations
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 12, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: sum(wifi_stations{host="$host"})
+  - id: 5
+    type: stat
+    title: NAT flows
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 16, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(node_nat_traffic{host="$host"})
+  - id: 6
+    type: stat
+    title: Conntrack entries
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 20, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_nf_conntrack_entries{host="$host"}
+  - id: 7
+    type: stat
+    title: CPU
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 0, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 95 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * (1 - avg(rate(node_cpu_seconds_total{host="$host",mode="idle"}[$__rate_interval])))
+  - id: 8
+    type: stat
+    title: 5 GHz stations
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 6, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: wifi_stations{host="$host",ifname="phy1-ap0"}
+  - id: 9
+    type: stat
+    title: 2.4 GHz stations
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 12, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: wifi_stations{host="$host",ifname="phy2-ap0"}
+  - id: 10
+    type: stat
+    title: Radio quality
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 18, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: orange, value: 50 }
+            - { color: green, value: 70 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: avg(wifi_network_quality{host="$host"})
+  - id: 11
+    type: row
+    title: Wireless
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 11 }
+    panels: []
+  - id: 12
+    type: table
+    title: Stations (now)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 24, x: 0, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides:
+        - matcher: { id: byName, options: "rx bps" }
+          properties:
+            - id: unit
+              value: bps
+        - matcher: { id: byName, options: "tx bps" }
+          properties:
+            - id: unit
+              value: bps
+        - matcher: { id: byName, options: "expected bps" }
+          properties:
+            - id: unit
+              value: bps
+        - matcher: { id: byName, options: "inactive s" }
+          properties:
+            - id: unit
+              value: s
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+      - id: merge
+        options: {}
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            host: true
+            instance: true
+            job: true
+            role: true
+          renameByName:
+            "Value #A": signal dBm
+            "Value #B": rx bps
+            "Value #C": tx bps
+            "Value #D": expected bps
+            "Value #E": inactive s
+      - id: sortBy
+        options:
+          sort:
+            - { field: "signal dBm", desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: wifi_station_signal_dbm{host="$host"}
+      - refId: B
+        instant: true
+        format: table
+        expr: wifi_station_receive_kilobits_per_second{host="$host"} * 1000
+      - refId: C
+        instant: true
+        format: table
+        expr: wifi_station_transmit_kilobits_per_second{host="$host"} * 1000
+      - refId: D
+        instant: true
+        format: table
+        expr: wifi_station_expected_throughput_kilobits_per_second{host="$host"} * 1000
+      - refId: E
+        instant: true
+        format: table
+        expr: wifi_station_inactive_milliseconds{host="$host"} / 1000
+  - id: 13
+    type: timeseries
+    title: Station signal (dBm)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 21 }
+    fieldConfig:
+      defaults:
+        unit: none
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [lastNotNull, min] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: wifi_station_signal_dbm{host="$host"}
+        legendFormat: "{{mac}}"
+  - id: 14
+    type: timeseries
+    title: Station inactive
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 21 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: wifi_station_inactive_milliseconds{host="$host"}
+        legendFormat: "{{mac}}"
+  - id: 15
+    type: timeseries
+    title: Radio quality
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 29 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: wifi_network_quality{host="$host"}
+        legendFormat: "{{ssid}}"
+  - id: 16
+    type: timeseries
+    title: Radio bitrate
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 29 }
+    fieldConfig:
+      defaults:
+        unit: bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: wifi_network_bitrate{host="$host"} * 1000
+        legendFormat: "{{ssid}}"
+  - id: 17
+    type: row
+    title: Network
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 37 }
+    panels: []
+  - id: 18
+    type: timeseries
+    title: Interface throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 38 }
+    fieldConfig:
+      defaults:
+        unit: bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 8 * rate(node_network_receive_bytes_total{host="$host",device!="lo"}[$__rate_interval])
+        legendFormat: "{{device}} rx"
+      - refId: B
+        expr: 8 * rate(node_network_transmit_bytes_total{host="$host",device!="lo"}[$__rate_interval])
+        legendFormat: "{{device}} tx"
+  - id: 19
+    type: timeseries
+    title: Errors and drops
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 38 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum(rate(node_network_receive_errs_total{host="$host"}[$__rate_interval]))
+        legendFormat: rx errors
+      - refId: B
+        expr: sum(rate(node_network_transmit_errs_total{host="$host"}[$__rate_interval]))
+        legendFormat: tx errors
+      - refId: C
+        expr: sum(rate(node_network_receive_drop_total{host="$host"}[$__rate_interval]))
+        legendFormat: rx drops
+      - refId: D
+        expr: sum(rate(node_network_transmit_drop_total{host="$host"}[$__rate_interval]))
+        legendFormat: tx drops
+  - id: 20
+    type: table
+    title: Top NAT talkers (now)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 46 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+            instance: true
+            job: true
+            role: true
+          renameByName:
+            Value: bytes
+      - id: sortBy
+        options:
+          sort:
+            - { field: bytes, desc: true }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: topk(10, node_nat_traffic{host="$host"})
+  - id: 21
+    type: timeseries
+    title: Conntrack
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 46 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_nf_conntrack_entries{host="$host"}
+        legendFormat: entries
+      - refId: B
+        expr: node_nf_conntrack_entries_limit{host="$host"}
+        legendFormat: limit
+  - id: 22
+    type: row
+    title: System
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 54 }
+    panels: []
+  - id: 23
+    type: timeseries
+    title: CPU modes
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 55 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 40
+          gradientMode: opacity
+          showPoints: never
+          stacking: { group: A, mode: normal }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: avg by (mode) (rate(node_cpu_seconds_total{host="$host"}[$__rate_interval]))
+        legendFormat: "{{mode}}"
+  - id: 24
+    type: timeseries
+    title: Memory
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 55 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_memory_MemTotal_bytes{host="$host"}
+        legendFormat: Total
+      - refId: B
+        expr: node_memory_MemTotal_bytes{host="$host"} - node_memory_MemFree_bytes{host="$host"} - (node_memory_Cached_bytes{host="$host"} + node_memory_Buffers_bytes{host="$host"} + node_memory_SReclaimable_bytes{host="$host"})
+        legendFormat: Used
+      - refId: C
+        expr: node_memory_Cached_bytes{host="$host"} + node_memory_Buffers_bytes{host="$host"} + node_memory_SReclaimable_bytes{host="$host"}
+        legendFormat: Cache + Buffer
+      - refId: D
+        expr: node_memory_MemFree_bytes{host="$host"}
+        legendFormat: Free
+  - id: 25
+    type: timeseries
+    title: Load average
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 63 }
+    fieldConfig:
+      defaults:
+        unit: none
+        min: 0
+        decimals: 2
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_load1{host="$host"}
+        legendFormat: 1m
+      - refId: B
+        expr: node_load5{host="$host"}
+        legendFormat: 5m
+      - refId: C
+        expr: node_load15{host="$host"}
+        legendFormat: 15m
+  - id: 26
+    type: table
+    title: Router
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 63 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            Value: true
+            __name__: true
+            host: true
+            instance: true
+            job: true
+            role: true
+            board_name: true
+      - id: sortBy
+        options:
+          sort:
+            - { field: model, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_openwrt_info{host="$host"}
