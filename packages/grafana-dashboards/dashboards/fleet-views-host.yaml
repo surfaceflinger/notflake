@@ -1,0 +1,1972 @@
+title: Fleet / Views / Host
+uid: fleet-host
+tags: [Fleet, Prometheus]
+timezone: browser
+refresh: 30s
+time:
+  from: now-6h
+  to: now
+schemaVersion: 39
+graphTooltip: 1
+editable: true
+links:
+  - title: Overview
+    url: /d/fleet-views-overview
+    type: link
+    icon: dashboard
+  - title: Storage
+    url: /d/fleet-views-storage
+    type: link
+    icon: dashboard
+templating:
+  list:
+    - name: host
+      label: Host
+      type: query
+      datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+      query:
+        query: label_values(up, host)
+        refId: PrometheusVariableQueryEditor-VariableQuery
+      refresh: 1
+      sort: 1
+      hide: 0
+      multi: false
+      includeAll: false
+panels:
+  - id: 1
+    type: row
+    title: Quick
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 0 }
+    panels: []
+  - id: 2
+    type: gauge
+    title: CPU
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 0, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 85 }
+            - { color: red, value: 95 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle",host="$host"}[$__rate_interval])))
+  - id: 3
+    type: gauge
+    title: RAM
+    description: Excludes reclaimable ZFS ARC, which the kernel does not count as available.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 4, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: clamp_min((1 - node:memory_available_with_arc_bytes{host="$host"} / node_memory_MemTotal_bytes{host="$host"}) * 100, 0)
+  - id: 4
+    type: gauge
+    title: Swap
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 8, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 10 }
+            - { color: red, value: 25 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: (node_memory_SwapTotal_bytes{host="$host"} - node_memory_SwapFree_bytes{host="$host"}) / clamp_min(node_memory_SwapTotal_bytes{host="$host"}, 1) * 100
+  - id: 5
+    type: gauge
+    title: Worst filesystem
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 12, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: max(100 * (1 - node_filesystem_avail_bytes{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"} / node_filesystem_size_bytes{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"}))
+  - id: 6
+    type: gauge
+    title: Load per core
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 16, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: none
+        min: 0
+        max: 2
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 0.7 }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: node_load5{host="$host"} / scalar(count(node_cpu_seconds_total{mode="idle",host="$host"}))
+  - id: 7
+    type: gauge
+    title: I/O wait
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 4, x: 20, y: 1 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 0.3
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: dark-green, value: null }
+            - { color: orange, value: 0.1 }
+            - { color: red, value: 0.2 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: avg(rate(node_cpu_seconds_total{mode="iowait",host="$host"}[$__rate_interval]))
+  - id: 8
+    type: stat
+    title: Cores
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 0, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: short
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(count by (cpu) (node_cpu_seconds_total{mode="idle",host="$host"}))
+  - id: 9
+    type: stat
+    title: RAM total
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 4, x: 3, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_memory_MemTotal_bytes{host="$host"}
+  - id: 10
+    type: stat
+    title: Swap total
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 7, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_memory_SwapTotal_bytes{host="$host"}
+  - id: 11
+    type: stat
+    title: Uptime
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 10, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: dtdurations
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: time() - node_boot_time_seconds{host="$host"}
+  - id: 12
+    type: stat
+    title: Reboots
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 2, x: 13, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: changes(node_boot_time_seconds{host="$host"}[24h])
+  - id: 13
+    type: stat
+    title: Running
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 15, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: short
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_procs_running{host="$host"}
+  - id: 14
+    type: stat
+    title: Resident
+    description: Process memory that cannot be reclaimed (anonymous pages and tmpfs).
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 18, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: none
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_memory_AnonPages_bytes{host="$host"} + node_memory_Shmem_bytes{host="$host"}
+  - id: 105
+    type: stat
+    title: Steal
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 3, w: 3, x: 21, y: 8 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 2 }
+            - { color: red, value: 5 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * avg(rate(node_cpu_seconds_total{mode="steal",host="$host"}[$__rate_interval]))
+  - id: 15
+    type: row
+    title: CPU
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 11 }
+    panels: []
+  - id: 16
+    type: timeseries
+    title: CPU modes
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 48
+          gradientMode: opacity
+          showPoints: never
+          stacking: { group: A, mode: normal }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: avg by (mode) (rate(node_cpu_seconds_total{host="$host"}[$__rate_interval]))
+        legendFormat: "{{mode}}"
+  - id: 17
+    type: timeseries
+    title: CPU per core
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 1
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * (1 - avg by (cpu) (rate(node_cpu_seconds_total{mode="idle",host="$host"}[$__rate_interval])))
+        legendFormat: "cpu{{cpu}}"
+  - id: 18
+    type: timeseries
+    title: CPU non-idle modes
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 20 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * avg by (mode) (rate(node_cpu_seconds_total{host="$host",mode=~"user|system|iowait|irq|softirq|steal|nice"}[$__rate_interval]))
+  - id: 19
+    type: timeseries
+    title: CPU pressure
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 20 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_pressure_cpu_waiting_seconds_total{host="$host"}[$__rate_interval])
+        legendFormat: waiting
+  - id: 20
+    type: timeseries
+    title: Context switches and interrupts
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 28 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_context_switches_total{host="$host"}[$__rate_interval])
+        legendFormat: context switches
+      - refId: B
+        expr: rate(node_intr_total{host="$host"}[$__rate_interval])
+        legendFormat: interrupts
+  - id: 21
+    type: timeseries
+    title: CPU frequency
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 28 }
+    fieldConfig:
+      defaults:
+        unit: hertz
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 1
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_cpu_scaling_frequency_hertz{host="$host"}
+        legendFormat: "cpu{{cpu}}"
+  - id: 106
+    type: timeseries
+    title: CPU steal
+    description: Time the hypervisor gave to other guests instead of this one.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 36 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        decimals: 2
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 2 }
+            - { color: red, value: 5 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * avg(rate(node_cpu_seconds_total{mode="steal",host="$host"}[$__rate_interval]))
+        legendFormat: total
+  - id: 107
+    type: timeseries
+    title: CPU steal per core
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 36 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        decimals: 2
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 1
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * rate(node_cpu_seconds_total{mode="steal",host="$host"}[$__rate_interval])
+        legendFormat: "cpu{{cpu}}"
+  - id: 22
+    type: row
+    title: Memory
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 44 }
+    panels: []
+  - id: 23
+    type: timeseries
+    title: Memory
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 0, y: 45 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_memory_MemTotal_bytes{host="$host"}
+        legendFormat: Total
+      - refId: B
+        expr: clamp_min((node_memory_MemTotal_bytes{host="$host"} - node_memory_MemFree_bytes{host="$host"} - (node_memory_Cached_bytes{host="$host"} + node_memory_Buffers_bytes{host="$host"} + node_memory_SReclaimable_bytes{host="$host"}) - node_zfs_arc_size{host="$host"}) or (node_memory_MemTotal_bytes{host="$host"} - node_memory_MemFree_bytes{host="$host"} - (node_memory_Cached_bytes{host="$host"} + node_memory_Buffers_bytes{host="$host"} + node_memory_SReclaimable_bytes{host="$host"})), 0)
+        legendFormat: Used by apps
+      - refId: C
+        expr: node_memory_Cached_bytes{host="$host"} + node_memory_Buffers_bytes{host="$host"} + node_memory_SReclaimable_bytes{host="$host"}
+        legendFormat: Cache + Buffer
+      - refId: D
+        expr: node_memory_MemFree_bytes{host="$host"}
+        legendFormat: Free
+      - refId: E
+        expr: node_zfs_arc_size{host="$host"}
+        legendFormat: ZFS ARC
+      - refId: F
+        expr: node_memory_AnonPages_bytes{host="$host"} + node_memory_Shmem_bytes{host="$host"}
+        legendFormat: Resident
+      - refId: G
+        expr: node_memory_SUnreclaim_bytes{host="$host"}
+        legendFormat: Kernel slab (unreclaimable)
+  - id: 24
+    type: timeseries
+    title: Swap
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 12, y: 45 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_memory_SwapTotal_bytes{host="$host"}
+        legendFormat: Total
+      - refId: B
+        expr: node_memory_SwapTotal_bytes{host="$host"} - node_memory_SwapFree_bytes{host="$host"}
+        legendFormat: Used
+  - id: 25
+    type: timeseries
+    title: Commit
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 54 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_memory_Committed_AS_bytes{host="$host"}
+        legendFormat: Committed
+      - refId: B
+        expr: node_memory_CommitLimit_bytes{host="$host"}
+        legendFormat: Commit limit
+  - id: 26
+    type: timeseries
+    title: Dirty and writeback
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 54 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_memory_Dirty_bytes{host="$host"}
+        legendFormat: Dirty
+      - refId: B
+        expr: node_memory_Writeback_bytes{host="$host"}
+        legendFormat: Writeback
+      - refId: C
+        expr: node_memory_WritebackTmp_bytes{host="$host"}
+        legendFormat: Writeback tmp
+  - id: 27
+    type: timeseries
+    title: Memory pressure
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 62 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_pressure_memory_waiting_seconds_total{host="$host"}[$__rate_interval])
+        legendFormat: waiting
+      - refId: B
+        expr: rate(node_pressure_memory_stalled_seconds_total{host="$host"}[$__rate_interval])
+        legendFormat: stalled
+  - id: 28
+    type: stat
+    title: OOM kills (24h)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 62 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: sum(increase(node_vmstat_oom_kill{host="$host"}[24h])) or vector(0)
+  - id: 108
+    type: timeseries
+    title: ZFS ARC size
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 70 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_zfs_arc_size{host="$host"}
+        legendFormat: size
+      - refId: B
+        expr: node_zfs_arc_c{host="$host"}
+        legendFormat: target
+      - refId: C
+        expr: node_zfs_arc_c_max{host="$host"}
+        legendFormat: max
+  - id: 109
+    type: timeseries
+    title: ZFS ARC hit ratio
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 70 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_zfs_arc_hits{host="$host"}[$__rate_interval]) / (rate(node_zfs_arc_hits{host="$host"}[$__rate_interval]) + rate(node_zfs_arc_misses{host="$host"}[$__rate_interval]))
+        legendFormat: hit ratio
+  - id: 29
+    type: row
+    title: Processes
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 78 }
+    panels: []
+  - id: 30
+    type: timeseries
+    title: Load average
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 79 }
+    fieldConfig:
+      defaults:
+        unit: none
+        min: 0
+        decimals: 2
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_load1{host="$host"}
+        legendFormat: 1m
+      - refId: B
+        expr: node_load5{host="$host"}
+        legendFormat: 5m
+      - refId: C
+        expr: node_load15{host="$host"}
+        legendFormat: 15m
+  - id: 31
+    type: timeseries
+    title: Processes
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 79 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_procs_running{host="$host"}
+        legendFormat: running
+      - refId: B
+        expr: node_procs_blocked{host="$host"}
+        legendFormat: blocked
+  - id: 32
+    type: timeseries
+    title: Forks
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 87 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_forks_total{host="$host"}[$__rate_interval])
+        legendFormat: forks
+  - id: 33
+    type: timeseries
+    title: Entropy
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 87 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_entropy_available_bits{host="$host"}
+        legendFormat: available
+      - refId: B
+        expr: node_entropy_pool_size_bits{host="$host"}
+        legendFormat: pool
+  - id: 34
+    type: timeseries
+    title: TCP sockets
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 95 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_sockstat_TCP_inuse{host="$host"}
+        legendFormat: in use
+      - refId: B
+        expr: node_sockstat_TCP_alloc{host="$host"}
+        legendFormat: allocated
+      - refId: C
+        expr: node_sockstat_TCP_tw{host="$host"}
+        legendFormat: time wait
+      - refId: D
+        expr: node_sockstat_TCP_orphan{host="$host"}
+        legendFormat: orphan
+  - id: 35
+    type: timeseries
+    title: Conntrack
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 95 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_nf_conntrack_entries{host="$host"}
+        legendFormat: entries
+      - refId: B
+        expr: node_nf_conntrack_entries_limit{host="$host"}
+        legendFormat: limit
+  - id: 36
+    type: timeseries
+    title: File descriptors
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 103 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_filefd_allocated{host="$host"}
+        legendFormat: allocated
+      - refId: B
+        expr: node_filefd_maximum{host="$host"}
+        legendFormat: maximum
+  - id: 37
+    type: timeseries
+    title: Softnet
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 103 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_softnet_times_squeezed_total{host="$host"}[$__rate_interval])
+        legendFormat: "cpu{{cpu}} squeezed"
+      - refId: B
+        expr: rate(node_softnet_dropped_total{host="$host"}[$__rate_interval])
+        legendFormat: "cpu{{cpu}} dropped"
+  - id: 38
+    type: row
+    title: Disk
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 111 }
+    panels: []
+  - id: 39
+    type: timeseries
+    title: IOPS
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 112 }
+    fieldConfig:
+      defaults:
+        unit: iops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_disk_reads_completed_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} read"
+      - refId: B
+        expr: rate(node_disk_writes_completed_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} write"
+  - id: 40
+    type: timeseries
+    title: Disk throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 112 }
+    fieldConfig:
+      defaults:
+        unit: Bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_disk_read_bytes_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} read"
+      - refId: B
+        expr: rate(node_disk_written_bytes_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} write"
+  - id: 41
+    type: timeseries
+    title: Disk latency
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 120 }
+    fieldConfig:
+      defaults:
+        unit: s
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_disk_read_time_seconds_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval]) / rate(node_disk_reads_completed_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} read"
+      - refId: B
+        expr: rate(node_disk_write_time_seconds_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval]) / rate(node_disk_writes_completed_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}} write"
+  - id: 42
+    type: timeseries
+    title: Disk utilization
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 120 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_disk_io_time_seconds_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval])
+        legendFormat: "{{device}}"
+  - id: 43
+    type: timeseries
+    title: Disk queue
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 0, y: 128 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_disk_io_now{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}
+        legendFormat: "{{device}}"
+  - id: 44
+    type: table
+    title: Devices
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 12, y: 128 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            Value: true
+            __name__: true
+            host: true
+            instance: true
+            job: true
+            major: true
+            minor: true
+            path: true
+            revision: true
+      - id: sortBy
+        options:
+          sort:
+            - { field: device, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_disk_info{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}
+  - id: 45
+    type: row
+    title: Filesystem
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 135 }
+    panels: []
+  - id: 46
+    type: timeseries
+    title: Used
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 0, y: 136 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 1
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [lastNotNull, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * (1 - node_filesystem_avail_bytes{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"} / node_filesystem_size_bytes{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"})
+        legendFormat: "{{mountpoint}}"
+  - id: 47
+    type: timeseries
+    title: Free
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 12, y: 136 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 1
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [lastNotNull, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_filesystem_avail_bytes{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"}
+        legendFormat: "{{mountpoint}}"
+  - id: 48
+    type: timeseries
+    title: Inodes used
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 145 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 1
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [lastNotNull, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * (1 - node_filesystem_files_free{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"} / node_filesystem_files{host="$host",fstype=~"zfs|ext4|btrfs",mountpoint!="/boot"})
+        legendFormat: "{{mountpoint}}"
+  - id: 49
+    type: table
+    title: Read-only mounts
+    description: NixOS always mounts /nix/store read-only; other rows are likely deliberate too.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 145 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            Value: true
+            __name__: true
+            host: true
+            instance: true
+            job: true
+            role: true
+      - id: sortBy
+        options:
+          sort:
+            - { field: mountpoint, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_filesystem_readonly{host="$host",fstype=~"zfs|ext4|btrfs"} == 1
+  - id: 50
+    type: table
+    title: Mounts
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 24, x: 0, y: 153 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+            host: true
+            instance: true
+            job: true
+          renameByName:
+            Value: available
+            mountpoint: mount
+      - id: sortBy
+        options:
+          sort:
+            - { field: available, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_filesystem_avail_bytes{host="$host",fstype=~"zfs|ext4|btrfs"}
+  - id: 51
+    type: row
+    title: Network
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 162 }
+    panels: []
+  - id: 52
+    type: timeseries
+    title: Throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 163 }
+    fieldConfig:
+      defaults:
+        unit: bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 8 * rate(node_network_receive_bytes_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval])
+        legendFormat: "{{device}} rx"
+      - refId: B
+        expr: 8 * rate(node_network_transmit_bytes_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval])
+        legendFormat: "{{device}} tx"
+  - id: 53
+    type: timeseries
+    title: Packets
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 163 }
+    fieldConfig:
+      defaults:
+        unit: pps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_network_receive_packets_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval])
+        legendFormat: "{{device}} rx"
+      - refId: B
+        expr: rate(node_network_transmit_packets_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval])
+        legendFormat: "{{device}} tx"
+  - id: 54
+    type: timeseries
+    title: Errors and drops
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 171 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(node_network_receive_errs_total{host="$host",device!~"lo|tailscale0"}[$__rate_interval])
+        legendFormat: "{{device}} rx errs"
+      - refId: B
+        expr: rate(node_network_transmit_errs_total{host="$host",device!~"lo|tailscale0"}[$__rate_interval])
+        legendFormat: "{{device}} tx errs"
+      - refId: C
+        expr: rate(node_network_receive_drop_total{host="$host",device!~"lo|tailscale0"}[$__rate_interval])
+        legendFormat: "{{device}} rx drops"
+      - refId: D
+        expr: rate(node_network_transmit_drop_total{host="$host",device!~"lo|tailscale0"}[$__rate_interval])
+        legendFormat: "{{device}} tx drops"
+  - id: 55
+    type: table
+    title: Interfaces
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 171 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            Value: true
+            __name__: true
+            broadcast: true
+            host: true
+            instance: true
+            job: true
+      - id: sortBy
+        options:
+          sort:
+            - { field: device, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_network_info{host="$host",device!~"lo"}
+  - id: 56
+    type: row
+    title: Systemd
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 179 }
+    panels: []
+  - id: 57
+    type: stat
+    title: Failed units
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 6, x: 0, y: 180 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(node_systemd_unit_state{host="$host",state="failed"} == 1) or vector(0)
+  - id: 58
+    type: stat
+    title: systemd
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 6, x: 6, y: 180 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: running, index: 0 }
+              "0": { text: degraded, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_systemd_system_running{host="$host"}
+  - id: 59
+    type: bargauge
+    title: Units by state
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 12, x: 12, y: 180 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      orientation: horizontal
+      displayMode: basic
+      showUnfilled: true
+      valueMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count by (state) (node_systemd_unit_state{host="$host"})
+        legendFormat: "{{state}}"
+  - id: 60
+    type: table
+    title: Failed units
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 24, x: 0, y: 186 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            Value: true
+            __name__: true
+            host: true
+            instance: true
+            job: true
+            state: true
+      - id: sortBy
+        options:
+          sort:
+            - { field: name, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: node_systemd_unit_state{host="$host",state="failed"} == 1
+  - id: 61
+    type: row
+    title: Hardware and time
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 193 }
+    panels: []
+  - id: 62
+    type: timeseries
+    title: Temperatures
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 194 }
+    fieldConfig:
+      defaults:
+        unit: celsius
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 95 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_thermal_zone_temp{host="$host"}
+        legendFormat: "{{type}}"
+      - refId: B
+        expr: node_hwmon_temp_celsius{host="$host"}
+        legendFormat: "{{chip}} {{sensor}}"
+  - id: 63
+    type: timeseries
+    title: Fans
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 194 }
+    fieldConfig:
+      defaults:
+        unit: rotrpm
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_hwmon_fan_rpm{host="$host"} > 0
+        legendFormat: "{{chip}} {{sensor}}"
+  - id: 64
+    type: timeseries
+    title: GPU busy
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 202 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_drm_gpu_busy_percent{host="$host"}
+        legendFormat: "{{card}}"
+  - id: 65
+    type: timeseries
+    title: Clock offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 202 }
+    fieldConfig:
+      defaults:
+        unit: s
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_timex_offset_seconds{host="$host"}
+        legendFormat: offset
+      - refId: B
+        expr: node_timex_maxerror_seconds{host="$host"}
+        legendFormat: max error
+  - id: 66
+    type: stat
+    title: Clock sync
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 6, x: 0, y: 210 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: synchronized, index: 0 }
+              "0": { text: unsynchronized, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_timex_sync_status{host="$host"}
+  - id: 67
+    type: timeseries
+    title: Clock source age
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 18, x: 6, y: 210 }
+    fieldConfig:
+      defaults:
+        unit: s
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_sources_last_sample_age_seconds{host="$host"}
+        legendFormat: "{{source_name}}"
+  - id: 68
+    type: row
+    title: ZFS and SMART
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 217 }
+    panels: []
+  - id: 69
+    type: stat
+    title: ZFS pools not online
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 6, x: 0, y: 218 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(zfs_pool_health{host="$host"} != 0) or vector(0)
+  - id: 70
+    type: bargauge
+    title: ZFS pool usage
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 18, x: 6, y: 218 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      orientation: horizontal
+      displayMode: basic
+      showUnfilled: true
+      valueMode: color
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * zfs_pool_allocated_bytes{host="$host"} / zfs_pool_size_bytes{host="$host"}
+        legendFormat: "{{pool}}"
+  - id: 71
+    type: timeseries
+    title: ZFS fragmentation
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 0, y: 224 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: zfs_pool_fragmentation_ratio{host="$host"}
+        legendFormat: "{{pool}}"
+  - id: 72
+    type: timeseries
+    title: Drive temperatures
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 12, y: 224 }
+    fieldConfig:
+      defaults:
+        unit: celsius
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 45 }
+            - { color: red, value: 55 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_temperature{host="$host",temperature_type="current"}
+        legendFormat: "{{device}}"
+  - id: 73
+    type: timeseries
+    title: Drive life remaining
+    description: Only drives that report a wear attribute appear here; HDDs usually do not.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 0, y: 231 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: orange, value: 20 }
+            - { color: green, value: 50 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_attribute{host="$host",attribute_name="Percent_Lifetime_Remain",attribute_value_type="value"}
+        legendFormat: "{{device}}"
+  - id: 74
+    type: timeseries
+    title: Bad sectors
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 7, w: 12, x: 12, y: 231 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_attribute{host="$host",attribute_name=~"Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable",attribute_value_type="raw"}
+        legendFormat: "{{device}} {{attribute_name}}"

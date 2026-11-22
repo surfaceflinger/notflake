@@ -1,0 +1,739 @@
+title: Fleet / Views / Storage
+uid: fleet-storage
+tags: [Fleet, Storage, ZFS, SMART]
+timezone: browser
+refresh: 1m
+time:
+  from: now-6h
+  to: now
+schemaVersion: 39
+graphTooltip: 1
+editable: true
+links:
+  - title: Overview
+    url: /d/fleet-views-overview
+    type: link
+    icon: dashboard
+  - title: Host detail
+    url: /d/fleet-views-host
+    type: link
+    icon: dashboard
+panels:
+  - id: 1
+    type: stat
+    title: Pools
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 0, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(zfs_pool_health)
+  - id: 2
+    type: stat
+    title: Pools not online
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 4, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(zfs_pool_health != 0) or vector(0)
+  - id: 3
+    type: stat
+    title: Read-only pools
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 8, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(zfs_pool_readonly == 1) or vector(0)
+  - id: 4
+    type: stat
+    title: Exporter errors
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 12, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(zfs_scrape_collector_success == 0) or vector(0)
+  - id: 5
+    type: gauge
+    title: Fleet pool usage
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 16, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      showThresholdMarkers: true
+      showThresholdLabels: false
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * sum(zfs_pool_allocated_bytes) / sum(zfs_pool_size_bytes)
+  - id: 6
+    type: stat
+    title: Leaked
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 20, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: sum(zfs_pool_leaked_bytes)
+  - id: 7
+    type: row
+    title: Pools
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 6 }
+    panels: []
+  - id: 8
+    type: bargauge
+    title: Usage
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 7 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 80 }
+            - { color: red, value: 90 }
+        links:
+          - title: "Open ${__field.labels.host}"
+            url: /d/fleet-views-host?var-host=${__field.labels.host}
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      orientation: horizontal
+      displayMode: basic
+      showUnfilled: true
+      valueMode: color
+    targets:
+      - refId: A
+        instant: true
+        expr: 100 * zfs_pool_allocated_bytes / zfs_pool_size_bytes
+        legendFormat: "{{host}} {{pool}}"
+  - id: 9
+    type: bargauge
+    title: Fragmentation
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 7 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 0.5 }
+            - { color: red, value: 0.8 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      orientation: horizontal
+      displayMode: basic
+      showUnfilled: true
+      valueMode: color
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_pool_fragmentation_ratio
+        legendFormat: "{{host}} {{pool}}"
+  - id: 10
+    type: timeseries
+    title: Allocated
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 15 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: zfs_pool_allocated_bytes
+        legendFormat: "{{pool}}"
+  - id: 11
+    type: timeseries
+    title: Free
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 15 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: zfs_pool_free_bytes
+        legendFormat: "{{pool}}"
+  - id: 12
+    type: table
+    title: Pools
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 24, x: 0, y: 23 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides:
+        - matcher: { id: byName, options: size }
+          properties:
+            - id: unit
+              value: bytes
+        - matcher: { id: byName, options: free }
+          properties:
+            - id: unit
+              value: bytes
+        - matcher: { id: byName, options: allocated }
+          properties:
+            - id: unit
+              value: bytes
+        - matcher: { id: byName, options: leaked }
+          properties:
+            - id: unit
+              value: bytes
+        - matcher: { id: byName, options: fragmentation }
+          properties:
+            - id: unit
+              value: percentunit
+        - matcher: { id: byName, options: dedup }
+          properties:
+            - id: unit
+              value: ratio
+        - matcher: { id: byName, options: health }
+          properties:
+            - id: mappings
+              value:
+                - type: value
+                  options:
+                    "0": { text: ONLINE, index: 0 }
+                    "1": { text: DEGRADED, index: 1 }
+                    "2": { text: FAULTED, index: 2 }
+                    "3": { text: OFFLINE, index: 3 }
+                    "4": { text: UNAVAIL, index: 4 }
+                    "5": { text: REMOVED, index: 5 }
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+      - id: merge
+        options: {}
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            instance: true
+            job: true
+            role: true
+          renameByName:
+            "Value #A": size
+            "Value #B": free
+            "Value #C": allocated
+            "Value #D": fragmentation
+            "Value #E": dedup
+            "Value #F": health
+            "Value #G": leaked
+      - id: sortBy
+        options:
+          sort:
+            - { field: host, desc: false }
+            - { field: pool, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: zfs_pool_size_bytes
+      - refId: B
+        instant: true
+        format: table
+        expr: zfs_pool_free_bytes
+      - refId: C
+        instant: true
+        format: table
+        expr: zfs_pool_allocated_bytes
+      - refId: D
+        instant: true
+        format: table
+        expr: zfs_pool_fragmentation_ratio
+      - refId: E
+        instant: true
+        format: table
+        expr: zfs_pool_deduplication_ratio
+      - refId: F
+        instant: true
+        format: table
+        expr: zfs_pool_health
+      - refId: G
+        instant: true
+        format: table
+        expr: zfs_pool_leaked_bytes
+  - id: 13
+    type: row
+    title: Datasets
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 32 }
+    panels: []
+  - id: 14
+    type: bargauge
+    title: Biggest datasets
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 0, y: 33 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      orientation: horizontal
+      displayMode: basic
+      showUnfilled: true
+      valueMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: topk(12, zfs_dataset_used_bytes{type="filesystem"})
+        legendFormat: "{{name}}"
+  - id: 15
+    type: table
+    title: Datasets
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 12, x: 12, y: 33 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides: []
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+            instance: true
+            job: true
+            role: true
+            type: true
+          renameByName:
+            Value: used
+            name: dataset
+      - id: sortBy
+        options:
+          sort:
+            - { field: used, desc: true }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: topk(25, zfs_dataset_used_bytes{type="filesystem"})
+  - id: 16
+    type: row
+    title: SMART
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 42 }
+    panels: []
+  - id: 17
+    type: stat
+    title: Drives
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 0, y: 43 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(smartctl_device_smart_status)
+  - id: 18
+    type: stat
+    title: Failing
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 6, y: 43 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(smartctl_device_smart_status != 1) or vector(0)
+  - id: 19
+    type: stat
+    title: Drives with smartctl notes
+    description: smartctl exit status is a bitmask; 64 means the drive error log is not empty.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 12, y: 43 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(smartctl_device_smartctl_exit_status != 0) or vector(0)
+  - id: 20
+    type: stat
+    title: Hottest drive
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 18, y: 43 }
+    fieldConfig:
+      defaults:
+        unit: celsius
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 45 }
+            - { color: red, value: 55 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(smartctl_device_temperature{temperature_type="current"})
+  - id: 21
+    type: table
+    title: Drives
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 24, x: 0, y: 48 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides:
+        - matcher: { id: byName, options: capacity }
+          properties:
+            - id: unit
+              value: bytes
+        - matcher: { id: byName, options: health }
+          properties:
+            - id: mappings
+              value:
+                - type: value
+                  options:
+                    "1": { text: PASSED, index: 0 }
+                    "0": { text: FAIL, index: 1 }
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+      - id: merge
+        options: {}
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            instance: true
+            job: true
+            role: true
+            "Value #A": true
+            ata_additional_product_id: true
+            ata_version: true
+            firmware_version: true
+            form_factor: true
+            interface: true
+            model_family: true
+            protocol: true
+            sata_version: true
+          renameByName:
+            "Value #B": capacity
+            "Value #C": health
+            model_name: model
+            serial_number: serial
+      - id: sortBy
+        options:
+          sort:
+            - { field: host, desc: false }
+            - { field: device, desc: false }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: smartctl_device
+      - refId: B
+        instant: true
+        format: table
+        expr: smartctl_device_capacity_bytes
+      - refId: C
+        instant: true
+        format: table
+        expr: smartctl_device_smart_status
+  - id: 22
+    type: timeseries
+    title: Temperature
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 57 }
+    fieldConfig:
+      defaults:
+        unit: celsius
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 45 }
+            - { color: red, value: 55 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_temperature{temperature_type="current"}
+        legendFormat: "{{host}} {{device}}"
+  - id: 23
+    type: timeseries
+    title: Life remaining
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 57 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+          thresholdsStyle: { mode: dashed }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: orange, value: 20 }
+            - { color: green, value: 50 }
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_attribute{attribute_name="Percent_Lifetime_Remain",attribute_value_type="value"}
+        legendFormat: "{{host}} {{device}}"
+  - id: 24
+    type: timeseries
+    title: Bad sectors
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 65 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_attribute{attribute_name=~"Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable",attribute_value_type="raw"}
+        legendFormat: "{{host}} {{device}} {{attribute_name}}"
+  - id: 25
+    type: timeseries
+    title: Power-on time
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 65 }
+    fieldConfig:
+      defaults:
+        unit: dtdurations
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: smartctl_device_power_on_seconds
+        legendFormat: "{{host}} {{device}}"
