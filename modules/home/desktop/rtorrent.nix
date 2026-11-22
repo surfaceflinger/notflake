@@ -18,6 +18,20 @@ let
     "/vol/ikea/Media/Videos/Other"
     "/vol/ikea/Other/Torrents"
   ];
+
+  configFile = pkgs.writeText "rtorrent.rc" ''
+    network.listen.port.range.set = 51413-51413
+    network.listen.port.random.set = no
+
+    session.path.set = ${stateDirectory}
+    directory.default.set = ${defaultDownloadDirectory}
+    system.file.allocate.set = 1
+
+    schedule = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
+
+    log.open_file = "log", ${stateDirectory}/rtorrent.log
+    log.add_output = "errors", "log"
+  '';
 in
 {
   home.packages = [
@@ -36,8 +50,11 @@ in
       Type = "simple";
       # rtorrent polls stdin with epoll, which rejects regular files such as
       # /dev/null, so feed it a pipe and keep rtorrent as the main process.
-      ExecStart = "${lib.getExe pkgs.bash} -c 'exec ${lib.getExe pkgs.rtorrent} -n -s ${stateDirectory} -o directory.default.set=${defaultDownloadDirectory} -o network.scgi.open_local=%t/rtorrent/rtorrent.sock < <(exec ${pkgs.coreutils}/bin/sleep infinity)'";
+      ExecStart = "${lib.getExe pkgs.bash} -c 'exec ${lib.getExe pkgs.rtorrent} -n -o import=${configFile} -o network.scgi.open_local=%t/rtorrent/rtorrent.sock < <(exec ${pkgs.coreutils}/bin/sleep infinity)'";
       WorkingDirectory = stateDirectory;
+
+      # sockets are allocated per category from this ulimit
+      LimitNOFILE = 16384;
 
       StateDirectory = "rtorrent";
       StateDirectoryMode = "0700";
