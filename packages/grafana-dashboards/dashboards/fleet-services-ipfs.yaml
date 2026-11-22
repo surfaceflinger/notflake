@@ -1,0 +1,1046 @@
+title: Fleet / Services / IPFS
+uid: fleet-services-ipfs
+tags: [Fleet, IPFS, Prometheus]
+timezone: browser
+refresh: 30s
+time:
+  from: now-6h
+  to: now
+schemaVersion: 39
+graphTooltip: 1
+editable: true
+links:
+  - title: Overview
+    url: /d/fleet-views-overview
+    type: link
+    icon: dashboard
+  - title: Host detail
+    url: /d/fleet-views-host
+    type: link
+    icon: dashboard
+  - title: Storage
+    url: /d/fleet-views-storage
+    type: link
+    icon: dashboard
+templating:
+  list:
+    - name: host
+      label: Host
+      type: query
+      datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+      query:
+        query: label_values(up{service="ipfs"}, host)
+        refId: PrometheusVariableQueryEditor-VariableQuery
+      refresh: 1
+      sort: 1
+      hide: 0
+      multi: false
+      includeAll: false
+    - name: dataset
+      label: Dataset
+      type: query
+      datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+      query:
+        query: label_values(zfs_dataset_used_bytes{host="$host",name=~".*/ipfs"}, name)
+        refId: PrometheusVariableQueryEditor-VariableQuery
+      refresh: 1
+      sort: 1
+      hide: 0
+      multi: false
+      includeAll: false
+panels:
+  - id: 1
+    type: stat
+    title: Peers
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 0, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: sum(ipfs_p2p_peers_total{host="$host"})
+  - id: 2
+    type: stat
+    title: Connections
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 4, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: sum(libp2p_rcmgr_connections{host="$host"})
+  - id: 3
+    type: stat
+    title: Reachability
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 8, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "0": { text: unknown, index: 2 }
+              "1": { text: public, index: 0 }
+              "2": { text: private, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+            - { color: green, value: 1 }
+            - { color: orange, value: 2 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: libp2p_autonat_reachability_status{host="$host"}
+  - id: 4
+    type: stat
+    title: Dataset
+    description: Physical space used by the repo dataset, snapshots included.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 12, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_dataset_used_bytes{host="$host",name="$dataset"}
+  - id: 5
+    type: stat
+    title: Dataset free
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 16, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_dataset_available_bytes{host="$host",name="$dataset"}
+  - id: 6
+    type: stat
+    title: Wantlist
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 20, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: ipfs_bitswap_wantlist_total{host="$host"}
+  - id: 7
+    type: stat
+    title: Bitswap sent
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 0, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: Bps
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: rate(ipfs_bitswap_sent_all_blocks_bytes_sum{host="$host"}[$__rate_interval])
+  - id: 8
+    type: stat
+    title: Bitswap received
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 6, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: Bps
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: rate(ipfs_bitswap_recv_all_blocks_bytes_sum{host="$host"}[$__rate_interval])
+  - id: 9
+    type: stat
+    title: Blockstore cache
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 12, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: percentunit
+        min: 0
+        max: 1
+        decimals: 1
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: rate(ipfs_bs_cache_boxo_blockstore_cache_hits{host="$host"}[$__rate_interval]) / rate(ipfs_bs_cache_boxo_blockstore_cache_total{host="$host"}[$__rate_interval])
+  - id: 10
+    type: stat
+    title: Goroutines
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 18, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: go_goroutines{service="ipfs",host="$host"}
+  - id: 11
+    type: row
+    title: Swarm
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 11 }
+    panels: []
+  - id: 12
+    type: timeseries
+    title: Peers by transport
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum by (transport) (ipfs_p2p_peers_total{host="$host"})
+        legendFormat: "{{transport}}"
+  - id: 13
+    type: timeseries
+    title: Connections
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum by (dir, scope) (libp2p_rcmgr_connections{host="$host"})
+        legendFormat: "{{dir}} {{scope}}"
+  - id: 14
+    type: timeseries
+    title: Connection churn
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 20 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum(rate(libp2p_swarm_connections_opened_total{host="$host"}[$__rate_interval]))
+        legendFormat: opened
+      - refId: B
+        expr: sum(rate(libp2p_swarm_connections_closed_total{host="$host"}[$__rate_interval]))
+        legendFormat: closed
+      - refId: C
+        expr: sum(rate(libp2p_swarm_dial_errors_total{host="$host"}[$__rate_interval]))
+        legendFormat: dial errors
+  - id: 15
+    type: timeseries
+    title: Addresses
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 20 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum(libp2p_host_addrs_reachable{host="$host"})
+        legendFormat: reachable
+      - refId: B
+        expr: sum(libp2p_host_addrs_unknown{host="$host"})
+        legendFormat: unknown
+  - id: 16
+    type: row
+    title: Bitswap
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 28 }
+    panels: []
+  - id: 17
+    type: timeseries
+    title: Tasks
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 29 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: ipfs_bitswap_active_tasks{host="$host"}
+        legendFormat: active
+      - refId: B
+        expr: ipfs_bitswap_pending_tasks{host="$host"}
+        legendFormat: pending
+      - refId: C
+        expr: ipfs_bitswap_active_block_tasks{host="$host"}
+        legendFormat: active block
+      - refId: D
+        expr: ipfs_bitswap_pending_block_tasks{host="$host"}
+        legendFormat: pending block
+  - id: 18
+    type: timeseries
+    title: Wantlist
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 29 }
+    fieldConfig:
+      defaults:
+        unit: short
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: ipfs_bitswap_wantlist_total{host="$host"}
+        legendFormat: items
+      - refId: B
+        expr: ipfs_bitswap_want_blocks_total{host="$host"}
+        legendFormat: want blocks
+      - refId: C
+        expr: ipfs_bitswap_blocks_received{host="$host"}
+        legendFormat: blocks received
+      - refId: D
+        expr: ipfs_bitswap_haves_received{host="$host"}
+        legendFormat: haves received
+  - id: 19
+    type: timeseries
+    title: Throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 37 }
+    fieldConfig:
+      defaults:
+        unit: Bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(ipfs_bitswap_sent_all_blocks_bytes_sum{host="$host"}[$__rate_interval])
+        legendFormat: sent
+      - refId: B
+        expr: rate(ipfs_bitswap_recv_all_blocks_bytes_sum{host="$host"}[$__rate_interval])
+        legendFormat: received
+      - refId: C
+        expr: rate(ipfs_bitswap_recv_dup_blocks_bytes_sum{host="$host"}[$__rate_interval])
+        legendFormat: duplicate received
+  - id: 20
+    type: timeseries
+    title: HTTP exchange
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 37 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(exchange_httpnet_requests_total{host="$host"}[$__rate_interval])
+        legendFormat: requests
+      - refId: B
+        expr: rate(exchange_httpnet_requests_failure{host="$host"}[$__rate_interval])
+        legendFormat: failures
+      - refId: C
+        expr: exchange_httpnet_requests_in_flight{host="$host"}
+        legendFormat: in flight
+  - id: 21
+    type: row
+    title: DHT
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 45 }
+    panels: []
+  - id: 22
+    type: timeseries
+    title: Inbound RPC
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 46 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum by (message_type) (rate(rpc_inbound_messages_total{host="$host"}[$__rate_interval]))
+        legendFormat: "{{message_type}}"
+  - id: 23
+    type: timeseries
+    title: Outbound RPC
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 46 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum by (message_type) (rate(rpc_outbound_messages_total{host="$host"}[$__rate_interval]))
+        legendFormat: "{{message_type}}"
+  - id: 24
+    type: timeseries
+    title: RPC errors
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 54 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum(rate(rpc_inbound_message_errors_total{host="$host"}[$__rate_interval]))
+        legendFormat: inbound message
+      - refId: B
+        expr: sum(rate(rpc_outbound_message_errors_total{host="$host"}[$__rate_interval]))
+        legendFormat: outbound message
+      - refId: C
+        expr: sum(rate(rpc_outbound_request_errors_total{host="$host"}[$__rate_interval]))
+        legendFormat: outbound request
+  - id: 25
+    type: timeseries
+    title: Provides
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 54 }
+    fieldConfig:
+      defaults:
+        unit: ops
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum by (dht) (rate(provider_provides_total{host="$host"}[$__rate_interval]))
+        legendFormat: "{{dht}}"
+  - id: 26
+    type: row
+    title: Node
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 62 }
+    panels: []
+  - id: 27
+    type: timeseries
+    title: CPU
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 63 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * (1 - avg(rate(node_cpu_seconds_total{host="$host",mode="idle"}[$__rate_interval])))
+        legendFormat: host CPU
+  - id: 28
+    type: timeseries
+    title: Memory used (apps)
+    description: Excludes reclaimable ZFS ARC.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 63 }
+    fieldConfig:
+      defaults:
+        unit: percent
+        min: 0
+        max: 100
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 25
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 100 * (1 - node:memory_available_with_arc_bytes{host="$host"} / node_memory_MemTotal_bytes{host="$host"})
+        legendFormat: memory
+  - id: 29
+    type: timeseries
+    title: Go heap
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 71 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 15
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: go_memstats_heap_inuse_bytes{service="ipfs",host="$host"}
+        legendFormat: heap in use
+      - refId: B
+        expr: go_memstats_alloc_bytes{service="ipfs",host="$host"}
+        legendFormat: allocated
+  - id: 30
+    type: timeseries
+    title: GC pause
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 71 }
+    fieldConfig:
+      defaults:
+        unit: s
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: rate(go_gc_duration_seconds_sum{service="ipfs",host="$host"}[$__rate_interval]) / rate(go_gc_duration_seconds_count{service="ipfs",host="$host"}[$__rate_interval])
+        legendFormat: average pause
+  - id: 31
+    type: timeseries
+    title: Host throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 79 }
+    fieldConfig:
+      defaults:
+        unit: bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: 8 * sum(rate(node_network_receive_bytes_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval]))
+        legendFormat: rx
+      - refId: B
+        expr: 8 * sum(rate(node_network_transmit_bytes_total{host="$host",device!~"lo|tailscale0|veth.*|docker.*|br-.*|virbr.*|tap.*|tun.*"}[$__rate_interval]))
+        legendFormat: tx
+  - id: 32
+    type: timeseries
+    title: Disk throughput
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 79 }
+    fieldConfig:
+      defaults:
+        unit: Bps
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: smooth
+          lineWidth: 2
+          fillOpacity: 20
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: sum(rate(node_disk_written_bytes_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval]))
+        legendFormat: written
+      - refId: B
+        expr: sum(rate(node_disk_read_bytes_total{host="$host",device!~"^(sr|loop|ram|zram|dm-|md)"}[$__rate_interval]))
+        legendFormat: read
+  - id: 33
+    type: row
+    title: Storage
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 87 }
+    panels: []
+  - id: 34
+    type: timeseries
+    title: Dataset usage
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 88 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: zfs_dataset_used_bytes{host="$host",name="$dataset"}
+        legendFormat: used
+      - refId: B
+        expr: zfs_dataset_referenced_bytes{host="$host",name="$dataset"}
+        legendFormat: referenced
+  - id: 35
+    type: timeseries
+    title: Dataset growth (per day)
+    description: Slope over the last 6h, extrapolated to a day.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 88 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: deriv(zfs_dataset_referenced_bytes{host="$host",name="$dataset"}[6h]) * 86400
+        legendFormat: growth
+  - id: 36
+    type: stat
+    title: Compression
+    description: Physical used divided by logical used; below 1 means ZFS is compressing the dataset.
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 0, y: 96 }
+    fieldConfig:
+      defaults:
+        unit: ratio
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_dataset_used_bytes{host="$host",name="$dataset"} / zfs_dataset_logical_used_bytes{host="$host",name="$dataset"}
+  - id: 37
+    type: stat
+    title: Quota
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 8, y: 96 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        mappings:
+          - type: value
+            options:
+              "0": { text: none, index: 0 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_dataset_quota_bytes{host="$host",name="$dataset"}
+  - id: 38
+    type: stat
+    title: Written
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 16, y: 96 }
+    fieldConfig:
+      defaults:
+        unit: bytes
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: zfs_dataset_written_bytes{host="$host",name="$dataset"}
+  - id: 39
+    type: row
+    title: Service
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 101 }
+    panels: []
+  - id: 40
+    type: stat
+    title: ipfs.service
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 0, y: 102 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: active, index: 0 }
+              "0": { text: inactive, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_systemd_unit_state{host="$host",name="ipfs.service",state="active"}
+  - id: 41
+    type: stat
+    title: API socket
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 6, y: 102 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: active, index: 0 }
+              "0": { text: inactive, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_systemd_unit_state{host="$host",name="ipfs-api.socket",state="active"}
+  - id: 42
+    type: stat
+    title: Gateway socket
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 12, y: 102 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: active, index: 0 }
+              "0": { text: inactive, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: node_systemd_unit_state{host="$host",name="ipfs-gateway.socket",state="active"}
+  - id: 43
+    type: stat
+    title: Scrape
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 18, y: 102 }
+    fieldConfig:
+      defaults:
+        unit: none
+        mappings:
+          - type: value
+            options:
+              "1": { text: up, index: 0 }
+              "0": { text: down, index: 1 }
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: red, value: null }
+            - { color: green, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: up{service="ipfs"}
