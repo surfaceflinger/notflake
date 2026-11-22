@@ -274,6 +274,19 @@
       "url": "https://github.com/surfaceflinger/nixpkgs/archive/54df01b8b2a521e5f1ef6d9bcbf4e01283ca20f1.tar.gz",
       "hash": "sha256-i0tfwGZZOGqe8X80LyMHeK+DrHER+B7qruHUXrttOIw="
     },
+    "rtremotesf": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "surfaceflinger",
+        "repo": "rtremotesf"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "1a58e0d2572549dc0dabde878b155c210f4d3495",
+      "url": "https://github.com/surfaceflinger/rtremotesf/archive/1a58e0d2572549dc0dabde878b155c210f4d3495.tar.gz",
+      "hash": "sha256-c7ihW2btTqk+a8aYtNs4KbpetW4BSA1d5nVBnttHkSg="
+    },
     "schizofox": {
       "type": "Git",
       "repository": {
