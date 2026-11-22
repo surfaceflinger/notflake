@@ -44,56 +44,18 @@
           access = "proxy";
           name = "[skogsduva] Prometheus";
           prune = true;
+          jsonData.timeInterval = "30s";
           type = "prometheus";
-          uid = "skogsduva-prometheus";
+          uid = pkgs.grafana-dashboards.datasourceUid;
           url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
         }
       ];
-      dashboards.settings.providers =
-        let
-          fetchDashboard =
-            {
-              name,
-              hash,
-              id,
-              version,
-            }:
-            pkgs.fetchurl {
-              inherit name hash;
-              url = "https://grafana.com/api/dashboards/${toString id}/revisions/${toString version}/download";
-              recursiveHash = true;
-              postFetch = ''
-                mv "$out" temp
-                sed -i 's/''${DS_PROMETHEUS}/skogsduva-prometheus/g' temp
-                mkdir -p "$out"
-                mv temp "$out/${name}.json";
-              '';
-            };
-          dashboard = name: fetchArgs: {
-            inherit name;
-            options.path = fetchDashboard fetchArgs;
-          };
-        in
-        [
-          (dashboard "Node Exporter Full" {
-            name = "node-exporter-full";
-            hash = "sha256-yP2bRVVN3xYV0oDhmikLzLmNUMp4oy5i2f6syaCVeDo=";
-            id = 1860;
-            version = 46;
-          })
-          (dashboard "OpenWRT" {
-            name = "asus-openwrt-router";
-            hash = "sha256-fXYPL6MdWA4mbkmi0KSJfswVenenbPaG831YM4GtX9g=";
-            id = 18153;
-            version = 4;
-          })
-          (dashboard "Caddy" {
-            name = "caddy";
-            hash = "sha256-AF0PA5gDlVBp0r+py9QAT3UcZcEwpu75Wxf4ma7cGFc=";
-            id = 22870;
-            version = 3;
-          })
-        ];
+      dashboards.settings.providers = [
+        {
+          name = "skogsduva";
+          options.path = pkgs.grafana-dashboards;
+        }
+      ];
     };
   };
 
