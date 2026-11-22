@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -16,6 +17,14 @@ let
     "skogsduva"
   ];
 
+  # every target is also marked with the host it runs on, so panels can filter
+  # node, zfs, smartctl and service metrics with the same $host variable
+  hostLabel =
+    host:
+    lib.optionalAttrs (builtins.match "[A-Za-z0-9][A-Za-z0-9_.-]*" host != null) {
+      inherit host;
+    };
+
   scrapeJob =
     {
       name,
@@ -27,14 +36,10 @@ let
     }:
     {
       job_name = name;
-      static_configs = [
-        (
-          {
-            targets = map (host: "${host}:${toString port}") hosts;
-          }
-          // lib.optionalAttrs (labels != { }) { inherit labels; }
-        )
-      ];
+      static_configs = map (host: {
+        targets = [ "${host}:${toString port}" ];
+        labels = hostLabel host // labels;
+      }) hosts;
     }
     // lib.optionalAttrs (path != null) { metrics_path = path; }
     // lib.optionalAttrs (interval != null) { scrape_interval = interval; };
@@ -71,25 +76,47 @@ in
       scrape_interval = "10s";
       scrape_timeout = "5s";
     };
+    ruleFiles = [
+      ((pkgs.formats.yaml { }).generate "recording-rules.yml" {
+        groups = [
+          {
+            name = "memory";
+            interval = "30s";
+            rules = [
+              {
+                # ARC is reclaimable, so count all but its minimum as
+                # available; hosts without ZFS fall back to MemAvailable
+                record = "node:memory_available_with_arc_bytes";
+                expr = "node_memory_MemAvailable_bytes + clamp_min(node_zfs_arc_size - node_zfs_arc_c_min, 0) or node_memory_MemAvailable_bytes";
+              }
+            ];
+          }
+        ];
+      })
+    ];
     scrapeConfigs = [
       (scrapeJob {
         name = "prometheus";
         port = prom.port;
         hosts = [ prom.listenAddress ];
+        labels.host = config.networking.hostName;
       })
       (scrapeJob {
         name = "grafana";
         port = grafana.http_port;
         hosts = [ "[${grafana.http_addr}]" ];
+        labels.host = config.networking.hostName;
       })
       {
         job_name = "node";
-        static_configs = map (
+        static_configs = lib.concatMap (
           { role, targets }:
-          {
-            labels.role = role;
-            targets = map (target: "${target}:${toString nodePort}") targets;
-          }
+          map (host: {
+            targets = [ "${host}:${toString nodePort}" ];
+            labels = {
+              inherit host role;
+            };
+          }) targets
         ) nodeRoles;
       }
       (scrapeJob {
@@ -116,6 +143,7 @@ in
         name = "json_exporter";
         port = jsonExporter.port;
         hosts = [ jsonExporter.listenAddress ];
+        labels.host = config.networking.hostName;
       })
       # monero goes through the json exporter's probe endpoint
       {
@@ -138,7 +166,10 @@ in
         ];
         static_configs = [
           {
-            labels.service = "monero";
+            labels = {
+              host = config.networking.hostName;
+              service = "monero";
+            };
             targets = [
               "http://${monero.rpc.address}:${toString monero.rpc.port}/get_info"
             ];
