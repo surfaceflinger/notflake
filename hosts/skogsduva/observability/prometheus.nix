@@ -21,9 +21,7 @@ let
   # node, zfs, smartctl and service metrics with the same $host variable
   hostLabel =
     host:
-    lib.optionalAttrs (builtins.match "[A-Za-z0-9][A-Za-z0-9_.-]*" host != null) {
-      inherit host;
-    };
+    lib.optionalAttrs (builtins.match "[A-Za-z0-9][A-Za-z0-9_.-]*" host != null) { inherit host; };
 
   scrapeJob =
     {
@@ -97,7 +95,7 @@ in
     scrapeConfigs = [
       (scrapeJob {
         name = "prometheus";
-        port = prom.port;
+        inherit (prom) port;
         hosts = [ prom.listenAddress ];
         labels.host = config.networking.hostName;
       })
@@ -113,9 +111,7 @@ in
           { role, targets }:
           map (host: {
             targets = [ "${host}:${toString nodePort}" ];
-            labels = {
-              inherit host role;
-            };
+            labels = { inherit host role; };
           }) targets
         ) nodeRoles;
       }
@@ -141,7 +137,7 @@ in
       })
       (scrapeJob {
         name = "json_exporter";
-        port = jsonExporter.port;
+        inherit (jsonExporter) port;
         hosts = [ jsonExporter.listenAddress ];
         labels.host = config.networking.hostName;
       })
@@ -170,9 +166,7 @@ in
               host = config.networking.hostName;
               service = "monero";
             };
-            targets = [
-              "http://${monero.rpc.address}:${toString monero.rpc.port}/get_info"
-            ];
+            targets = [ "http://${monero.rpc.address}:${toString monero.rpc.port}/get_info" ];
           }
         ];
       }

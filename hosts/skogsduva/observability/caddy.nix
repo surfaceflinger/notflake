@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   age.secrets.caddy-desec-skogsduva.file = ../../../secrets/caddy-desec-skogsduva.age;
 
   services.caddy = {
