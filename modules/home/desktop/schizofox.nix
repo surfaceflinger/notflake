@@ -85,7 +85,7 @@ in
       "gnomeTheme.hideWebrtcIndicator" = true;
       "gnomeTheme.normalWidthTabs" = true;
       "svg.context-properties.content.enabled" = true;
-      "widget.gtk.rounded-bottom-corners.enabled" = true;
+      "widget.gtk.rounded-bottom-corners.enabled" = false;
     };
 
     extensions = {
