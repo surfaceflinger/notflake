@@ -150,7 +150,10 @@ in
       layer-rules = [
         {
           matches = [ { namespace = "^ashell-"; } ];
-          background-effect.blur = true;
+          background-effect = {
+            blur = true;
+            xray = false;
+          };
         }
       ];
 
