@@ -9,6 +9,7 @@
     ./mpv.nix
     ./opencode.nix
     ./prismlauncher.nix
+    ./rtorrent.nix
     ./schizofox.nix
     ./tailscale.nix
     ./xdg.nix
