@@ -34,7 +34,6 @@
         constrict
         diebahn
         file-roller
-        fragments
         gnome-podcasts
         newsflash
         signal-desktop
