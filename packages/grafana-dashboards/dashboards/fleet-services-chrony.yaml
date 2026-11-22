@@ -1,0 +1,674 @@
+title: Fleet / Services / Chrony
+uid: fleet-services-chrony
+tags: [Fleet, Time, Prometheus]
+timezone: browser
+refresh: 30s
+time:
+  from: now-6h
+  to: now
+schemaVersion: 39
+graphTooltip: 1
+editable: true
+links:
+  - title: Overview
+    url: /d/fleet-views-overview
+    type: link
+    icon: dashboard
+  - title: Host detail
+    url: /d/fleet-views-host
+    type: link
+    icon: dashboard
+panels:
+  - id: 1
+    type: stat
+    title: Worst offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 0, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 1 }
+            - { color: red, value: 10 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(abs(chrony_tracking_last_offset_seconds{host!=""})) * 1000
+  - id: 2
+    type: stat
+    title: Worst RMS offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 4, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: orange, value: 1 }
+            - { color: red, value: 10 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(chrony_tracking_rms_offset_seconds{host!=""}) * 1000
+  - id: 3
+    type: stat
+    title: Worst skew (ppm)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 8, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(chrony_tracking_skew_ppms{host!=""})
+  - id: 4
+    type: stat
+    title: Worst frequency (ppm)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 12, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(abs(chrony_tracking_frequency_ppms{host!=""}))
+  - id: 5
+    type: stat
+    title: Unsynced hosts
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 16, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(chrony_tracking_stratum{host!=""} == 0) or vector(0)
+  - id: 6
+    type: stat
+    title: Kernel unsynced
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 6, w: 4, x: 20, y: 0 }
+    fieldConfig:
+      defaults:
+        unit: none
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(node_timex_sync_status{job="node",host!=""} == 0) or vector(0)
+  - id: 7
+    type: stat
+    title: Root delay
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 0, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(chrony_tracking_root_delay_seconds{host!=""}) * 1000
+  - id: 8
+    type: stat
+    title: Root dispersion
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 6, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        decimals: 2
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(chrony_tracking_root_dispersion_seconds{host!=""}) * 1000
+  - id: 9
+    type: stat
+    title: Worst stratum
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 12, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: max(chrony_tracking_stratum{host!=""})
+  - id: 10
+    type: stat
+    title: Sources
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 6, x: 18, y: 6 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(chrony_sources_peer_offset_seconds{host!=""})
+  - id: 11
+    type: row
+    title: Hosts
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 11 }
+    panels: []
+  - id: 12
+    type: table
+    title: Hosts (now)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 9, w: 24, x: 0, y: 12 }
+    fieldConfig:
+      defaults:
+        unit: none
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+      overrides:
+        - matcher: { id: byName, options: "offset ms" }
+          properties:
+            - id: unit
+              value: ms
+        - matcher: { id: byName, options: "rms ms" }
+          properties:
+            - id: unit
+              value: ms
+        - matcher: { id: byName, options: "root delay ms" }
+          properties:
+            - id: unit
+              value: ms
+    options:
+      showHeader: true
+      cellHeight: sm
+    transformations:
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            __name__: true
+      - id: merge
+        options: {}
+      - id: organize
+        options:
+          excludeByName:
+            Time: true
+            instance: true
+            job: true
+          renameByName:
+            "Value #A": offset ms
+            "Value #B": rms ms
+            "Value #C": skew ppm
+            "Value #D": freq ppm
+            "Value #E": stratum
+            "Value #F": root delay ms
+      - id: sortBy
+        options:
+          sort:
+            - { field: "offset ms", desc: true }
+    targets:
+      - refId: A
+        instant: true
+        format: table
+        expr: chrony_tracking_last_offset_seconds{host!=""} * 1000
+      - refId: B
+        instant: true
+        format: table
+        expr: chrony_tracking_rms_offset_seconds{host!=""} * 1000
+      - refId: C
+        instant: true
+        format: table
+        expr: chrony_tracking_skew_ppms{host!=""}
+      - refId: D
+        instant: true
+        format: table
+        expr: chrony_tracking_frequency_ppms{host!=""}
+      - refId: E
+        instant: true
+        format: table
+        expr: chrony_tracking_stratum{host!=""}
+      - refId: F
+        instant: true
+        format: table
+        expr: chrony_tracking_root_delay_seconds{host!=""} * 1000
+  - id: 13
+    type: row
+    title: Offsets
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 21 }
+    panels: []
+  - id: 14
+    type: timeseries
+    title: Tracking offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 22 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_tracking_last_offset_seconds{host!=""} * 1000
+        legendFormat: "{{host}}"
+  - id: 15
+    type: timeseries
+    title: RMS offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 22 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_tracking_rms_offset_seconds{host!=""} * 1000
+        legendFormat: "{{host}}"
+  - id: 16
+    type: timeseries
+    title: Skew (ppm)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 30 }
+    fieldConfig:
+      defaults:
+        unit: none
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_tracking_skew_ppms{host!=""}
+        legendFormat: "{{host}}"
+  - id: 17
+    type: timeseries
+    title: Frequency (ppm)
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 30 }
+    fieldConfig:
+      defaults:
+        unit: none
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_tracking_frequency_ppms{host!=""}
+        legendFormat: "{{host}}"
+  - id: 18
+    type: row
+    title: Sources
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 38 }
+    panels: []
+  - id: 19
+    type: timeseries
+    title: Source offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 39 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 1
+          fillOpacity: 0
+          gradientMode: none
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_sources_peer_offset_seconds{host!=""} * 1000
+        legendFormat: "{{host}} {{source_name}}"
+  - id: 20
+    type: timeseries
+    title: Source age
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 39 }
+    fieldConfig:
+      defaults:
+        unit: s
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 1
+          fillOpacity: 0
+          gradientMode: none
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [lastNotNull, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_sources_last_sample_age_seconds{host!=""}
+        legendFormat: "{{host}} {{source_name}}"
+  - id: 21
+    type: timeseries
+    title: Source delay
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 47 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 1
+          fillOpacity: 0
+          gradientMode: none
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_sources_peer_delay_seconds{host!=""} * 1000
+        legendFormat: "{{host}} {{source_name}}"
+  - id: 22
+    type: timeseries
+    title: Source dispersion
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 47 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 1
+          fillOpacity: 0
+          gradientMode: none
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: table, placement: bottom, showLegend: true, calcs: [mean, max] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: chrony_sources_peer_dispersion_seconds{host!=""} * 1000
+        legendFormat: "{{host}} {{source_name}}"
+  - id: 23
+    type: row
+    title: Kernel
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 55 }
+    panels: []
+  - id: 24
+    type: timeseries
+    title: PLL offset
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 0, y: 56 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_timex_offset_seconds{host!=""} * 1000
+        legendFormat: "{{host}}"
+  - id: 25
+    type: timeseries
+    title: Kernel error
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 8, w: 12, x: 12, y: 56 }
+    fieldConfig:
+      defaults:
+        unit: ms
+        min: 0
+        custom:
+          drawStyle: line
+          lineInterpolation: linear
+          lineWidth: 2
+          fillOpacity: 10
+          gradientMode: opacity
+          showPoints: never
+      overrides: []
+    options:
+      legend: { displayMode: list, placement: bottom, showLegend: true, calcs: [] }
+      tooltip: { mode: multi, sort: desc }
+    targets:
+      - refId: A
+        expr: node_timex_maxerror_seconds{host!=""} * 1000
+        legendFormat: "{{host}} max error"
+      - refId: B
+        expr: node_timex_estimated_error_seconds{host!=""} * 1000
+        legendFormat: "{{host}} estimated error"
+  - id: 26
+    type: row
+    title: Service
+    collapsed: false
+    gridPos: { h: 1, w: 24, x: 0, y: 64 }
+    panels: []
+  - id: 27
+    type: stat
+    title: Targets up
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 0, y: 65 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(up{job="chrony"} == 1)
+  - id: 28
+    type: stat
+    title: Targets down
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 8, y: 65 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: green, value: null }
+            - { color: red, value: 1 }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: background
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(up{job="chrony"} == 0) or vector(0)
+  - id: 29
+    type: stat
+    title: chronyd units
+    datasource: { type: prometheus, uid: "${DS_PROMETHEUS}" }
+    gridPos: { h: 5, w: 8, x: 16, y: 65 }
+    fieldConfig:
+      defaults:
+        unit: short
+        decimals: 0
+        thresholds:
+          mode: absolute
+          steps:
+            - { color: blue, value: null }
+      overrides: []
+    options:
+      reduceOptions: { calcs: [lastNotNull], fields: "", values: false }
+      colorMode: value
+      graphMode: none
+      textMode: value
+    targets:
+      - refId: A
+        instant: true
+        expr: count(node_systemd_unit_state{job="node",name="chronyd.service",state="active"} == 1)
